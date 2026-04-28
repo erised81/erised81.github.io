@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cole's Week — Scarlet Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --scarlet: #C1391B;
+    --scarlet-dark: #8B2010;
+    --gold: #F5C842;
+    --gold-dark: #C9A020;
+    --cream: #FFF8ED;
+    --parchment: #F2E8D0;
+    --ink: #1A1008;
+    --forest: #2E6B3E;
+    --forest-light: #3D8C52;
+    --sky: #2563A8;
+    --sky-light: #3A7FCC;
+    --purple: #6B3FA0;
+    --purple-light: #8B5CC8;
+    --done-bg: #E8F5EC;
+    --done-border: #A8D8B4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--ink);
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(193,57,27,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(37,99,168,0.15) 0%, transparent 50%);
+    min-height: 100vh;
+    font-family: 'Nunito', sans-serif;
+    color: var(--ink);
+    padding: 24px 16px 48px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: var(--scarlet);
+    color: var(--gold);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-shadow: 0 3px 0 var(--scarlet-dark);
+  }
+
+  .header h1 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(13px, 3vw, 18px);
+    color: var(--gold);
+    text-shadow: 0 3px 0 var(--gold-dark), 0 5px 12px rgba(0,0,0,0.5);
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  .header-sub {
+    color: rgba(255,248,237,0.55);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  /* PROGRESS BAR */
+  .global-progress {
+    background: rgba(255,255,255,0.07);
+    border: 2px solid rgba(245,200,66,0.2);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .progress-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .progress-count {
+    color: rgba(255,248,237,0.6);
+  }
+
+  .progress-track {
+    background: rgba(255,255,255,0.1);
+    border-radius: 99px;
+    height: 14px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--scarlet), var(--gold));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    min-width: 0;
+  }
+
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 20px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 99px;
+  }
+
+  /* DAY CARDS */
+  .days-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .day-card {
+    background: var(--cream);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .day-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .day-header {
+    padding: 14px 18px 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+
+  .day-mon { background: linear-gradient(135deg, #C1391B, #8B2010); }
+  .day-tue { background: linear-gradient(135deg, #2E6B3E, #1A4525); }
+  .day-wed { background: linear-gradient(135deg, #6B3FA0, #4A2570); }
+  .day-thu { background: linear-gradient(135deg, #C1391B, #8B2010); }
+  .day-fri { background: linear-gradient(135deg, #2563A8, #173D72); }
+
+  .day-emoji {
+    font-size: 28px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  }
+
+  .day-title-group {
+    flex: 1;
+  }
+
+  .day-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    margin-bottom: 3px;
+  }
+
+  .day-tagline {
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+  }
+
+  .day-progress-pills {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .day-pip {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    transition: background 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .day-pip.done {
+    background: var(--gold);
+    box-shadow: 0 0 6px rgba(245,200,66,0.6);
+  }
+
+  /* TASKS */
+  .tasks-list {
+    padding: 14px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--parchment);
+    border: 2px solid rgba(26,16,8,0.1);
+    border-radius: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .task-item:hover {
+    border-color: rgba(26,16,8,0.25);
+    background: #EDE0C4;
+  }
+
+  .task-item.completed {
+    background: var(--done-bg);
+    border-color: var(--done-border);
+  }
+
+  .task-item.completed::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shimmer 1s ease forwards;
+  }
+
+  @keyframes shimmer {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(200%); }
+  }
+
+  .task-checkbox {
+    width: 22px; height: 22px;
+    border: 2.5px solid rgba(26,16,8,0.25);
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    background: white;
+  }
+
+  .task-item.completed .task-checkbox {
+    background: var(--forest);
+    border-color: var(--forest);
+  }
+
+  .checkmark {
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    color: white;
+    font-size: 13px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .task-item.completed .checkmark {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .task-content {
+    flex: 1;
+  }
+
+  .task-icon {
+    font-size: 15px;
+    margin-right: 4px;
+  }
+
+  .task-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+    transition: color 0.2s;
+  }
+
+  .task-item.completed .task-name {
+    color: var(--forest);
+    text-decoration: line-through;
+    text-decoration-color: rgba(46,107,62,0.4);
+  }
+
+  .task-detail {
+    font-size: 11.5px;
+    color: rgba(26,16,8,0.5);
+    margin-top: 2px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .task-item.completed .task-detail {
+    color: rgba(46,107,62,0.6);
+  }
+
+  .task-tag {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    padding: 2px 7px;
+    border-radius: 99px;
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+
+  .tag-gym { background: rgba(193,57,27,0.12); color: var(--scarlet); }
+  .tag-scratch { background: rgba(37,99,168,0.12); color: var(--sky); }
+  .tag-free { background: rgba(107,63,160,0.12); color: var(--purple); }
+  .tag-burpee { background: rgba(46,107,62,0.12); color: var(--forest); }
+  .tag-choice { background: rgba(201,160,32,0.15); color: var(--gold-dark); }
+
+  /* DIVIDER label */
+  .section-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 6px;
+    letter-spacing: 1px;
+    color: rgba(26,16,8,0.3);
+    text-transform: uppercase;
+    padding: 0 16px 4px;
+    margin-top: 4px;
+  }
+
+  /* BURST animation */
+  @keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    70% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .day-card { animation: popIn 0.4s ease both; }
+  .day-card:nth-child(1) { animation-delay: 0.05s; }
+  .day-card:nth-child(2) { animation-delay: 0.10s; }
+  .day-card:nth-child(3) { animation-delay: 0.15s; }
+  .day-card:nth-child(4) { animation-delay: 0.20s; }
+  .day-card:nth-child(5) { animation-delay: 0.25s; }
+
+  /* BADGE EARNED state */
+  .all-done-banner {
+    display: none;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--ink);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 0 0 14px 14px;
+    letter-spacing: 1px;
+    line-height: 1.8;
+  }
+
+  .day-card.all-done .all-done-banner { display: block; }
+
+  /* WEDNESDAY special */
+  .burpee-block {
+    background: linear-gradient(135deg, rgba(107,63,160,0.08), rgba(107,63,160,0.04));
+    border: 2px dashed rgba(107,63,160,0.25);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin: 0 16px 14px;
+    text-align: center;
+  }
+
+  .burpee-block-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    color: var(--purple);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .burpee-block-text {
+    font-size: 12px;
+    color: rgba(26,16,8,0.6);
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  /* Responsive */
+  @media (max-width: 500px) {
+    .days-grid { grid-template-columns: 1fr; }
+    body { padding: 16px 10px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">⚔️ SCARLET ACADEMY</div>
+  <h1>COLE'S WEEK</h1>
+  <div class="header-sub">Pick what calls to you · Check it off · Watch the week fill up</div>
+</div>
+
+<div class="global-progress" id="globalProgress">
+  <div class="progress-label">
+    <span>🏅 WEEKLY QUEST PROGRESS</span>
+    <span class="progress-count" id="progressText">0 / 0 complete</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+  </div>
+</div>
+
+<div class="days-grid">
+
+  <!-- MONDAY -->
+  <div class="day-card" id="card-mon">
+    <div class="day-header day-mon">
+      <div class="day-emoji">🌄</div>
+      <div class="day-title-group">
+        <div class="day-name">MONDAY</div>
+        <div class="day-tagline">Choose your first Gym</div>
+      </div>
+      <div class="day-progress-pills" id="pips-mon"></div>
+    </div>
+    <div class="tasks-list">
+      <div class="section-label">— choose one gym —</div>
+      <div class="task-item" onclick="toggle(this)" data-day="mon">
+        <div class="task-checkbox"><span class="checkmark">✓</span></div>
+        <div class="task-content">
+          <div class="task-name"><span class="task-icon">🦴</span>Fossil Math Gym — Trail 1</div>
+          <div class="task-detail">Scale & proportion using real dino lengths</div>
+          <span class="task-tag tag-gym">Gym Trail</span>
+        </div>
+      </div>
+      <div class="task-item" onclick="toggle(this)" data-day="mon">
+        <div class="task-checkbox"><span class="checkmark">✓</span></div>
+        <div class="task-content">
+          <div class="task-name"><span class="task-icon">⚡</span>Rotom-Dex Research Gym — Trail 1</div>
+          <div class="task-detail">Source Scanner — evaluate a paleontology source</div>
+          <span class="task-tag tag-gym">Gym Trail</span>
+        </div>
+      </div>
+      <div class="section-label">— independent time —</div>
+      <div class="task-item" onclick="toggle(this)" data-day="mon">
+        <div class="task-checkbox"><span class="checkmark">✓</span></div>
+        <div class="task-content">
+          <div class="task-name"><span class="task-icon">🎮</span>Night Zookeeper / Mia Academy / Journeys box</div>
+          <div class="task-detail">Free choice — whatever sounds good</div>
+          <span class="task-tag tag-free">Free Choice</span>
+        </div>
+      </div>
+    </div>
+    <div class="all-done-banner">⭐ Monday Quest Complete!</div>
+  </div>
+
+  <!-- TUESDAY -->
+  <div class="day-card" id="card-tue">
+    <div class="day-header day-tue">
+      <div class="day-emoji">🦅</div>
+      <div class="day-title-group">
+        <div class="day-name">TUESDAY</div>
+        <div class="day-tagline">Scientist prep before Burpee</div>
+      </div>
+      <div class="day-progress-pills" id="pips-tue"></div>
+    </div>
+    <div class="tasks-list">
+      <div class="section-label">— choose one gym —</div>
+      <div class="task-item" onclick="toggle(this)" data-day="tue">
+        <div class="task-checkbox"><span class="checkmark">✓</span></div>
+        <div class="task-content">
+          <div class="task-name"><span class="task-icon">🦅</span>Archen's Field Report Gym — Trail 1</div>
+          <div class="task-detail">Observation Lab — perfect warm-up for Wednesday</div>
+          <span class="task-tag tag-gym">Gym Trail</span>
+        </div>
+      </div>
+      <div class="task-item" onclick="toggle(this)" data-day="tue">
+        <div class="task-checkbox"><span class="checkmark">✓</span></div>
+        <div class="task-content">
+          <div class="task-name"><span class="task-icon">🦴</span>Fossil Math Gym — Trail 1</div>
+          <div class="task-detail">If not done Monday — scale & proportion with dinos</div>
+          <span class="task-tag tag-gym">Gym Trail</span>
+        </div>
+      </div>
+      <div class="section-label">— clock refresher (quick) —</div>
+      <div class="task-item" onclick="toggle(this)" data-day="tue">
+        <div class="task-checkbox"><span class="checkmark">✓</span></div>
+        <div class="task-content">
+          <div class="task-name"><span class="task-icon">🕐</span>Rotom Clock — Real World Check</div>
+          <div class="task-detail">Glance at an analog clock naturally — what does it say?</div>
+          <span class="task-tag tag-choice">Refresher</span>
+        </div>
+      </div>
+    </div>
+    <div class="all-done-banner">⭐ Tuesday Quest Complete!</div>
+  </div>
+
+  <!-- WEDNESDAY -->
+  <div class="day-card" id="card-wed">
+    <div class="day-header day-wed">
+      <div class="day-emoji">🦖</div>
+      <div class="day-title-group">
+        <div class="day-name">WEDNESDAY</div>
+        <div class="day-tagline">Burpee Museum Day</div>
+      </div>
+      <div class="day-progress-pills" id="pips-wed"></div>
+    </div>
+    <div class="burpee-block">
+      <div class="burpee-block-title">🚗 Drive (1.5h each way)</div>
+      <div class="burpee-block-text">Podcast, audiobook, or just chill — your call</div>
+    </div>
+    <div class="tasks-list">
+      <div class="task-item" onclick="toggle(this)" data-day="wed">
+        <div class="task-checkbox"><span class="checkmark">✓</span></div>
+        <div class="task-content">
+          <div class="task-name"><span class="task-icon">🦴</span>Fossil cleaning at Burpee</div>
+          <div class="task-detail">Real paleontology work — log hours for transcript</div>
+          <span class="task-tag tag-burpee">Burpee</span>
+        </div>
+      </div>
+      <div class="task-item" onclick="toggle(this)" data-day="wed">
+        <div class="task-checkbox"><span class="checkmark">✓</span></div>
+        <div class="task-content">
+          <div class="task-name"><span class="task-icon">📋</span>Field Report — 3 Observations</div>
+          <div class="task-detail">Jot, sketch, or voice-memo 3 things noticed today. Archen is watching 👀</div>
+          <span class="task-tag tag-burpee">Field Notes</span>
+        </div>
+      </div>
+    </div>
+    <div class="all-done-banner">⭐ Burpee Day Complete!</div>
+  </div>
+
+  <!-- THURSDAY -->
+  <div class="day-card" id="card-thu">
+    <div class="day-header day-mon">
+      <div class="day-emoji">⚡</div>
+      <div class="day-title-group">
+        <div class="day-name">THURSDAY</div>
+        <div class="day-tagline">Level up your Gym progress</div>
+      </div>
+      <div class="day-progress-pills" id="pips-thu"></div>
+    </div>
+    <div class="tasks-list">
+      <div class="section-label">— gym trail 2 —</div>
+      <div class="task-item" onclick="toggle(this)" data-day="thu">
+        <div class="task-checkbox"><span class="checkmark">✓</span></div>
+        <div class="task-content">
+          <div class="task-name"><span class="task-icon">🦅</span>Archen's Field Report Gym — Trail 2</div>
+          <div class="task-detail">Claim + Evidence move (if Trail 1 done Tuesday)</div>
+          <span class="task-tag tag-gym">Gym Trail</span>
+        </div>
+      </div>
+      <div class="task-item" onclick="toggle(this)" data-day="thu">
+        <div class="task-checkbox"><span class="checkmark">✓</span></div>
+        <div class="task-content">
+          <div class="task-name"><span class="task-icon">🦴</span>Fossil Math Gym — Trail 1</div>
+          <div class="task-detail">If still untouched — scale & proportion with dino sizes</div>
+          <span class="task-tag tag-gym">Gym Trail</span>
+        </div>
+      </div>
+      <div class="section-label">— independent time —</div>
+      <div class="task-item" onclick="toggle(this)" data-day="thu">
+        <div class="task-checkbox"><span class="checkmark">✓</span></div>
+        <div class="task-content">
+          <div class="task-name"><span class="task-icon">🎮</span>Free Scratch / ABCya / Mia / Night Zookeeper</div>
+          <div class="task-detail">No goal — just explore whatever sounds fun</div>
+          <span class="task-tag tag-free">Free Choice</span>
+        </div>
+      </div>
+    </div>
+    <div class="all-done-banner">⭐ Thursday Quest Complete!</div>
+  </div>
+
+  <!-- FRIDAY -->
+  <div class="day-card" id="card-fri">
+    <div class="day-header day-fri">
+      <div class="day-emoji">🎮</div>
+      <div class="day-title-group">
+        <div class="day-name">FRIDAY</div>
+        <div class="day-tagline">Big day — Scratch + Field Report</div>
+      </div>
+      <div class="day-progress-pills" id="pips-fri"></div>
+    </div>
+    <div class="tasks-list">
+      <div class="section-label">— scratch game —</div>
+      <div class="task-item" onclick="toggle(this)" data-day="fri">
+        <div class="task-checkbox"><span class="checkmark">✓</span></div>
+        <div class="task-content">
+          <div class="task-name"><span class="task-icon">🦕</span>Brachiosaurus Game — Next Trial</div>
+          <div class="task-detail">Hunger cap, Thirst system, or Water Zones — wherever you're at</div>
+          <span class="task-tag tag-scratch">Scratch</span>
+        </div>
+      </div>
+      <div class="section-label">— field report main challenge —</div>
+      <div class="task-item" onclick="toggle(this)" data-day="fri">
+        <div class="task-checkbox"><span class="checkmark">✓</span></div>
+        <div class="task-content">
+          <div class="task-name"><span class="task-icon">🦅</span>Archen's Field Report — Main Challenge</div>
+          <div class="task-detail">Turn Wednesday's Burpee observations into a scientist-style field report. Goes in the portfolio!</div>
+          <span class="task-tag tag-gym">Main Challenge</span>
+        </div>
+      </div>
+      <div class="section-label">— wind down —</div>
+      <div class="task-item" onclick="toggle(this)" data-day="fri">
+        <div class="task-checkbox"><span class="checkmark">✓</span></div>
+        <div class="task-content">
+          <div class="task-name"><span class="task-icon">🌟</span>Free choice wind-down</div>
+          <div class="task-detail">Night Zookeeper, Mia Academy, Journeys box — whatever</div>
+          <span class="task-tag tag-free">Free Choice</span>
+        </div>
+      </div>
+    </div>
+    <div class="all-done-banner">⭐ WEEK COMPLETE — Badge Earned! 🏅</div>
+  </div>
+
+</div>
+
+<script>
+  const dayTaskCounts = {};
+
+  function buildPips() {
+    ['mon','tue','wed','thu','fri'].forEach(day => {
+      const tasks = document.querySelectorAll(`.task-item[data-day="${day}"]`);
+      dayTaskCounts[day] = tasks.length;
+      const pipContainer = document.getElementById(`pips-${day}`);
+      tasks.forEach(() => {
+        const pip = document.createElement('div');
+        pip.className = 'day-pip';
+        pipContainer.appendChild(pip);
+      });
+    });
+  }
+
+  function toggle(el) {
+    el.classList.toggle('completed');
+    updateAll();
+  }
+
+  function updateAll() {
+    let total = 0, done = 0;
+
+    ['mon','tue','wed','thu','fri'].forEach(day => {
+      const tasks = document.querySelectorAll(`.task-item[data-day="${day}"]`);
+      const pips = document.querySelectorAll(`#pips-${day} .day-pip`);
+      const card = document.getElementById(`card-${day}`);
+      let dayDone = 0;
+
+      tasks.forEach((t, i) => {
+        if (t.classList.contains('completed')) {
+          dayDone++;
+          if (pips[i]) pips[i].classList.add('done');
+        } else {
+          if (pips[i]) pips[i].classList.remove('done');
+        }
+      });
+
+      total += tasks.length;
+      done += dayDone;
+
+      if (dayDone === tasks.length && tasks.length > 0) {
+        card.classList.add('all-done');
+      } else {
+        card.classList.remove('all-done');
+      }
+    });
+
+    const pct = total > 0 ? (done / total) * 100 : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').textContent = `${done} / ${total} complete`;
+  }
+
+  buildPips();
+  updateAll();
+</script>
+</body>
+</html>
