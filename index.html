@@ -98,6 +98,26 @@
   }
 
   /* Schedule grid */
+  /* Week section */
+  .section-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4rem;
+    color: var(--red);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+    border-radius: 1px;
+  }
+
+  /* Schedule grid */
   .week-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
