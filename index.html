@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pokémon Scarlet Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C93B3B;
+    --red-dark: #A02C2C;
+    --red-light: #F5E0E0;
+    --gold: #E8A020;
+    --gold-light: #FDF3DC;
+    --teal: #2A9D8F;
+    --teal-light: #DDF3F1;
+    --bg: #FDF8F2;
+    --card: #FFFFFF;
+    --text: #2C2218;
+    --muted: #7A6A5A;
+    --border: #E8DDD0;
+    --radius: 16px;
+    --shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 3rem;
+  }
+
+  header {
+    background: var(--red);
+    color: white;
+    padding: 2rem 1.5rem 1.5rem;
+    text-align: center;
+    border-bottom: 6px solid var(--red-dark);
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 120px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+
+  header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+    text-shadow: 2px 3px 0 rgba(0,0,0,0.2);
+  }
+
+  header p {
+    margin-top: 0.4rem;
+    font-size: 1rem;
+    opacity: 0.9;
+    font-weight: 600;
+  }
+
+  .pokeball-stripe {
+    height: 8px;
+    background: linear-gradient(to right, #2C2218 33%, white 33%, white 66%, #2C2218 66%);
+    background-size: 24px 8px;
+  }
+
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem;
+  }
+
+  /* Week section */
+  .section-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4rem;
+    color: var(--red);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+    border-radius: 1px;
+  }
+
+  /* Schedule grid */
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 2.5rem;
+  }
+
+  .day-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+  }
+
+  .day-card .day-name {
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.95rem;
+    color: var(--red);
+    margin-bottom: 0.5rem;
+  }
+
+  .day-card .activity {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.5;
+    font-weight: 600;
+  }
+
+  .day-card .gym-link-small {
+    display: inline-block;
+    margin-top: 6px;
+    background: var(--red-light);
+    color: var(--red-dark);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    text-decoration: none;
+  }
+
+  .day-card .gym-link-small:hover {
+    background: var(--red);
+    color: white;
+  }
+
+  /* Gym cards */
+  .gym-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .gym-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: transform 0.15s, box-shadow 0.15s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .gym-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+
+  .gym-card .gym-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+
+  .gym-card .gym-name {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    color: var(--text);
+  }
+
+  .gym-card .gym-subject {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .gym-card .progress-bar-wrap {
+    background: var(--border);
+    border-radius: 20px;
+    height: 8px;
+    overflow: hidden;
+  }
+
+  .gym-card .progress-bar-fill {
+    height: 100%;
+    border-radius: 20px;
+    background: var(--teal);
+    transition: width 0.4s;
+  }
+
+  .gym-card .progress-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .gym-card .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    align-self: flex-start;
+  }
+
+  .badge-active { background: var(--teal-light); color: var(--teal); }
+  .badge-coming { background: var(--gold-light); color: var(--gold); }
+  .badge-done { background: #EEF5E8; color: #4A8C22; }
+
+  /* Colors per gym type */
+  .gym-scratch { border-top: 4px solid #F4781F; }
+  .gym-paleo   { border-top: 4px solid #8B5E3C; }
+  .gym-science { border-top: 4px solid var(--teal); }
+  .gym-time    { border-top: 4px solid var(--gold); }
+  .gym-writing { border-top: 4px solid #7C5CBF; }
+  .gym-global  { border-top: 4px solid #2A82C9; }
+
+  /* Trainer notes section */
+  .notes-box {
+    background: var(--gold-light);
+    border: 1.5px solid #E8C070;
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .notes-box h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    color: #7A5010;
+    margin-bottom: 0.5rem;
+  }
+
+  .notes-box p {
+    font-size: 0.9rem;
+    color: #5A3A10;
+    line-height: 1.7;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>&#x1F3AE; Pokémon Scarlet Academy</h1>
+  <p>Cole's Learning Headquarters</p>
+</header>
+<div class="pokeball-stripe"></div>
+
+<main>
+
+  <!-- Trainer Notes (editable each week) -->
+  <div class="notes-box">
+    <h3>&#x1F4CB; This Week's Quest Board</h3>
+    <p>Welcome back, Trainer Cole! This week we're continuing the Brachiosaurus Survival Game — your Scratch trail is waiting. Check your active Gyms below and pick where you'd like to explore first.</p>
+  </div>
+
+  <!-- Weekly Schedule -->
+  <div class="section-title">Weekly Schedule</div>
+  <div class="week-grid">
+    <div class="day-card">
+      <div class="day-name">Mon</div>
+      <div class="activity">Scratch Game Dev</div>
+      <a href="gyms/scratch-game.html" class="gym-link-small">Open Gym</a>
+    </div>
+    <div class="day-card">
+      <div class="day-name">Tue</div>
+      <div class="activity">Burpee Museum</div>
+      <div class="activity" style="margin-top:4px; color:#4A8C22;">&#x2B50; Volunteer</div>
+    </div>
+    <div class="day-card">
+      <div class="day-name">Wed</div>
+      <div class="activity">Field Report Writing</div>
+      <a href="gyms/field-report.html" class="gym-link-small">Open Gym</a>
+    </div>
+    <div class="day-card">
+      <div class="day-name">Thu</div>
+      <div class="activity">Earth Systems / Rocks</div>
+      <a href="#gyms" class="gym-link-small">Browse</a>
+    </div>
+    <div class="day-card">
+      <div class="day-name">Fri</div>
+      <div class="activity">Free Choice Day</div>
+      <div class="activity" style="margin-top:4px;">Pick any Gym!</div>
+    </div>
+  </div>
+
+  <!-- Active Gyms -->
+  <div class="section-title" id="gyms">Active Gyms</div>
+  <div class="gym-grid">
+
+    <a href="gyms/scratch-game.html" class="gym-card gym-scratch">
+      <div class="gym-icon">&#x1F995;</div>
+      <div class="gym-name">Brachiosaurus Survival Gym</div>
+      <div class="gym-subject">Computer Science · Scratch</div>
+      <span class="badge badge-active">In Progress</span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="scratch-bar" style="width: 20%;"></div>
+      </div>
+      <div class="progress-label" id="scratch-label">Loading progress...</div>
+    </a>
+
+    <a href="gyms/field-report.html" class="gym-card gym-writing">
+      <div class="gym-icon">&#x1F9EA;</div>
+      <div class="gym-name">Field Report Writing Gym</div>
+      <div class="gym-subject">Science Writing · Literacy</div>
+      <span class="badge badge-active">In Progress</span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="writing-bar" style="width: 0%; background: #7C5CBF;"></div>
+      </div>
+      <div class="progress-label" id="writing-label">Not started yet</div>
+    </a>
+
+    <a href="gyms/rotom-clock.html" class="gym-card gym-time">
+      <div class="gym-icon">&#x23F0;</div>
+      <div class="gym-name">Rotom Clock Gym</div>
+      <div class="gym-subject">Telling Time · Analog Clocks</div>
+      <span class="badge badge-active">In Progress</span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="clock-bar" style="width: 0%; background: var(--gold);"></div>
+      </div>
+      <div class="progress-label" id="clock-label">Not started yet</div>
+    </a>
+
+    <div class="gym-card gym-paleo" style="cursor: default; opacity: 0.75;">
+      <div class="gym-icon">&#x1F9B4;</div>
+      <div class="gym-name">Fossil Field Gym</div>
+      <div class="gym-subject">Paleontology · Earth Science</div>
+      <span class="badge badge-coming">Coming Soon</span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" style="width: 0%; background: #8B5E3C;"></div>
+      </div>
+      <div class="progress-label">Not yet unlocked</div>
+    </div>
+
+    <div class="gym-card gym-science" style="cursor: default; opacity: 0.75;">
+      <div class="gym-icon">&#x1F30D;</div>
+      <div class="gym-name">Earth Systems Gym</div>
+      <div class="gym-subject">Rocks · Weather · Crystals</div>
+      <span class="badge badge-coming">Coming Soon</span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" style="width: 0%;"></div>
+      </div>
+      <div class="progress-label">Not yet unlocked</div>
+    </div>
+
+    <div class="gym-card gym-global" style="cursor: default; opacity: 0.75;">
+      <div class="gym-icon">&#x1F5FA;</div>
+      <div class="gym-name">Global Awareness Gym</div>
+      <div class="gym-subject">Student News · Current Events</div>
+      <span class="badge badge-coming">Coming Soon</span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" style="width: 0%; background: #2A82C9;"></div>
+      </div>
+      <div class="progress-label">Not yet unlocked</div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>Pokémon Scarlet Academy &mdash; Cole's Homeschool Hub</footer>
+
+<script>
+  // Load progress from localStorage and update cards
+  function loadProgress(key, barId, labelId, color) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      const bar = document.getElementById(barId);
+      const label = document.getElementById(labelId);
+      if (bar && data.percent !== undefined) {
+        bar.style.width = data.percent + '%';
+        if (color) bar.style.background = color;
+      }
+      if (label && data.summary) {
+        label.textContent = data.summary;
+      }
+    } catch(e) {}
+  }
+
+  loadProgress('progress_scratch', 'scratch-bar', 'scratch-label', '#F4781F');
+  loadProgress('progress_writing', 'writing-bar', 'writing-label', '#7C5CBF');
+  loadProgress('progress_clock',   'clock-bar',   'clock-label',   '#E8A020');
+</script>
+
+</body>
+</html>
