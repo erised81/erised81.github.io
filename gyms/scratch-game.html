@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brachiosaurus Survival Gym · Scarlet Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #F4781F;
+    --orange-dark: #C25C10;
+    --orange-light: #FEF0E4;
+    --red: #C93B3B;
+    --teal: #2A9D8F;
+    --teal-light: #DDF3F1;
+    --gold: #E8A020;
+    --gold-light: #FDF3DC;
+    --bg: #FDF8F2;
+    --card: #FFFFFF;
+    --text: #2C2218;
+    --muted: #7A6A5A;
+    --border: #E8DDD0;
+    --radius: 16px;
+    --shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 3rem;
+  }
+
+  /* Header */
+  header {
+    background: var(--orange);
+    color: white;
+    padding: 1.5rem 1.5rem 1.25rem;
+    border-bottom: 6px solid var(--orange-dark);
+  }
+  .header-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .back-link {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .back-link:hover { background: rgba(255,255,255,0.15); }
+  .header-text h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.7rem;
+    text-shadow: 1px 2px 0 rgba(0,0,0,0.2);
+  }
+  .header-text p { font-size: 0.9rem; opacity: 0.9; font-weight: 600; }
+
+  .pokeball-stripe {
+    height: 8px;
+    background: linear-gradient(to right, #2C2218 33%, white 33%, white 66%, #2C2218 66%);
+    background-size: 24px 8px;
+  }
+
+  main { max-width: 800px; margin: 0 auto; padding: 2rem 1.25rem; }
+
+  /* Progress tracker */
+  .progress-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 1.5rem;
+    border-top: 4px solid var(--orange);
+  }
+  .progress-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    color: var(--orange-dark);
+    margin-bottom: 1rem;
+  }
+  .trail-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .trail-row label {
+    font-weight: 700;
+    font-size: 0.9rem;
+    min-width: 80px;
+  }
+  .step-btns {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .step-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: white;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--muted);
+  }
+  .step-btn:hover { border-color: var(--orange); color: var(--orange); }
+  .step-btn.active {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: white;
+  }
+  .step-btn.done {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: white;
+  }
+  .save-btn {
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 24px;
+    padding: 10px 28px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.05rem;
+    cursor: pointer;
+    margin-top: 0.75rem;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .save-btn:hover { background: var(--orange-dark); }
+  .save-btn:active { transform: scale(0.97); }
+  .save-confirm {
+    display: none;
+    margin-top: 0.5rem;
+    color: var(--teal);
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  /* Section heading */
+  .section-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3rem;
+    color: var(--orange-dark);
+    margin: 1.75rem 0 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+    border-radius: 1px;
+  }
+
+  /* Trail containers */
+  .trail-block {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .trail-header {
+    background: var(--orange-light);
+    border-bottom: 1.5px solid #F5CCB0;
+    padding: 0.9rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  .trail-header-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.05rem;
+    color: var(--orange-dark);
+  }
+  .trail-header-sub {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .chevron { font-size: 1rem; color: var(--orange); transition: transform 0.2s; }
+  .trail-body { padding: 1.25rem 1.5rem; }
+  .trail-block.collapsed .trail-body { display: none; }
+  .trail-block.collapsed .chevron { transform: rotate(-90deg); }
+
+  /* Steps */
+  .step {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .step-num {
+    width: 32px; height: 32px; min-width: 32px;
+    border-radius: 50%;
+    background: var(--orange);
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-content h4 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.35rem;
+  }
+  .step-content p {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+  .step-content .code-block {
+    background: #2C2218;
+    color: #F4D9B0;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-family: monospace;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    line-height: 1.6;
+    overflow-x: auto;
+  }
+  .step-content .tip-box {
+    background: var(--teal-light);
+    border-left: 4px solid var(--teal);
+    padding: 0.6rem 0.9rem;
+    border-radius: 0 8px 8px 0;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #1A5E55;
+    font-weight: 600;
+  }
+  .step-content .parent-note {
+    background: var(--gold-light);
+    border-left: 4px solid var(--gold);
+    padding: 0.6rem 0.9rem;
+    border-radius: 0 8px 8px 0;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #5A3A10;
+    font-weight: 600;
+  }
+
+  /* Challenge box */
+  .challenge-box {
+    background: linear-gradient(135deg, #FEF0E4 0%, #FDF3DC 100%);
+    border: 2px solid var(--orange);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  .challenge-box h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3rem;
+    color: var(--orange-dark);
+    margin-bottom: 0.5rem;
+  }
+  .challenge-box p {
+    font-size: 0.92rem;
+    color: #5A3A10;
+    line-height: 1.65;
+  }
+
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="back-link">&#8592; Home Base</a>
+    <div class="header-text">
+      <h1>&#x1F995; Brachiosaurus Survival Gym</h1>
+      <p>Computer Science &amp; Computational Thinking &middot; Scratch</p>
+    </div>
+  </div>
+</header>
+<div class="pokeball-stripe"></div>
+
+<main>
+
+  <!-- Progress Tracker -->
+  <div class="progress-card">
+    <div class="progress-title">&#x1F4CA; Quest Progress Tracker</div>
+    <div class="trail-row">
+      <label>Trail 1</label>
+      <div class="step-btns" id="trail1-btns"></div>
+    </div>
+    <div class="trail-row">
+      <label>Trail 2</label>
+      <div class="step-btns" id="trail2-btns"></div>
+    </div>
+    <div class="trail-row">
+      <label>Challenge</label>
+      <div class="step-btns" id="challenge-btns"></div>
+    </div>
+    <button class="save-btn" onclick="saveProgress()">&#x1F4BE; Save My Progress</button>
+    <div class="save-confirm" id="save-confirm">&#x2714; Progress saved!</div>
+  </div>
+
+  <!-- Trail 1 -->
+  <div class="section-title">Trail 1 &mdash; Food Finder</div>
+
+  <div class="trail-block" id="t1">
+    <div class="trail-header" onclick="toggleTrail('t1')">
+      <div>
+        <div class="trail-header-title">&#x1F33F; Adding Food to the Map</div>
+        <div class="trail-header-sub">3 steps &mdash; Tap a step number in the tracker above when you finish it</div>
+      </div>
+      <span class="chevron">&#x25BE;</span>
+    </div>
+    <div class="trail-body">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Place a Food Sprite on the Stage</h4>
+          <p>In Scratch, click the cat sprite icon at the bottom right and choose a sprite. Something plant-like works well — fern, leaf, or a tree. Place it somewhere on the stage. This will be your Brachio's first food source.</p>
+          <div class="tip-box">&#x1F4A1; Try the sprite library search for "plant" or "tree" — there are some great prehistoric-looking options!</div>
+          <div class="parent-note">&#x1F9D1; Parent note: The sprite library button looks like a cat face with a + sign. Click it, then search. Drag the sprite to where you want it on the stage.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Make the Brachio Check for Food</h4>
+          <p>We need the Brachio to know when it's touching food. Click on the <strong>Brachiosaurus sprite</strong>, then go into its scripts. Add this logic inside your main game loop:</p>
+          <div class="code-block">
+if &lt;touching [Food Sprite v]?&gt; then<br>
+&nbsp;&nbsp;change [Hunger v] by (10)<br>
+&nbsp;&nbsp;play sound [Chomp v]<br>
+end
+          </div>
+          <div class="tip-box">&#x1F4A1; Replace "Food Sprite" with the actual name of your food sprite. You can see its name below it on the stage.</div>
+          <div class="parent-note">&#x1F9D1; Parent note: "touching" is in the Sensing blocks (light blue). "change Hunger by" uses the variable you already set up. If there's no chomp sound yet, skip that line for now.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Test It!</h4>
+          <p>Click the green flag and walk your Brachio over to the food. Does the hunger bar go up? If yes — Trail 1, Step 3 complete! If not, check that your variable name matches exactly (capitals matter in Scratch).</p>
+          <div class="tip-box">&#x1F4A1; Debug tip: temporarily put a "say Hunger" block inside the if-block so you can see the number changing on screen while you test.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Trail 2 -->
+  <div class="section-title">Trail 2 &mdash; Water &amp; Wading</div>
+
+  <div class="trail-block collapsed" id="t2">
+    <div class="trail-header" onclick="toggleTrail('t2')">
+      <div>
+        <div class="trail-header-title">&#x1F4A7; Adding Water Sources</div>
+        <div class="trail-header-sub">3 steps &mdash; Unlocked after Trail 1</div>
+      </div>
+      <span class="chevron">&#x25BE;</span>
+    </div>
+    <div class="trail-body">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Add a Water Area to the Backdrop</h4>
+          <p>Click on the Stage (bottom right, the landscape icon). Click "Backdrops" at the top. Use the paint tools to draw a blue area on your backdrop — this is the lake or river your Brachio can drink from.</p>
+          <div class="tip-box">&#x1F4A1; Draw a wide, irregular blue shape — it looks more natural than a perfect rectangle. The fill tool (paint bucket) makes it fast.</div>
+          <div class="parent-note">&#x1F9D1; Parent note: Make the water area a distinct blue color you don't use anywhere else on the backdrop — this lets us use "touching color" sensing to detect it.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Detect When Brachio Touches Water</h4>
+          <p>Click back on the Brachiosaurus sprite. Add this to the main game loop alongside the food check:</p>
+          <div class="code-block">
+if &lt;touching color [#0066FF]?&gt; then<br>
+&nbsp;&nbsp;change [Thirst v] by (10)<br>
+end
+          </div>
+          <div class="tip-box">&#x1F4A1; The color in the block needs to match your water color exactly. Click the color circle in the block, then use the eyedropper to pick the color right off your backdrop.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Test the Water System</h4>
+          <p>Run the game and walk your Brachio into the water area. Does the thirst bar go up? Once it works, you've completed Trail 2!</p>
+          <div class="tip-box">&#x1F4A1; Think about: should the thirst go up faster or slower than hunger? You can change the number (10) to tune the feel of the game.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Main Challenge -->
+  <div class="section-title">Main Challenge &mdash; Boss Round</div>
+
+  <div class="challenge-box">
+    <h3>&#x1F534; Survival Challenge: Add a Predator</h3>
+    <p>Your Brachio can eat and drink — now it needs something to <em>avoid</em>. Design a predator enemy (a Carnotaurus? An Allosaurus?) that moves around the map. If the Brachio touches it, the energy bar goes down. You decide how fast it moves, how it behaves, and how the player can escape. This is your design choice — there's no single right answer.</p>
+  </div>
+
+</main>
+
+<footer>&#x1F995; Brachiosaurus Survival Gym &mdash; Pokémon Scarlet Academy</footer>
+
+<script>
+  const STEPS = { trail1: 3, trail2: 3, challenge: 1 };
+  let progress = { trail1: 0, trail2: 0, challenge: 0 };
+
+  function loadProgress() {
+    try {
+      const raw = localStorage.getItem('progress_scratch');
+      if (raw) {
+        const saved = JSON.parse(raw);
+        progress.trail1 = saved.trail1 || 0;
+        progress.trail2 = saved.trail2 || 0;
+        progress.challenge = saved.challenge || 0;
+      }
+    } catch(e) {}
+    renderButtons();
+  }
+
+  function renderButtons() {
+    renderTrail('trail1-btns', 'trail1', STEPS.trail1);
+    renderTrail('trail2-btns', 'trail2', STEPS.trail2);
+    renderTrail('challenge-btns', 'challenge', STEPS.challenge);
+  }
+
+  function renderTrail(containerId, key, count) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+    for (let i = 1; i <= count; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'step-btn';
+      btn.textContent = i;
+      if (i < progress[key]) btn.classList.add('done');
+      if (i === progress[key]) btn.classList.add('active');
+      btn.onclick = () => setStep(key, i);
+      container.appendChild(btn);
+    }
+  }
+
+  function setStep(key, step) {
+    progress[key] = (progress[key] === step) ? step - 1 : step;
+    renderButtons();
+  }
+
+  function saveProgress() {
+    const total = STEPS.trail1 + STEPS.trail2 + STEPS.challenge;
+    const done = progress.trail1 + progress.trail2 + progress.challenge;
+    const percent = Math.round((done / total) * 100);
+
+    let trail = 'Trail 1';
+    let stepNum = progress.trail1;
+    if (progress.trail1 >= STEPS.trail1 && progress.trail2 > 0) { trail = 'Trail 2'; stepNum = progress.trail2; }
+    if (progress.trail2 >= STEPS.trail2) { trail = 'Challenge'; stepNum = progress.challenge; }
+
+    const summary = done === 0 ? 'Not started yet'
+      : done >= total ? 'Gym Complete! ⭐'
+      : trail + ', Step ' + stepNum;
+
+    const data = { trail1: progress.trail1, trail2: progress.trail2, challenge: progress.challenge, percent, summary };
+    localStorage.setItem('progress_scratch', JSON.stringify(data));
+
+    const confirm = document.getElementById('save-confirm');
+    confirm.style.display = 'block';
+    setTimeout(() => confirm.style.display = 'none', 3000);
+  }
+
+  function toggleTrail(id) {
+    document.getElementById(id).classList.toggle('collapsed');
+  }
+
+  loadProgress();
+</script>
+
+</body>
+</html>
