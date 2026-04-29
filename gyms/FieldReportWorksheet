@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Archen's Field Report Gym — Worksheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1C1208;
+    --parchment: #F5EDD8;
+    --parchment-dark: #EAD9BB;
+    --parchment-mid: #F0E4C8;
+    --amber: #8B5E1A;
+    --amber-light: #C28A30;
+    --teal: #2A6B5E;
+    --rust: #8B3A1A;
+    --rule: #C8A86A;
+    --faint: #D4B896;
+    --guide-bg: #EDE0C4;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+font-family: ‘Crimson Pro’, Georgia, serif;
+background: var(–parchment-dark);
+color: var(–ink);
+min-height: 100vh;
+background-image:
+url(“data:image/svg+xml,%3Csvg width=‘200’ height=‘200’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3CfeColorMatrix type=‘saturate’ values=‘0’/%3E%3C/filter%3E%3Crect width=‘200’ height=‘200’ filter=‘url(%23n)’ opacity=‘0.04’/%3E%3C/svg%3E”);
+}
+
+@media print {
+body { background: white; }
+.no-print { display: none !important; }
+.page-break { page-break-before: always; }
+.sheet { box-shadow: none !important; border: 1px solid #ccc !important; margin: 0 !important; border-radius: 0 !important; }
+textarea { border: none !important; background: transparent !important; resize: none !important; }
+.write-line { border-bottom: 1px solid #999 !important; }
+}
+
+.page-wrap {
+max-width: 760px;
+margin: 0 auto;
+padding: 24px 16px 60px;
+}
+
+/* TOP TOOLBAR */
+.toolbar {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 24px;
+flex-wrap: wrap;
+gap: 10px;
+}
+
+.toolbar-title {
+font-family: ‘Cinzel’, serif;
+font-size: 13px;
+color: var(–amber);
+letter-spacing: 1.5px;
+text-transform: uppercase;
+}
+
+.btn {
+font-family: ‘Cinzel’, serif;
+font-size: 11px;
+padding: 8px 18px;
+border: 2px solid var(–amber);
+border-radius: 4px;
+cursor: pointer;
+letter-spacing: 1px;
+transition: all 0.2s;
+text-transform: uppercase;
+}
+
+.btn-print {
+background: var(–amber);
+color: var(–parchment);
+}
+.btn-print:hover { background: var(–amber-light); border-color: var(–amber-light); }
+
+.btn-clear {
+background: transparent;
+color: var(–rust);
+border-color: var(–rust);
+}
+.btn-clear:hover { background: var(–rust); color: var(–parchment); }
+
+/* DOCUMENT SHEET */
+.sheet {
+background: var(–parchment);
+border-radius: 6px;
+box-shadow: 0 4px 24px rgba(0,0,0,0.18), inset 0 0 60px rgba(200,168,106,0.08);
+margin-bottom: 32px;
+overflow: hidden;
+position: relative;
+}
+
+/* Left binding strip */
+.sheet::before {
+content: ‘’;
+position: absolute;
+left: 0;
+top: 0;
+bottom: 0;
+width: 6px;
+background: linear-gradient(180deg, var(–rust) 0%, var(–amber) 50%, var(–rust) 100%);
+opacity: 0.7;
+}
+
+.sheet-inner {
+padding: 36px 40px 40px 46px;
+}
+
+/* SECTION HEADER */
+.section-header {
+display: flex;
+align-items: flex-start;
+gap: 16px;
+margin-bottom: 28px;
+padding-bottom: 16px;
+border-bottom: 2px solid var(–rule);
+position: relative;
+}
+
+.section-icon {
+font-size: 44px;
+line-height: 1;
+flex-shrink: 0;
+margin-top: 2px;
+}
+
+.section-header-text {}
+
+.section-eyebrow {
+font-family: ‘Cinzel’, serif;
+font-size: 9px;
+letter-spacing: 3px;
+color: var(–teal);
+text-transform: uppercase;
+margin-bottom: 4px;
+}
+
+.section-title {
+font-family: ‘Cinzel’, serif;
+font-size: 22px;
+color: var(–ink);
+font-weight: 700;
+line-height: 1.2;
+margin-bottom: 6px;
+}
+
+.section-subtitle {
+font-size: 14px;
+color: var(–amber);
+font-style: italic;
+}
+
+/* ARCHEN PROMPT BOX */
+.archen-prompt {
+background: var(–guide-bg);
+border-left: 3px solid var(–teal);
+border-radius: 0 6px 6px 0;
+padding: 12px 16px;
+margin-bottom: 24px;
+display: flex;
+gap: 10px;
+align-items: flex-start;
+}
+
+.archen-prompt-icon { font-size: 22px; flex-shrink: 0; }
+.archen-prompt-text { font-size: 14px; line-height: 1.65; color: #3A2810; font-style: italic; }
+.archen-prompt-text strong { font-style: normal; color: var(–teal); font-weight: 600; }
+
+/* FIELD BLOCKS */
+.field-block {
+margin-bottom: 24px;
+}
+
+.field-label {
+font-family: ‘Cinzel’, serif;
+font-size: 11px;
+letter-spacing: 2px;
+color: var(–amber);
+text-transform: uppercase;
+margin-bottom: 6px;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.field-label::after {
+content: ‘’;
+flex: 1;
+height: 1px;
+background: var(–faint);
+}
+
+.field-hint {
+font-size: 12.5px;
+color: #8B7355;
+font-style: italic;
+margin-bottom: 8px;
+line-height: 1.5;
+}
+
+textarea {
+width: 100%;
+background: rgba(255,255,255,0.5);
+border: 1px solid var(–faint);
+border-radius: 4px;
+padding: 10px 12px;
+font-family: ‘Crimson Pro’, Georgia, serif;
+font-size: 16px;
+color: var(–ink);
+line-height: 1.8;
+resize: vertical;
+min-height: 70px;
+outline: none;
+transition: border-color 0.2s, background 0.2s;
+}
+
+textarea:focus {
+border-color: var(–teal);
+background: rgba(255,255,255,0.8);
+}
+
+textarea::placeholder {
+color: var(–faint);
+font-style: italic;
+}
+
+textarea.tall { min-height: 110px; }
+textarea.short { min-height: 54px; }
+
+/* CONNECTOR BOX */
+.connector-box {
+background: rgba(42,107,94,0.08);
+border: 1px solid rgba(42,107,94,0.2);
+border-radius: 6px;
+padding: 12px 16px;
+margin-bottom: 20px;
+}
+
+.connector-label {
+font-family: ‘Cinzel’, serif;
+font-size: 9px;
+letter-spacing: 2px;
+color: var(–teal);
+text-transform: uppercase;
+margin-bottom: 10px;
+}
+
+.connector-chips {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+}
+
+.connector-chip {
+background: rgba(42,107,94,0.12);
+border: 1px solid rgba(42,107,94,0.3);
+border-radius: 20px;
+padding: 4px 14px;
+font-size: 13px;
+color: var(–teal);
+font-style: italic;
+cursor: pointer;
+transition: background 0.15s;
+user-select: none;
+}
+
+.connector-chip:hover { background: rgba(42,107,94,0.25); }
+.connector-chip.used { background: var(–teal); color: var(–parchment); border-color: var(–teal); }
+
+.chip-note {
+font-size: 11.5px;
+color: #8B7355;
+font-style: italic;
+margin-top: 8px;
+}
+
+/* DIVIDER */
+.ornament-divider {
+text-align: center;
+color: var(–rule);
+font-size: 18px;
+letter-spacing: 12px;
+margin: 10px 0 24px;
+opacity: 0.6;
+}
+
+/* SUMMARY BOX — the 3-sentence assembly */
+.summary-preview {
+background: rgba(139,94,26,0.06);
+border: 1px dashed var(–rule);
+border-radius: 6px;
+padding: 16px 20px;
+margin-top: 6px;
+}
+
+.summary-preview-label {
+font-family: ‘Cinzel’, serif;
+font-size: 9px;
+letter-spacing: 2px;
+color: var(–amber);
+text-transform: uppercase;
+margin-bottom: 10px;
+}
+
+.summary-line {
+font-size: 15px;
+line-height: 1.8;
+color: var(–ink);
+margin-bottom: 6px;
+min-height: 28px;
+font-style: italic;
+}
+
+.summary-line span.tag {
+font-style: normal;
+font-family: ‘Cinzel’, serif;
+font-size: 9px;
+letter-spacing: 1px;
+color: var(–amber);
+margin-right: 8px;
+vertical-align: middle;
+}
+
+.summary-line span.content {
+color: var(–ink);
+}
+
+/* MAIN CHALLENGE ADDITIONS */
+.report-section {
+margin-bottom: 28px;
+}
+
+.report-section-title {
+font-family: ‘Cinzel’, serif;
+font-size: 13px;
+color: var(–rust);
+font-weight: 600;
+letter-spacing: 1px;
+margin-bottom: 4px;
+padding-bottom: 6px;
+border-bottom: 1px solid var(–faint);
+}
+
+.report-number {
+display: inline-block;
+background: var(–rust);
+color: var(–parchment);
+font-family: ‘Cinzel’, serif;
+font-size: 10px;
+padding: 2px 8px;
+border-radius: 2px;
+margin-right: 8px;
+letter-spacing: 1px;
+}
+
+/* BADGE STRIP */
+.badge-strip {
+margin-top: 32px;
+padding-top: 20px;
+border-top: 2px solid var(–rule);
+text-align: center;
+}
+
+.badge-strip-label {
+font-family: ‘Cinzel’, serif;
+font-size: 10px;
+letter-spacing: 3px;
+color: var(–faint);
+text-transform: uppercase;
+margin-bottom: 8px;
+}
+
+.badge-checkbox-row {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 16px;
+}
+
+.badge-checkbox {
+width: 20px;
+height: 20px;
+border: 2px solid var(–rule);
+border-radius: 3px;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 14px;
+transition: all 0.15s;
+user-select: none;
+background: transparent;
+}
+
+.badge-checkbox.checked {
+background: var(–teal);
+border-color: var(–teal);
+color: white;
+}
+
+.badge-checkbox-label {
+font-size: 13px;
+color: #8B7355;
+font-style: italic;
+}
+
+/* PAGE BREAK LABEL */
+.page-break-label {
+font-family: ‘Cinzel’, serif;
+font-size: 10px;
+letter-spacing: 3px;
+color: var(–faint);
+text-align: center;
+margin: 8px 0 24px;
+text-transform: uppercase;
+opacity: 0.5;
+}
+</style>
+
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- TOOLBAR -->
+
+  <div class="toolbar no-print">
+    <div class="toolbar-title">🦅 Archen's Field Report Gym — Worksheet</div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-clear" onclick="clearAll()">Clear All</button>
+      <button class="btn btn-print" onclick="window.print()">🖨 Print / Save PDF</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- SHEET 1: TRAIL 2                            -->
+
+  <!-- ═══════════════════════════════════════════ -->
+
+  <div class="sheet">
+    <div class="sheet-inner">
+
+```
+  <div class="section-header">
+    <div class="section-icon">📜</div>
+    <div class="section-header-text">
+      <div class="section-eyebrow">Archen's Field Report Gym · Trail 2</div>
+      <div class="section-title">The Claim + Evidence Move</div>
+      <div class="section-subtitle">Learning to write like a scientist</div>
+    </div>
+  </div>
+
+  <div class="archen-prompt">
+    <span class="archen-prompt-icon">🦅</span>
+    <div class="archen-prompt-text">
+      <strong>Archen says:</strong> "Here's the one writing move that makes scientists sound like scientists — you make a CLAIM, then you back it up with EVIDENCE. You already have your observations from Trail 1. Now let's build on top of them."
+    </div>
+  </div>
+
+  <!-- STEP 1: Pick best observation -->
+  <div class="field-block">
+    <div class="field-label">Step 1 — Your Best Observation</div>
+    <div class="field-hint">Look at your Trail 1 notes. Which observation is the most interesting or unusual? Write it here — this becomes your Evidence.</div>
+    <textarea id="t2-observation" class="tall" placeholder="e.g. The surface near the edge is rougher and a different shade than the center — almost darker, with small pits…"></textarea>
+  </div>
+
+  <div class="ornament-divider">· · ·</div>
+
+  <!-- STEP 2: CLAIM -->
+  <div class="field-block">
+    <div class="field-label">Step 2 — Your Claim</div>
+    <div class="field-hint">Write ONE sentence that states something you believe to be true about this fossil — based on what you actually observed. Your best guess counts. Scientists call this a hypothesis.</div>
+    <textarea id="t2-claim" class="tall" placeholder="e.g. This fossil likely came from a younger animal because the bone surface appears less dense than adult specimens I've seen at Burpee…"></textarea>
+  </div>
+
+  <div class="ornament-divider">· · ·</div>
+
+  <!-- STEP 3: REASONING -->
+  <div class="field-block">
+    <div class="field-label">Step 3 — Your Reasoning</div>
+    <div class="field-hint">Write ONE sentence connecting your claim to your observation. Use one of the connector phrases below to get started.</div>
+
+    <div class="connector-box">
+      <div class="connector-label">Connector Phrases — tap to copy into your reasoning:</div>
+      <div class="connector-chips">
+        <span class="connector-chip" onclick="copyConnector(this, 'This suggests that ')">This suggests that…</span>
+        <span class="connector-chip" onclick="copyConnector(this, 'This is consistent with ')">This is consistent with…</span>
+        <span class="connector-chip" onclick="copyConnector(this, 'One explanation might be ')">One explanation might be…</span>
+        <span class="connector-chip" onclick="copyConnector(this, 'Based on this observation, ')">Based on this observation…</span>
+        <span class="connector-chip" onclick="copyConnector(this, 'This pattern could indicate ')">This pattern could indicate…</span>
+      </div>
+      <div class="chip-note">Tap a phrase to highlight it, then type it yourself to start your sentence.</div>
+    </div>
+
+    <textarea id="t2-reasoning" class="tall" placeholder="e.g. This suggests that the specimen may have been buried in sediment with lower mineral content on one side, causing uneven preservation…"></textarea>
+  </div>
+
+  <div class="ornament-divider">· · ·</div>
+
+  <!-- ASSEMBLED 3-SENTENCE FIELD NOTE -->
+  <div class="field-block">
+    <div class="field-label">Your 3-Sentence Field Note</div>
+    <div class="field-hint">Here's what you've built. A real scientific field note — observation, claim, reasoning. Read it back to yourself.</div>
+
+    <div class="summary-preview">
+      <div class="summary-preview-label">Scientific Field Note</div>
+      <div class="summary-line"><span class="tag">OBSERVATION</span><span class="content" id="preview-obs">—</span></div>
+      <div class="summary-line"><span class="tag">CLAIM</span><span class="content" id="preview-claim">—</span></div>
+      <div class="summary-line"><span class="tag">REASONING</span><span class="content" id="preview-reasoning">—</span></div>
+    </div>
+  </div>
+
+  <div class="badge-strip">
+    <div class="badge-strip-label">Trail 2 Complete?</div>
+    <div class="badge-checkbox-row">
+      <div class="badge-checkbox" id="t2-check" onclick="toggleCheck('t2-check')"></div>
+      <span class="badge-checkbox-label">I have an observation, a claim, and a reasoning sentence.</span>
+    </div>
+  </div>
+
+</div>
+```
+
+  </div>
+
+  <div class="page-break-label no-print">— Main Challenge begins on next page when printed —</div>
+
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- SHEET 2: MAIN CHALLENGE                     -->
+
+  <!-- ═══════════════════════════════════════════ -->
+
+  <div class="sheet page-break">
+    <div class="sheet-inner">
+
+```
+  <div class="section-header">
+    <div class="section-icon">⭐</div>
+    <div class="section-header-text">
+      <div class="section-eyebrow">Archen's Field Report Gym · Main Challenge</div>
+      <div class="section-title">The Burpee Field Report</div>
+      <div class="section-subtitle">Official portfolio document — goes in your Fossil Lab record</div>
+    </div>
+  </div>
+
+  <div class="archen-prompt">
+    <span class="archen-prompt-icon">🦅</span>
+    <div class="archen-prompt-text">
+      <strong>Archen says:</strong> "Real paleontologists write a Field Report after every lab session. It's not a school essay — it's a scientific record. Yours will go into your Fossil Lab portfolio. Pick a Burpee visit — recent or one you remember well — and let's document it properly."
+    </div>
+  </div>
+
+  <!-- REPORT TITLE -->
+  <div class="field-block">
+    <div class="field-label">Report Title</div>
+    <div class="field-hint">Give your report a title the way scientists do — include the specimen and what you observed. Example: <em>"Observations on Specimen BM-14: Possible Ceratopsid Bone Fragment"</em></div>
+    <textarea id="mc-title" class="short" placeholder="Observations on Specimen ___: …"></textarea>
+  </div>
+
+  <div class="ornament-divider">· · ·</div>
+
+  <!-- SECTION 1: LOCATION & DATE -->
+  <div class="report-section">
+    <div class="report-section-title"><span class="report-number">01</span> Location &amp; Date</div>
+    <div class="field-hint" style="margin: 8px 0;">Where were you, when, and what was your role that session?</div>
+    <textarea id="mc-location" class="tall" placeholder="e.g. Burpee Museum of Natural History, Rockford IL — fossil preparation lab. Visit on [date]. I was cleaning specimens and assisting with [task]…"></textarea>
+  </div>
+
+  <!-- SECTION 2: WHAT I WORKED ON -->
+  <div class="report-section">
+    <div class="report-section-title"><span class="report-number">02</span> What I Worked On</div>
+    <div class="field-hint" style="margin: 8px 0;">What fossil, what tools, what techniques did you use?</div>
+    <textarea id="mc-worked" class="tall" placeholder="e.g. I worked on a partial bone fragment from the Utah dig site. I used a pneumatic air scribe and fine brushes to remove matrix from around the specimen…"></textarea>
+  </div>
+
+  <!-- SECTION 3: WHAT I OBSERVED -->
+  <div class="report-section">
+    <div class="report-section-title"><span class="report-number">03</span> What I Observed</div>
+    <div class="field-hint" style="margin: 8px 0;">Your Trail 1 observations, expanded. What did you notice? Be specific — texture, color, shape, anything unusual.</div>
+    <textarea id="mc-observed" class="tall" placeholder="e.g. The specimen had an unusual density pattern — the outer cortical layer appeared more mineralized than the interior spongy bone. There were also faint striations running parallel to the long axis…"></textarea>
+  </div>
+
+  <!-- SECTION 4: CLAIM + EVIDENCE (from Trail 2) -->
+  <div class="report-section">
+    <div class="report-section-title"><span class="report-number">04</span> Scientific Observation — Claim + Evidence</div>
+    <div class="field-hint" style="margin: 8px 0;">Include your Trail 2 work here — your observation, claim, and reasoning sentence. You can copy them from the first sheet, or revise them now that you've written more context.</div>
+    <textarea id="mc-claim-evidence" class="tall" placeholder="Observation: …&#10;Claim: …&#10;Reasoning: …"></textarea>
+  </div>
+
+  <!-- SECTION 5: WHAT I'M WONDERING -->
+  <div class="report-section">
+    <div class="report-section-title"><span class="report-number">05</span> What I'm Wondering</div>
+    <div class="field-hint" style="margin: 8px 0;">Your question from Trail 1, plus any hypothesis. Real scientists always end with the next question.</div>
+    <textarea id="mc-wondering" class="tall" placeholder="e.g. I noticed the preservation was uneven — I'm wondering whether that reflects different burial conditions or whether part of the bone was already eroding before fossilization. My hypothesis is…"></textarea>
+  </div>
+
+  <div class="ornament-divider">· · · ✦ · · ·</div>
+
+  <!-- SIGNATURE / DATE LINE -->
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+    <div class="field-block" style="margin-bottom:0">
+      <div class="field-label">Reported By</div>
+      <textarea id="mc-reporter" class="short" placeholder="Cole"></textarea>
+    </div>
+    <div class="field-block" style="margin-bottom:0">
+      <div class="field-label">Date of Visit</div>
+      <textarea id="mc-date" class="short" placeholder="e.g. April 2026"></textarea>
+    </div>
+  </div>
+
+  <div class="badge-strip">
+    <div class="badge-strip-label">🏅 Taphonomy Badge Unlocked?</div>
+    <div class="badge-checkbox-row">
+      <div class="badge-checkbox" id="mc-check" onclick="toggleCheck('mc-check')"></div>
+      <span class="badge-checkbox-label">My Field Report has all 5 sections and a Claim + Evidence sentence.</span>
+    </div>
+  </div>
+
+</div>
+```
+
+  </div>
+
+</div>
+
+<script>
+  // Live preview for Trail 2 summary
+  function updatePreview() {
+    const obs = document.getElementById('t2-observation').value.trim();
+    const claim = document.getElementById('t2-claim').value.trim();
+    const reason = document.getElementById('t2-reasoning').value.trim();
+
+    document.getElementById('preview-obs').textContent = obs || '—';
+    document.getElementById('preview-claim').textContent = claim || '—';
+    document.getElementById('preview-reasoning').textContent = reason || '—';
+  }
+
+  ['t2-observation', 't2-claim', 't2-reasoning'].forEach(id => {
+    document.getElementById(id).addEventListener('input', updatePreview);
+  });
+
+  // Toggle connector chip highlight
+  function copyConnector(el, text) {
+    document.querySelectorAll('.connector-chip').forEach(c => c.classList.remove('used'));
+    el.classList.add('used');
+  }
+
+  // Toggle checkboxes
+  function toggleCheck(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('checked');
+    el.textContent = el.classList.contains('checked') ? '✓' : '';
+  }
+
+  // Clear all fields
+  function clearAll() {
+    if (!confirm('Clear all fields on this worksheet?')) return;
+    document.querySelectorAll('textarea').forEach(t => t.value = '');
+    document.querySelectorAll('.badge-checkbox').forEach(c => {
+      c.classList.remove('checked');
+      c.textContent = '';
+    });
+    document.querySelectorAll('.connector-chip').forEach(c => c.classList.remove('used'));
+    updatePreview();
+  }
+</script>
+
+</body>
+</html>
