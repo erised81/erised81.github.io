@@ -4,12 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pokémon Scarlet Academy</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
     --red: #C93B3B;
     --red-dark: #A02C2C;
-    --red-light: #F5E0E0;
     --gold: #E8A020;
     --gold-light: #FDF3DC;
     --teal: #2A9D8F;
@@ -33,6 +32,7 @@
     padding-bottom: 3rem;
   }
 
+  /* ── Header ── */
   header {
     background: var(--red);
     color: white;
@@ -42,7 +42,6 @@
     position: relative;
     overflow: hidden;
   }
-
   header::before {
     content: '';
     position: absolute;
@@ -51,37 +50,17 @@
     background: rgba(255,255,255,0.06);
     border-radius: 50%;
   }
-
   header h1 {
     font-family: 'Fredoka One', cursive;
     font-size: 2.2rem;
     letter-spacing: 1px;
     text-shadow: 2px 3px 0 rgba(0,0,0,0.2);
   }
-
   header p {
     margin-top: 0.4rem;
     font-size: 1rem;
     opacity: 0.9;
     font-weight: 600;
-  }
-
-  .schedule-link {
-    display: inline-block;
-    margin-top: 1rem;
-    background: rgba(255,255,255,0.15);
-    border: 2px solid rgba(255,255,255,0.5);
-    color: white;
-    font-family: 'Fredoka One', cursive;
-    font-size: 1rem;
-    padding: 0.45rem 1.2rem;
-    border-radius: 30px;
-    text-decoration: none;
-    transition: background 0.15s;
-  }
-
-  .schedule-link:hover {
-    background: rgba(255,255,255,0.28);
   }
 
   .pokeball-stripe {
@@ -90,22 +69,113 @@
     background-size: 24px 8px;
   }
 
+  /* ── Layout ── */
   main {
-    max-width: 860px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 2rem 1.25rem;
+  }
+
+  .section-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--border);
   }
 
   .section-title {
     font-family: 'Fredoka One', cursive;
     font-size: 1.3rem;
     color: var(--text);
-    margin-bottom: 1rem;
-    padding-bottom: 0.4rem;
-    border-bottom: 2px solid var(--border);
   }
 
-  /* Gym cards */
+  /* ── Print button ── */
+  .print-btn {
+    background: var(--text);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 5px 14px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .print-btn:hover { opacity: 0.75; }
+
+  /* ── Schedule grid ── */
+  .sched-wrap {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+
+  .sched-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border-top: 1.5px solid var(--border);
+  }
+
+  .day-col {
+    border-right: 1.5px solid var(--border);
+    display: flex;
+    flex-direction: column;
+  }
+  .day-col:last-child { border-right: none; }
+
+  .day-header {
+    background: var(--text);
+    color: white;
+    text-align: center;
+    font-weight: 900;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 4px;
+  }
+
+  .items-list {
+    padding: 10px 10px 14px;
+    flex: 1;
+    min-height: 180px;
+  }
+
+  .item-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    margin-bottom: 8px;
+  }
+  .item-row input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: var(--teal);
+  }
+  .item-text {
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--text);
+    flex: 1;
+    word-break: break-word;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .item-row.done .item-text {
+    text-decoration: line-through;
+    opacity: 0.38;
+  }
+
+  /* ── Gym cards ── */
   .gym-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -126,52 +196,43 @@
     text-decoration: none;
     color: inherit;
   }
-
   a.gym-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 24px rgba(0,0,0,0.12);
   }
 
-  .gym-card .gym-icon {
-    font-size: 1.8rem;
-    line-height: 1;
-  }
-
-  .gym-card .gym-name {
+  .gym-icon { font-size: 1.8rem; line-height: 1; }
+  .gym-name {
     font-family: 'Fredoka One', cursive;
     font-size: 1.1rem;
     color: var(--text);
   }
-
-  .gym-card .gym-subject {
+  .gym-subject {
     font-size: 0.8rem;
     font-weight: 700;
     color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
-
-  .gym-card .progress-bar-wrap {
+  .progress-bar-wrap {
     background: var(--border);
     border-radius: 20px;
     height: 8px;
     overflow: hidden;
   }
-
-  .gym-card .progress-bar-fill {
+  .progress-bar-fill {
     height: 100%;
     border-radius: 20px;
     background: var(--teal);
     transition: width 0.4s;
   }
-
-  .gym-card .progress-label {
+  .progress-label {
     font-size: 0.75rem;
     color: var(--muted);
     font-weight: 600;
   }
 
-  .gym-card .badge {
+  .badge {
     display: inline-block;
     font-size: 0.72rem;
     font-weight: 700;
@@ -179,47 +240,127 @@
     border-radius: 20px;
     align-self: flex-start;
   }
+  .badge-active { background: var(--teal-light); color: var(--teal); }
+  .badge-coming { background: var(--gold-light); color: var(--gold); }
+  .badge-done   { background: #EEF5E8; color: #4A8C22; }
 
-  .badge-active  { background: var(--teal-light); color: var(--teal); }
-  .badge-coming  { background: var(--gold-light); color: var(--gold); }
-  .badge-done    { background: #EEF5E8; color: #4A8C22; }
+  .gym-scratch  { border-top: 4px solid #F4781F; }
+  .gym-paleo    { border-top: 4px solid #8B5E3C; }
+  .gym-science  { border-top: 4px solid var(--teal); }
+  .gym-math     { border-top: 4px solid #E8A020; }
+  .gym-writing  { border-top: 4px solid #7C5CBF; }
+  .gym-research { border-top: 4px solid #2A82C9; }
 
-  /* Colors per gym type */
-  .gym-scratch { border-top: 4px solid #F4781F; }
-  .gym-paleo   { border-top: 4px solid #8B5E3C; }
-  .gym-science { border-top: 4px solid var(--teal); }
-  .gym-math    { border-top: 4px solid #E8A020; }
-  .gym-writing { border-top: 4px solid #7C5CBF; }
-  .gym-research{ border-top: 4px solid #2A82C9; }
-
-  /* Trainer notes section */
-  .notes-box {
-    background: var(--gold-light);
-    border: 1.5px solid #E8C070;
-    border-radius: var(--radius);
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 2rem;
+  /* Track progress button inside gym card */
+  .track-btn {
+    margin-top: 0.2rem;
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--muted);
+    padding: 4px 12px;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: border-color 0.15s, color 0.15s;
   }
+  .track-btn:hover { border-color: var(--teal); color: var(--teal); }
 
-  .notes-box h3 {
+  /* ── Progress modal ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    background: white;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    max-width: 360px;
+    width: 92%;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+  }
+  .modal-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.1rem;
+  }
+  .modal-gym-name {
     font-family: 'Fredoka One', cursive;
     font-size: 1.1rem;
-    color: #7A5010;
-    margin-bottom: 0.5rem;
+    color: var(--text);
   }
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: var(--muted);
+    padding: 2px 6px;
+  }
+  .modal-close:hover { color: var(--text); }
 
-  .notes-box p {
+  .milestone-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
     font-size: 0.9rem;
-    color: #5A3A10;
-    line-height: 1.7;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .milestone-row:last-child { border-bottom: none; }
+  .milestone-row input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    accent-color: var(--teal);
+    cursor: pointer;
+  }
+  .milestone-row.done-row { color: var(--muted); text-decoration: line-through; }
+
+  .modal-progress-summary {
+    margin-top: 1rem;
+    padding-top: 0.8rem;
+    border-top: 2px solid var(--border);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-align: center;
   }
 
-  /* Footer */
+  /* ── Footer ── */
   footer {
     text-align: center;
     padding: 1.5rem;
     color: var(--muted);
     font-size: 0.82rem;
+  }
+
+  /* ── Print styles ── */
+  @media print {
+    body * { visibility: hidden; }
+    .print-zone, .print-zone * { visibility: visible; }
+    .print-zone {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      padding: 20px;
+    }
+    .print-btn { display: none; }
+    .sched-wrap { box-shadow: none; border: 1px solid #ccc; }
+    .day-header { background: #333 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 </style>
 </head>
@@ -228,20 +369,26 @@
 <header>
   <h1>&#x1F3AE; Pokémon Scarlet Academy</h1>
   <p>Cole's Learning Headquarters</p>
-  <a href="schedules/schedule.html" class="schedule-link">&#x1F4C5; This Week's Schedule</a>
 </header>
 <div class="pokeball-stripe"></div>
 
 <main>
 
-  <!-- Trainer Notes -->
-  <div class="notes-box">
-    <h3>&#x1F4CB; This Week's Quest Board</h3>
-    <p>Welcome back, Trainer Cole! Your active Gyms are below — pick whichever one calls to you first. The Burpee Lab tracker is there for Wednesday's visit. Take it at your own pace.</p>
+  <!-- This Week's Schedule -->
+  <div class="section-row">
+    <div class="section-title">&#x1F4C5; This Week's Schedule</div>
+    <button class="print-btn" onclick="window.print()">&#x1F5A8;&#xFE0E; Print Schedule</button>
+  </div>
+  <div class="print-zone">
+    <div class="sched-wrap">
+      <div class="sched-grid" id="schedule-grid"></div>
+    </div>
   </div>
 
   <!-- Active Gyms -->
-  <div class="section-title" id="gyms">&#x26A1; Active Gyms</div>
+  <div class="section-row">
+    <div class="section-title">&#x26A1; Active Gyms</div>
+  </div>
   <div class="gym-grid">
 
     <a href="gyms/burpee-lab-tracker.html" class="gym-card gym-paleo">
@@ -252,7 +399,7 @@
       <div class="progress-bar-wrap">
         <div class="progress-bar-fill" id="burpee-bar" style="width: 0%; background: #8B5E3C;"></div>
       </div>
-      <div class="progress-label" id="burpee-label">Tap to log a visit</div>
+      <div class="progress-label" id="burpee-label">Open to log a visit →</div>
     </a>
 
     <a href="gyms/scratch-game.html" class="gym-card gym-scratch">
@@ -261,9 +408,10 @@
       <div class="gym-subject">Computer Science · Scratch</div>
       <span class="badge badge-active">In Progress</span>
       <div class="progress-bar-wrap">
-        <div class="progress-bar-fill" id="scratch-bar" style="width: 25%; background: #F4781F;"></div>
+        <div class="progress-bar-fill" id="scratch-bar" style="width: 0%; background: #F4781F;"></div>
       </div>
-      <div class="progress-label" id="scratch-label">Trials 1–3 complete</div>
+      <div class="progress-label" id="scratch-label">Loading...</div>
+      <button class="track-btn" onclick="openModal(event,'scratch')">&#x270F;&#xFE0E; Update Progress</button>
     </a>
 
     <a href="gyms/rotom-dex-research.html" class="gym-card gym-research">
@@ -272,9 +420,10 @@
       <div class="gym-subject">Research Skills · Literacy</div>
       <span class="badge badge-active">In Progress</span>
       <div class="progress-bar-wrap">
-        <div class="progress-bar-fill" id="rotom-bar" style="width: 33%; background: #2A82C9;"></div>
+        <div class="progress-bar-fill" id="rotom-bar" style="width: 0%; background: #2A82C9;"></div>
       </div>
-      <div class="progress-label" id="rotom-label">Trail 1 complete</div>
+      <div class="progress-label" id="rotom-label">Loading...</div>
+      <button class="track-btn" onclick="openModal(event,'rotom')">&#x270F;&#xFE0E; Update Progress</button>
     </a>
 
     <a href="gyms/fossil-math.html" class="gym-card gym-math">
@@ -285,13 +434,16 @@
       <div class="progress-bar-wrap">
         <div class="progress-bar-fill" id="math-bar" style="width: 0%; background: #E8A020;"></div>
       </div>
-      <div class="progress-label" id="math-label">Ready when you are</div>
+      <div class="progress-label" id="math-label">Loading...</div>
+      <button class="track-btn" onclick="openModal(event,'math')">&#x270F;&#xFE0E; Update Progress</button>
     </a>
 
   </div>
 
   <!-- Completed Gyms -->
-  <div class="section-title">&#x2705; Completed Gyms — Badges Earned</div>
+  <div class="section-row">
+    <div class="section-title">&#x2705; Completed Gyms — Badges Earned</div>
+  </div>
   <div class="gym-grid">
 
     <div class="gym-card gym-writing" style="cursor: default; opacity: 0.80;">
@@ -322,28 +474,238 @@
 
 <footer>Pokémon Scarlet Academy &mdash; Cole's Homeschool Hub</footer>
 
-<script>
-  function loadProgress(key, barId, labelId, color) {
-    try {
-      const raw = localStorage.getItem(key);
-      if (!raw) return;
-      const data = JSON.parse(raw);
-      const bar = document.getElementById(barId);
-      const label = document.getElementById(labelId);
-      if (bar && data.percent !== undefined) {
-        bar.style.width = data.percent + '%';
-        if (color) bar.style.background = color;
-      }
-      if (label && data.summary) {
-        label.textContent = data.summary;
-      }
-    } catch(e) {}
-  }
+<!-- Progress Tracking Modal -->
+<div id="progress-modal" class="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="modal-top">
+      <span class="modal-gym-name" id="modal-gym-name"></span>
+      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    </div>
+    <div id="modal-body"></div>
+    <div class="modal-progress-summary" id="modal-summary"></div>
+  </div>
+</div>
 
-  loadProgress('progress_scratch', 'scratch-bar', 'scratch-label', '#F4781F');
-  loadProgress('progress_rotom',   'rotom-bar',   'rotom-label',   '#2A82C9');
-  loadProgress('progress_burpee',  'burpee-bar',  'burpee-label',  '#8B5E3C');
-  loadProgress('progress_math',    'math-bar',    'math-label',    '#E8A020');
+<script>
+// ============================================================
+//  SCHEDULE — update this each week
+// ============================================================
+const SCHEDULE = {
+  MON: [
+    "Animal Farm video",
+    "Lego Life Hacks",
+    "Cole's choice: Mia, Night Zoo, Activity",
+    "1:30 Heartland"
+  ],
+  TUES: [
+    "9:30 Brock",
+    "Library & Animal Farm",
+    "2:30 Heartland"
+  ],
+  WED: [
+    "Choice: listen to Animal Farm or do Madlibs",
+    "10:00 Burpee"
+  ],
+  THU: [
+    "9:30 Maeve",
+    "2 Mia Academy lessons",
+    "Night Zookeeper 15 min",
+    "1:30 Ms. Amber"
+  ],
+  FRI: [
+    "Rotom-Dex Trial 2",
+    "Bracho Game",
+    "Zoo Lunch"
+  ]
+};
+// ============================================================
+
+const DAYS = ['MON', 'TUES', 'WED', 'THU', 'FRI'];
+
+// ============================================================
+//  GYM MILESTONES — edit these to match each gym's structure
+// ============================================================
+const GYMS = {
+  scratch: {
+    name: 'Brachiosaurus Survival Gym',
+    barId: 'scratch-bar',
+    labelId: 'scratch-label',
+    color: '#F4781F',
+    milestones: [
+      { id: 'scratch_t1',  label: 'Trial 1: Movement',          done: true  },
+      { id: 'scratch_t2',  label: 'Trial 2: Hunger variable',   done: true  },
+      { id: 'scratch_t3',  label: 'Trial 3: Food mechanic',     done: true  },
+      { id: 'scratch_t4',  label: 'Trial 4: Hunger cap',        done: false },
+      { id: 'scratch_t5',  label: 'Trial 5: Movement upgrade',  done: false },
+      { id: 'scratch_t6',  label: 'Trial 6: Thirst system',     done: false },
+      { id: 'scratch_t7',  label: 'Trial 7: Water zones',       done: false },
+      { id: 'scratch_t8',  label: 'Trial 8: Wading effect',     done: false },
+      { id: 'scratch_t9',  label: 'Trial 9: Roaming hazard',    done: false },
+      { id: 'scratch_t10', label: 'Trial 10: Score counter',    done: false },
+      { id: 'scratch_t11', label: 'Trial 11: Game Over screen', done: false },
+      { id: 'scratch_t12', label: 'Trial 12: Restart button',   done: false },
+    ]
+  },
+  rotom: {
+    name: 'Rotom-Dex Research Gym',
+    barId: 'rotom-bar',
+    labelId: 'rotom-label',
+    color: '#2A82C9',
+    milestones: [
+      { id: 'rotom_t1', label: 'Trail 1',        done: true  },
+      { id: 'rotom_t2', label: 'Trail 2',        done: false },
+      { id: 'rotom_mc', label: 'Main Challenge', done: false },
+    ]
+  },
+  math: {
+    name: 'Fossil Math Gym',
+    barId: 'math-bar',
+    labelId: 'math-label',
+    color: '#E8A020',
+    milestones: [
+      { id: 'math_t1', label: 'Trail 1',        done: false },
+      { id: 'math_t2', label: 'Trail 2',        done: false },
+      { id: 'math_mc', label: 'Main Challenge', done: false },
+    ]
+  }
+};
+// ============================================================
+
+function buildSchedule() {
+  const grid = document.getElementById('schedule-grid');
+  grid.innerHTML = '';
+  DAYS.forEach(day => {
+    const col = document.createElement('div');
+    col.className = 'day-col';
+
+    const hdr = document.createElement('div');
+    hdr.className = 'day-header';
+    hdr.textContent = day;
+    col.appendChild(hdr);
+
+    const list = document.createElement('div');
+    list.className = 'items-list';
+
+    (SCHEDULE[day] || []).forEach((text, i) => {
+      const key = `sched_${day}_${i}`;
+      const checked = localStorage.getItem(key) === '1';
+
+      const row = document.createElement('div');
+      row.className = 'item-row' + (checked ? ' done' : '');
+
+      const box = document.createElement('input');
+      box.type = 'checkbox';
+      box.checked = checked;
+      box.addEventListener('change', () => {
+        localStorage.setItem(key, box.checked ? '1' : '0');
+        row.classList.toggle('done', box.checked);
+      });
+
+      const span = document.createElement('span');
+      span.className = 'item-text';
+      span.textContent = text;
+      span.addEventListener('click', () => box.click());
+
+      row.appendChild(box);
+      row.appendChild(span);
+      list.appendChild(row);
+    });
+
+    col.appendChild(list);
+    grid.appendChild(col);
+  });
+}
+
+function isMilestoneDone(m) {
+  const stored = localStorage.getItem('gym_' + m.id);
+  if (stored === null) {
+    if (m.done) localStorage.setItem('gym_' + m.id, '1');
+    return m.done;
+  }
+  return stored === '1';
+}
+
+function refreshGymCard(gymKey) {
+  const gym = GYMS[gymKey];
+  const total = gym.milestones.length;
+  if (total === 0) return;
+
+  const doneCount = gym.milestones.filter(m => isMilestoneDone(m)).length;
+  const pct = Math.round(doneCount / total * 100);
+
+  const bar = document.getElementById(gym.barId);
+  const label = document.getElementById(gym.labelId);
+  if (bar) { bar.style.width = pct + '%'; bar.style.background = gym.color; }
+  if (label) {
+    if (doneCount === 0) label.textContent = 'Not started yet';
+    else if (doneCount === total) label.textContent = 'All done — badge earned! 🎉';
+    else label.textContent = `${doneCount} of ${total} complete`;
+  }
+}
+
+function openModal(event, gymKey) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const gym = GYMS[gymKey];
+  document.getElementById('modal-gym-name').textContent = gym.name;
+
+  const body = document.getElementById('modal-body');
+  body.innerHTML = '';
+
+  gym.milestones.forEach(m => {
+    const checked = isMilestoneDone(m);
+
+    const row = document.createElement('label');
+    row.className = 'milestone-row' + (checked ? ' done-row' : '');
+
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = checked;
+    cb.addEventListener('change', () => {
+      localStorage.setItem('gym_' + m.id, cb.checked ? '1' : '0');
+      row.classList.toggle('done-row', cb.checked);
+      refreshGymCard(gymKey);
+      updateModalSummary(gymKey);
+    });
+
+    row.appendChild(cb);
+    row.appendChild(document.createTextNode(m.label));
+    body.appendChild(row);
+  });
+
+  updateModalSummary(gymKey);
+  document.getElementById('progress-modal').classList.add('open');
+}
+
+function updateModalSummary(gymKey) {
+  const gym = GYMS[gymKey];
+  const total = gym.milestones.length;
+  const doneCount = gym.milestones.filter(m => isMilestoneDone(m)).length;
+  const pct = Math.round(doneCount / total * 100);
+  document.getElementById('modal-summary').textContent =
+    `${doneCount} of ${total} complete — ${pct}%`;
+}
+
+function closeModal() {
+  document.getElementById('progress-modal').classList.remove('open');
+}
+
+function loadBurpeeVisits() {
+  try {
+    const raw = localStorage.getItem('burpee-visits');
+    const visits = raw ? JSON.parse(raw) : [];
+    const count = Array.isArray(visits) ? visits.length : 0;
+    const bar = document.getElementById('burpee-bar');
+    const label = document.getElementById('burpee-label');
+    if (bar) { bar.style.width = Math.min(count / 40 * 100, 100) + '%'; bar.style.background = '#8B5E3C'; }
+    if (label) label.textContent = count === 0 ? 'Open to log a visit →' : `${count} visit${count === 1 ? '' : 's'} logged`;
+  } catch(e) {}
+}
+
+buildSchedule();
+Object.keys(GYMS).forEach(key => refreshGymCard(key));
+loadBurpeeVisits();
 </script>
 
 </body>
