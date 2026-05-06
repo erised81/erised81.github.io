@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Burpee Fossil Lab Gym — Scarlet Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bone: #f0e6cc;
+    --parchment: #e8d9b5;
+    --deep-earth: #2a1e0f;
+    --fossil-brown: #5c3d1e;
+    --amber: #c17f24;
+    --amber-light: #e8a83a;
+    --slate: #3d4f5c;
+    --slate-light: #6b8394;
+    --rust: #8b3a1e;
+    --rust-light: #c4522b;
+    --cream: #faf4e6;
+    --shadow: rgba(42, 30, 15, 0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--deep-earth);
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(193, 127, 36, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(139, 58, 30, 0.06) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c17f24' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    min-height: 100vh;
+    font-family: 'Crimson Pro', Georgia, serif;
+    color: var(--deep-earth);
+    padding: 0 0 60px 0;
+  }
+
+  /* === HEADER === */
+  .gym-header {
+    background: linear-gradient(180deg, #1a1008 0%, var(--deep-earth) 100%);
+    padding: 40px 20px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 3px solid var(--amber);
+  }
+
+  .gym-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='100' cy='100' r='80' stroke='%23c17f24' stroke-opacity='0.05' stroke-width='1' fill='none'/%3E%3Ccircle cx='100' cy='100' r='60' stroke='%23c17f24' stroke-opacity='0.04' stroke-width='1' fill='none'/%3E%3Ccircle cx='100' cy='100' r='40' stroke='%23c17f24' stroke-opacity='0.03' stroke-width='1' fill='none'/%3E%3C/svg%3E") center/cover;
+    opacity: 0.4;
+  }
+
+  .academy-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--amber-light);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.8;
+    position: relative;
+  }
+
+  .gym-badge-wrap {
+    display: inline-block;
+    margin: 0 auto 16px;
+    position: relative;
+  }
+
+  .gym-badge {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, var(--amber-light), var(--amber), var(--fossil-brown));
+    border: 3px solid var(--amber-light);
+    box-shadow: 0 0 30px rgba(193, 127, 36, 0.4), 0 0 60px rgba(193, 127, 36, 0.15), inset 0 2px 4px rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    position: relative;
+    animation: badgePulse 3s ease-in-out infinite;
+  }
+
+  @keyframes badgePulse {
+    0%, 100% { box-shadow: 0 0 30px rgba(193,127,36,0.4), 0 0 60px rgba(193,127,36,0.15), inset 0 2px 4px rgba(255,255,255,0.2); }
+    50% { box-shadow: 0 0 40px rgba(193,127,36,0.6), 0 0 80px rgba(193,127,36,0.25), inset 0 2px 4px rgba(255,255,255,0.2); }
+  }
+
+  .gym-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(22px, 5vw, 36px);
+    font-weight: 900;
+    color: var(--bone);
+    line-height: 1.2;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    position: relative;
+    margin-bottom: 8px;
+  }
+
+  .gym-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--amber);
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  .divider-rune {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 20px auto 0;
+    color: var(--amber);
+    opacity: 0.6;
+    font-size: 18px;
+    position: relative;
+  }
+
+  .divider-rune::before,
+  .divider-rune::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--amber));
+  }
+  .divider-rune::after { background: linear-gradient(90deg, var(--amber), transparent); }
+
+  /* === MAIN CONTAINER === */
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  /* === SCROLL CARD === */
+  .scroll-card {
+    background: var(--cream);
+    background-image:
+      linear-gradient(180deg, var(--bone) 0%, var(--cream) 40%, var(--cream) 60%, var(--parchment) 100%),
+      url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    border-radius: 8px 8px 0 0;
+    margin-top: -20px;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.3), 0 20px 60px rgba(0,0,0,0.4);
+    border: 1px solid rgba(193, 127, 36, 0.3);
+    border-top: none;
+    overflow: hidden;
+  }
+
+  .scroll-top-curl {
+    height: 28px;
+    background: linear-gradient(180deg, var(--parchment) 0%, var(--bone) 100%);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    border: 1px solid rgba(193, 127, 36, 0.2);
+    border-bottom: none;
+    margin: -20px -1px 0;
+    box-shadow: inset 0 4px 8px rgba(193, 127, 36, 0.1);
+  }
+
+  .card-inner {
+    padding: 32px 28px 40px;
+  }
+
+  /* === SECTION HEADINGS === */
+  .section-heading {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--fossil-brown);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-heading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--amber), transparent);
+    opacity: 0.4;
+  }
+
+  /* === INTRO TEXT === */
+  .intro-box {
+    background: linear-gradient(135deg, rgba(193,127,36,0.08), rgba(92,61,30,0.05));
+    border-left: 3px solid var(--amber);
+    border-radius: 0 6px 6px 0;
+    padding: 16px 18px;
+    margin-bottom: 28px;
+    font-style: italic;
+    color: var(--fossil-brown);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* === TRIALS === */
+  .trials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 520px) { .trials-grid { grid-template-columns: 1fr; } }
+
+  .trial-card {
+    background: linear-gradient(135deg, rgba(92,61,30,0.06), rgba(193,127,36,0.04));
+    border: 1px solid rgba(193,127,36,0.25);
+    border-radius: 8px;
+    padding: 16px;
+    position: relative;
+  }
+
+  .trial-number {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+
+  .trial-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--fossil-brown);
+    margin-bottom: 8px;
+  }
+
+  .trial-desc {
+    font-size: 14px;
+    color: var(--slate);
+    line-height: 1.55;
+  }
+
+  .trial-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .main-challenge {
+    background: linear-gradient(135deg, rgba(139,58,30,0.08), rgba(193,127,36,0.06));
+    border: 1.5px solid var(--rust-light);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .main-challenge::before {
+    content: '★';
+    position: absolute;
+    right: 16px;
+    top: 12px;
+    font-size: 20px;
+    color: var(--amber);
+    opacity: 0.3;
+  }
+
+  .challenge-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust-light);
+    margin-bottom: 6px;
+  }
+
+  .challenge-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--fossil-brown);
+    margin-bottom: 8px;
+  }
+
+  /* === STANDARDS === */
+  .standards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .standard-chip {
+    background: rgba(61, 79, 92, 0.07);
+    border: 1px solid rgba(61,79,92,0.2);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 13px;
+    color: var(--slate);
+  }
+
+  .standard-chip strong {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--slate-light);
+    margin-bottom: 3px;
+  }
+
+  /* === FIELD LOG === */
+  .field-log {
+    border: 1.5px solid rgba(193,127,36,0.3);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+
+  .field-log-header {
+    background: linear-gradient(90deg, var(--fossil-brown), var(--slate));
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .field-log-title {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--bone);
+  }
+
+  .log-entry {
+    border-bottom: 1px solid rgba(193,127,36,0.15);
+    background: white;
+    transition: background 0.2s;
+  }
+
+  .log-entry:last-child { border-bottom: none; }
+
+  .log-entry-header {
+    padding: 14px 18px 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    cursor: pointer;
+  }
+
+  .log-visit-num {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--amber);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .log-fields {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 0 18px 14px;
+  }
+
+  @media (max-width: 500px) { .log-fields { grid-template-columns: 1fr; } }
+
+  .log-field {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .log-field label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--slate-light);
+  }
+
+  .log-field input,
+  .log-field textarea,
+  .log-field select {
+    border: 1px solid rgba(193,127,36,0.25);
+    border-radius: 4px;
+    padding: 7px 10px;
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 14px;
+    color: var(--deep-earth);
+    background: rgba(240, 230, 204, 0.2);
+    transition: border-color 0.2s, background 0.2s;
+    width: 100%;
+    resize: vertical;
+  }
+
+  .log-field input:focus,
+  .log-field textarea:focus,
+  .log-field select:focus {
+    outline: none;
+    border-color: var(--amber);
+    background: rgba(240, 230, 204, 0.4);
+  }
+
+  .log-field textarea { min-height: 72px; }
+
+  .log-field-full {
+    grid-column: 1 / -1;
+  }
+
+  .add-visit-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(90deg, rgba(193,127,36,0.08), rgba(193,127,36,0.04));
+    border: none;
+    border-top: 1px dashed rgba(193,127,36,0.3);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amber);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .add-visit-btn:hover { background: rgba(193,127,36,0.14); }
+
+  /* === BADGE UNLOCK === */
+  .badge-unlock {
+    text-align: center;
+    padding: 28px 20px;
+    background: linear-gradient(135deg, rgba(193,127,36,0.06), rgba(139,58,30,0.04));
+    border: 1.5px solid rgba(193,127,36,0.25);
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }
+
+  .badge-progress-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--slate-light);
+    margin-bottom: 12px;
+  }
+
+  .progress-bar-wrap {
+    background: rgba(92,61,30,0.12);
+    border-radius: 50px;
+    height: 10px;
+    overflow: hidden;
+    margin: 0 auto 8px;
+    max-width: 300px;
+    border: 1px solid rgba(193,127,36,0.2);
+  }
+
+  .progress-bar {
+    height: 100%;
+    border-radius: 50px;
+    background: linear-gradient(90deg, var(--fossil-brown), var(--amber-light));
+    transition: width 0.8s ease;
+    min-width: 4px;
+  }
+
+  .progress-text {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+
+  .badge-unlock-note {
+    font-size: 14px;
+    color: var(--slate);
+    font-style: italic;
+    max-width: 380px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  /* === TRANSCRIPT BOX === */
+  .transcript-box {
+    background: linear-gradient(135deg, rgba(61,79,92,0.06), rgba(61,79,92,0.02));
+    border: 1px solid rgba(61,79,92,0.2);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 28px;
+  }
+
+  .transcript-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--slate);
+    font-style: italic;
+  }
+
+  .transcript-text strong {
+    font-style: normal;
+    color: var(--fossil-brown);
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  /* === PRINT / EXPORT === */
+  .action-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-top: 8px;
+  }
+
+  .btn {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 12px 22px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--fossil-brown), var(--amber));
+    color: var(--bone);
+    box-shadow: 0 4px 12px rgba(92,61,30,0.3);
+  }
+
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(92,61,30,0.4); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--fossil-brown);
+    border: 1.5px solid rgba(92,61,30,0.35);
+  }
+
+  .btn-secondary:hover { background: rgba(92,61,30,0.06); }
+
+  /* === PRINT === */
+  @media print {
+    body { background: white; }
+    .gym-header { background: var(--fossil-brown) !important; }
+    .action-row { display: none; }
+    .scroll-card { box-shadow: none; }
+  }
+
+  /* === ANIMATIONS === */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .scroll-card { animation: fadeUp 0.6s ease forwards; }
+
+  .log-entry { animation: fadeUp 0.3s ease forwards; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="gym-header">
+  <div class="academy-label">⚔ Pokémon Scarlet Academy ⚔</div>
+  <div class="gym-badge-wrap">
+    <div class="gym-badge">🦴</div>
+  </div>
+  <h1 class="gym-title">Burpee Fossil Lab Gym</h1>
+  <div class="gym-subtitle">Field Paleontology · Specimen Preparation · Animal Science</div>
+  <div class="divider-rune">✦</div>
+</div>
+
+<!-- MAIN SCROLL -->
+<div class="container">
+  <div class="scroll-card">
+    <div class="scroll-top-curl"></div>
+    <div class="card-inner">
+
+      <!-- INTRO -->
+      <div class="intro-box">
+        "An explorer doesn't just read about ancient creatures — they uncover them. At the Burpee Museum, you are doing the real work of paleontology. Every fossil you clean holds a story that has been waiting millions of years for a scientist like you to find it."
+      </div>
+
+      <!-- TRIALS -->
+      <div class="section-heading">⚔ The Trials</div>
+
+      <div class="trials-grid">
+        <div class="trial-card">
+          <span class="trial-icon">🔬</span>
+          <div class="trial-number">Trial 1</div>
+          <div class="trial-name">The Specimen Preparator</div>
+          <div class="trial-desc">After a visit, describe one fossil you worked on: where it was excavated, what layer of rock it came from, and what tools you used to clean it. Sketch or photograph it if you can.</div>
+        </div>
+        <div class="trial-card">
+          <span class="trial-icon">🦎</span>
+          <div class="trial-number">Trial 2</div>
+          <div class="trial-name">The Keeper of Scales</div>
+          <div class="trial-desc">After a reptile care session, record what you observed: what the animal ate, how it behaved, what its habitat needs are, and one thing that surprised you about caring for a living reptile vs. studying an ancient one.</div>
+        </div>
+      </div>
+
+      <!-- MAIN CHALLENGE -->
+      <div class="main-challenge">
+        <div class="challenge-label">⚔ Main Challenge</div>
+        <div class="challenge-name">🏆 The Deep Time Dispatch</div>
+        <div class="trial-desc" style="font-size:15px; line-height:1.65;">
+          After your <strong>5th visit</strong>, write or record a "Field Report" — like a real paleontologist would send back from a dig site. Include: (1) what specimens you worked on across your visits, (2) one thing you know now that you didn't know before you started, and (3) what question you most want to answer next. Any format works: written, voice memo, video, slides, or drawing.
+        </div>
+      </div>
+
+      <!-- STANDARDS -->
+      <div class="section-heading">📋 Wisconsin Learning Standards</div>
+      <div class="standards-grid">
+        <div class="standard-chip"><strong>Science · SCI.ETS</strong>Fossil preparation as scientific practice & evidence-based reasoning</div>
+        <div class="standard-chip"><strong>Science · LS4</strong>Biological evolution, biodiversity, and geological change over time</div>
+        <div class="standard-chip"><strong>Science · ESS1-4</strong>Earth's deep history, rock strata, and fossil record interpretation</div>
+        <div class="standard-chip"><strong>Science · LS2</strong>Ecosystems: reptile habitat, feeding relationships, organism needs</div>
+        <div class="standard-chip"><strong>ELA · W.7.2</strong>Informational/explanatory writing through field report format</div>
+        <div class="standard-chip"><strong>ELA · SL.7.4</strong>Presenting findings and observations clearly to an audience</div>
+      </div>
+
+      <!-- FIELD LOG -->
+      <div class="section-heading">📓 Field Visit Log</div>
+      <div class="field-log" id="field-log">
+        <div class="field-log-header">
+          <span class="field-log-title">🗂 Burpee Visit Log — Cole's Expedition Record</span>
+        </div>
+        <div id="log-entries">
+          <!-- entries injected by JS -->
+        </div>
+        <button class="add-visit-btn" onclick="addVisit()">＋ Add Visit Entry</button>
+      </div>
+
+      <!-- BADGE PROGRESS -->
+      <div class="badge-unlock" id="badge-section">
+        <div class="badge-progress-label">🦴 Badge Progress</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+        </div>
+        <div class="progress-text" id="progress-text">0 of 5 visits logged</div>
+        <div class="badge-unlock-note" id="badge-note">Complete 5 visits and the Main Challenge to earn the <strong>Fossil Lab Badge</strong> 🏅</div>
+      </div>
+
+      <!-- TRANSCRIPT LANGUAGE -->
+      <div class="section-heading">📜 High School Transcript Language</div>
+      <div class="transcript-box">
+        <div class="transcript-text">
+          <strong>Course:</strong> Applied Paleontology & Natural History Field Science<br><br>
+          Student completed an ongoing volunteer practicum at the Burpee Museum of Natural History (Rockford, IL), engaging in professional fossil preparation — cleaning and cataloging specimens excavated from Cretaceous-era dig sites in Utah and Montana — as well as live reptile husbandry. Student maintained a field visit log documenting specimen work, scientific observations, and reflective writing. Culminating project: a scientist-style Field Report synthesizing learning across multiple visits.
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="action-row">
+        <button class="btn btn-primary" onclick="window.print()">🖨 Print / Save as PDF</button>
+        <button class="btn btn-secondary" onclick="exportLog()">📋 Copy Log to Clipboard</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // Load saved data from localStorage (graceful fallback)
+  let visits = [];
+  try {
+    const saved = localStorage.getItem('burpee-visits');
+    if (saved) visits = JSON.parse(saved);
+  } catch(e) {}
+
+  if (visits.length === 0) addVisit(true);
+  else renderAll();
+
+  function save() {
+    try { localStorage.setItem('burpee-visits', JSON.stringify(visits)); } catch(e) {}
+  }
+
+  function addVisit(silent) {
+    const num = visits.length + 1;
+    visits.push({ date: '', activity: 'fossil-cleaning', specimen: '', observation: '', question: '', highlight: '' });
+    save();
+    renderAll();
+    if (!silent) {
+      setTimeout(() => {
+        const entries = document.querySelectorAll('.log-entry');
+        entries[entries.length - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }
+
+  function renderAll() {
+    const container = document.getElementById('log-entries');
+    container.innerHTML = '';
+    visits.forEach((v, i) => {
+      const el = document.createElement('div');
+      el.className = 'log-entry';
+      el.innerHTML = `
+        <div class="log-entry-header">
+          <span class="log-visit-num">Visit #${i + 1}</span>
+        </div>
+        <div class="log-fields">
+          <div class="log-field">
+            <label>Date of Visit</label>
+            <input type="date" value="${v.date}" oninput="updateField(${i},'date',this.value)">
+          </div>
+          <div class="log-field">
+            <label>Primary Activity</label>
+            <select oninput="updateField(${i},'activity',this.value)">
+              <option value="fossil-cleaning" ${v.activity==='fossil-cleaning'?'selected':''}>🦴 Fossil Cleaning</option>
+              <option value="reptile-care" ${v.activity==='reptile-care'?'selected':''}>🦎 Reptile Care & Feeding</option>
+              <option value="both" ${v.activity==='both'?'selected':''}>🦴🦎 Both</option>
+              <option value="other" ${v.activity==='other'?'selected':''}>Other</option>
+            </select>
+          </div>
+          <div class="log-field">
+            <label>Specimen / Animal Worked With</label>
+            <input type="text" placeholder="e.g. Brachiosaurus rib fragment from Utah" value="${v.specimen}" oninput="updateField(${i},'specimen',this.value)">
+          </div>
+          <div class="log-field">
+            <label>Tools or Techniques Used</label>
+            <input type="text" placeholder="e.g. air scribe, fine brush, pin tool" value="${v.highlight}" oninput="updateField(${i},'highlight',this.value)">
+          </div>
+          <div class="log-field log-field-full">
+            <label>What I Observed or Discovered</label>
+            <textarea placeholder="Describe what you noticed, what surprised you, or what you learned..." oninput="updateField(${i},'observation',this.value)">${v.observation}</textarea>
+          </div>
+          <div class="log-field log-field-full">
+            <label>Question I Want to Answer Next Time</label>
+            <textarea placeholder="What are you curious about for your next visit?" style="min-height:54px" oninput="updateField(${i},'question',this.value)">${v.question}</textarea>
+          </div>
+        </div>
+      `;
+      container.appendChild(el);
+    });
+    updateProgress();
+  }
+
+  function updateField(i, key, val) {
+    visits[i][key] = val;
+    save();
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const filled = visits.filter(v => v.date && v.observation && v.observation.length > 10).length;
+    const max = 5;
+    const pct = Math.min(100, (filled / max) * 100);
+    document.getElementById('progress-bar').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = `${filled} of ${max} visits logged`;
+    if (filled >= max) {
+      document.getElementById('badge-note').innerHTML = '🏅 <strong>5 visits complete!</strong> Now write your Deep Time Dispatch to earn the Fossil Lab Badge.';
+    }
+  }
+
+  function exportLog() {
+    let text = 'BURPEE FOSSIL LAB GYM — COLE\'S VISIT LOG\n';
+    text += '='.repeat(50) + '\n\n';
+    visits.forEach((v, i) => {
+      text += `VISIT #${i+1}\n`;
+      text += `Date: ${v.date || '—'}\n`;
+      text += `Activity: ${v.activity}\n`;
+      text += `Specimen/Animal: ${v.specimen || '—'}\n`;
+      text += `Tools: ${v.highlight || '—'}\n`;
+      text += `Observations: ${v.observation || '—'}\n`;
+      text += `Next Question: ${v.question || '—'}\n\n`;
+    });
+    navigator.clipboard.writeText(text).then(() => {
+      alert('Log copied to clipboard! You can paste it into any document.');
+    });
+  }
+</script>
+</body>
+</html>

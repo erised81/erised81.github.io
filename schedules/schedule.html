@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scarlet Academy Schedule</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #f5f5f5;
+    padding: 24px;
+    color: #111;
+  }
+
+  .page {
+    background: white;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 32px 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.1);
+  }
+
+  /* HEADER */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    border-bottom: 4px solid #111;
+    padding-bottom: 16px;
+  }
+
+  .pokeball {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #111;
+  }
+
+  /* GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border: 2px solid #111;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .day-col {
+    border-right: 2px solid #111;
+    display: flex;
+    flex-direction: column;
+  }
+  .day-col:last-child { border-right: none; }
+
+  .day-header {
+    background: #111;
+    color: white;
+    text-align: center;
+    font-weight: 900;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 4px;
+  }
+
+  .items-list {
+    padding: 10px 10px 14px;
+    flex: 1;
+    min-height: 240px;
+  }
+
+  /* ITEMS */
+  .item-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    margin-bottom: 8px;
+  }
+
+  .checkbox {
+    width: 14px;
+    height: 14px;
+    border: 2px solid #111;
+    flex-shrink: 0;
+    margin-top: 3px;
+    border-radius: 2px;
+  }
+
+  .item-text {
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: #111;
+    flex: 1;
+    word-break: break-word;
+  }
+
+  /* PRINT STYLES */
+  @media print {
+    body { background: white; padding: 0; }
+    .page { box-shadow: none; padding: 16px; max-width: 100%; }
+    h1 { font-size: 1.6rem; }
+    .grid { border: 2px solid #111; }
+    .day-col { border-right: 2px solid #111; }
+    .items-list { min-height: 200px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <svg class="pokeball" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="48" fill="white" stroke="#111" stroke-width="4"/>
+      <path d="M2 50 Q2 2 50 2 Q98 2 98 50Z" fill="#111"/>
+      <rect x="2" y="46" width="96" height="8" fill="#111"/>
+      <circle cx="50" cy="50" r="14" fill="white" stroke="#111" stroke-width="4"/>
+      <circle cx="50" cy="50" r="7" fill="#111"/>
+    </svg>
+    <h1>Scarlet Academy Schedule</h1>
+    <svg class="pokeball" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="48" fill="white" stroke="#111" stroke-width="4"/>
+      <path d="M2 50 Q2 2 50 2 Q98 2 98 50Z" fill="#111"/>
+      <rect x="2" y="46" width="96" height="8" fill="#111"/>
+      <circle cx="50" cy="50" r="14" fill="white" stroke="#111" stroke-width="4"/>
+      <circle cx="50" cy="50" r="7" fill="#111"/>
+    </svg>
+  </div>
+
+  <div class="grid" id="schedule-grid"></div>
+
+</div>
+
+<script>
+// ============================================================
+//  EDIT YOUR SCHEDULE HERE — update this each week
+//  Each day is a list of items. Delete, add, or change any line.
+//  Leave a day empty ([]) if nothing is scheduled.
+// ============================================================
+
+const SCHEDULE = {
+  MON: [
+    "Animal Farm video",
+    "Lego Life Hacks",
+    "Cole's choice: Mia, Night Zoo, Activity",
+    "1:30 Heartland"
+  ],
+  TUES: [
+    "9:30 Brock",
+    "Library & Animal Farm",
+    "2:30 Heartland"
+  ],
+  WED: [
+    "Choice: listen to Animal Farm or do Madlibs",
+    "10:00 Burpee"
+  ],
+  THU: [
+    "9:30 Maeve",
+    "2 Mia Academy lessons",
+    "Night Zookeeper 15 min"
+    "1:30 Ms. Amber"
+  ],
+  FRI: [
+    "Rotom-Dex Trial 2",
+    "Bracho Game"
+    "Zoo Lunch"
+  ]
+};
+
+// ============================================================
+//  NOTHING BELOW THIS LINE NEEDS TO BE EDITED
+// ============================================================
+
+const DAYS = ['MON', 'TUES', 'WED', 'THU', 'FRI'];
+
+function buildGrid() {
+  const grid = document.getElementById('schedule-grid');
+  grid.innerHTML = '';
+
+  DAYS.forEach(day => {
+    const col = document.createElement('div');
+    col.className = 'day-col';
+
+    const header = document.createElement('div');
+    header.className = 'day-header';
+    header.textContent = day;
+    col.appendChild(header);
+
+    const list = document.createElement('div');
+    list.className = 'items-list';
+
+    (SCHEDULE[day] || []).forEach(text => {
+      const row = document.createElement('div');
+      row.className = 'item-row';
+
+      const box = document.createElement('div');
+      box.className = 'checkbox';
+
+      const span = document.createElement('span');
+      span.className = 'item-text';
+      span.textContent = text;
+
+      row.appendChild(box);
+      row.appendChild(span);
+      list.appendChild(row);
+    });
+
+    col.appendChild(list);
+    grid.appendChild(col);
+  });
+}
+
+buildGrid();
+</script>
+</body>
+</html>
