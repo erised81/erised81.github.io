@@ -91,13 +91,13 @@
     margin-bottom: 8px;
   }
 
-  .checkbox {
-    width: 14px;
-    height: 14px;
-    border: 2px solid #111;
+  .item-row input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
     flex-shrink: 0;
-    margin-top: 3px;
-    border-radius: 2px;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: #111;
   }
 
   .item-text {
@@ -107,6 +107,13 @@
     color: #111;
     flex: 1;
     word-break: break-word;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+
+  .item-row.done .item-text {
+    text-decoration: line-through;
+    opacity: 0.4;
   }
 
   /* PRINT STYLES */
@@ -204,16 +211,25 @@ function buildGrid() {
     const list = document.createElement('div');
     list.className = 'items-list';
 
-    (SCHEDULE[day] || []).forEach(text => {
-      const row = document.createElement('div');
-      row.className = 'item-row';
+    (SCHEDULE[day] || []).forEach((text, i) => {
+      const key = `sched_${day}_${i}`;
+      const checked = localStorage.getItem(key) === '1';
 
-      const box = document.createElement('div');
-      box.className = 'checkbox';
+      const row = document.createElement('div');
+      row.className = 'item-row' + (checked ? ' done' : '');
+
+      const box = document.createElement('input');
+      box.type = 'checkbox';
+      box.checked = checked;
+      box.addEventListener('change', () => {
+        localStorage.setItem(key, box.checked ? '1' : '0');
+        row.classList.toggle('done', box.checked);
+      });
 
       const span = document.createElement('span');
       span.className = 'item-text';
       span.textContent = text;
+      span.addEventListener('click', () => box.click());
 
       row.appendChild(box);
       row.appendChild(span);
