@@ -139,7 +139,50 @@
     white-space: nowrap;
   }
   .trial-tab:hover { border-color: rgba(76,175,80,0.4); color: var(--leaf-bright); }
+  .trial-tab.tab-hidden { display: none; }
   .trial-tab.active { background: rgba(76,175,80,0.15); border-color: var(--leaf); color: var(--leaf-bright); }
+
+  /* JUMP MENU */
+  .trial-jump-wrap { position: relative; margin-top: 0.5rem; }
+  .trial-jump-btn {
+    padding: 0.45rem 1rem;
+    border-radius: 10px;
+    border: 2px solid rgba(245,166,35,0.35);
+    background: rgba(245,166,35,0.08);
+    color: #c9a020;
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .trial-jump-btn:hover { background: rgba(245,166,35,0.18); color: #f5c842; }
+  .trial-jump-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    background: #1e2a1a;
+    border: 2px solid rgba(245,166,35,0.25);
+    border-radius: 10px;
+    padding: 0.4rem;
+    z-index: 100;
+    min-width: 230px;
+  }
+  .trial-jump-menu.open { display: block; }
+  .trial-jump-item {
+    display: block; width: 100%;
+    padding: 0.4rem 0.75rem;
+    border: none; background: none;
+    color: var(--stone);
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-align: left;
+    border-radius: 6px;
+    transition: background 0.15s;
+  }
+  .trial-jump-item:hover { background: rgba(255,255,255,0.07); color: var(--leaf-bright); }
+  .trial-jump-item.ji-done { color: var(--complete); }
   .trial-tab.t-completed { border-color: rgba(39,174,96,0.45); color: var(--complete); }
   .trial-tab.t-completed::after { content: ' ✓'; }
 
@@ -343,27 +386,21 @@
   <header class="site-header">
     <span class="dino-emoji">🦕</span>
     <h1 class="site-title">Cole's Dino Survival Game</h1>
-    <p class="site-subtitle">Scratch Trials 2–12 · Build your complete game!</p>
+    <p class="site-subtitle">Scratch Trials · We can build your actual game together!</p>
   </header>
-
-  <!-- PROGRESS -->
-  <div class="progress-section">
-    <div class="progress-label">
-      <span>⚡ Overall Progress</span>
-      <span id="progressText">0 steps done</span>
-    </div>
-    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
-    <div class="step-dots" id="stepDots"></div>
-  </div>
 
   <!-- TRIAL TABS -->
   <div class="trial-nav-wrap">
     <div class="trial-nav" id="trialNav"></div>
   </div>
+  <div class="trial-jump-wrap">
+    <button class="trial-jump-btn" onclick="toggleJumpMenu()" id="jumpBtn">📋 Jump to a trial ▾</button>
+    <div class="trial-jump-menu" id="jumpMenu"></div>
+  </div>
 
   <!-- ═══════════════ TRIAL 2 ═══════════════ -->
   <div class="trial-panel active" id="trial-2">
-    <div class="trial-badge"><span class="badge-dot" style="background:#f5a623"></span>Trial 2 of 12</div>
+    <div class="trial-badge"><span class="badge-dot" style="background:#f5a623"></span>Trial 2</div>
     <div class="archen-box">
       <div class="archen-avatar">🐦</div>
       <div>
@@ -453,7 +490,7 @@ end</div>
 
   <!-- ═══════════════ TRIAL 3 ═══════════════ -->
   <div class="trial-panel" id="trial-3">
-    <div class="trial-badge"><span class="badge-dot" style="background:#4caf50"></span>Trial 3 of 12</div>
+    <div class="trial-badge"><span class="badge-dot" style="background:#4caf50"></span>Trial 3</div>
     <div class="archen-box">
       <div class="archen-avatar">🐦</div>
       <div>
@@ -541,7 +578,7 @@ go to (random position)</div>
 
   <!-- ═══════════════ TRIAL 4 ═══════════════ -->
   <div class="trial-panel" id="trial-4">
-    <div class="trial-badge"><span class="badge-dot" style="background:#e63946"></span>Trial 4 of 12</div>
+    <div class="trial-badge"><span class="badge-dot" style="background:#e63946"></span>Trial 4</div>
     <div class="archen-box">
       <div class="archen-avatar">🐦</div>
       <div>
@@ -603,7 +640,7 @@ say [🚨 STARVING! Find food NOW!] for (2) seconds</div>
 
   <!-- ═══════════════ TRIAL 5 ═══════════════ -->
   <div class="trial-panel" id="trial-5">
-    <div class="trial-badge"><span class="badge-dot" style="background:#00b4d8"></span>Trial 5 of 12</div>
+    <div class="trial-badge"><span class="badge-dot" style="background:#00b4d8"></span>Trial 5</div>
     <div class="archen-box">
       <div class="archen-avatar">🐦</div>
       <div>
@@ -679,7 +716,7 @@ end</div>
 
   <!-- ═══════════════ TRIAL 6 ═══════════════ -->
   <div class="trial-panel" id="trial-6">
-    <div class="trial-badge"><span class="badge-dot" style="background:#0077b6"></span>Trial 6 of 12</div>
+    <div class="trial-badge"><span class="badge-dot" style="background:#0077b6"></span>Trial 6</div>
     <div class="archen-box">
       <div class="archen-avatar">🐦</div>
       <div>
@@ -753,7 +790,7 @@ end</div>
 
   <!-- ═══════════════ TRIAL 7 ═══════════════ -->
   <div class="trial-panel" id="trial-7">
-    <div class="trial-badge"><span class="badge-dot" style="background:#0077b6"></span>Trial 7 of 12</div>
+    <div class="trial-badge"><span class="badge-dot" style="background:#0077b6"></span>Trial 7</div>
     <div class="archen-box">
       <div class="archen-avatar">🐦</div>
       <div>
@@ -818,7 +855,7 @@ end</div>
 
   <!-- ═══════════════ TRIAL 8 ═══════════════ -->
   <div class="trial-panel" id="trial-8">
-    <div class="trial-badge"><span class="badge-dot" style="background:#90e0ef"></span>Trial 8 of 12</div>
+    <div class="trial-badge"><span class="badge-dot" style="background:#90e0ef"></span>Trial 8</div>
     <div class="archen-box">
       <div class="archen-avatar">🐦</div>
       <div>
@@ -916,7 +953,7 @@ end</div>
 
   <!-- ═══════════════ TRIAL 9 ═══════════════ -->
   <div class="trial-panel" id="trial-9">
-    <div class="trial-badge"><span class="badge-dot" style="background:#e63946"></span>Trial 9 of 12</div>
+    <div class="trial-badge"><span class="badge-dot" style="background:#e63946"></span>Trial 9</div>
     <div class="archen-box">
       <div class="archen-avatar">🐦</div>
       <div>
@@ -996,7 +1033,7 @@ end</div>
 
   <!-- ═══════════════ TRIAL 10 ═══════════════ -->
   <div class="trial-panel" id="trial-10">
-    <div class="trial-badge"><span class="badge-dot" style="background:#f0c040"></span>Trial 10 of 12</div>
+    <div class="trial-badge"><span class="badge-dot" style="background:#f0c040"></span>Trial 10</div>
     <div class="archen-box">
       <div class="archen-avatar">🐦</div>
       <div>
@@ -1054,7 +1091,7 @@ end</div>
 
   <!-- ═══════════════ TRIAL 11 ═══════════════ -->
   <div class="trial-panel" id="trial-11">
-    <div class="trial-badge"><span class="badge-dot" style="background:#e63946"></span>Trial 11 of 12</div>
+    <div class="trial-badge"><span class="badge-dot" style="background:#e63946"></span>Trial 11</div>
     <div class="archen-box">
       <div class="archen-avatar">🐦</div>
       <div>
@@ -1131,7 +1168,7 @@ stop [all v]</div>
 
   <!-- ═══════════════ TRIAL 12 ═══════════════ -->
   <div class="trial-panel" id="trial-12">
-    <div class="trial-badge"><span class="badge-dot" style="background:#f0c040"></span>Trial 12 of 12 — THE FINAL TRIAL</div>
+    <div class="trial-badge"><span class="badge-dot" style="background:#f0c040"></span>Trial 12 — THE FINAL TRIAL</div>
     <div class="archen-box">
       <div class="archen-avatar">🐦</div>
       <div>
@@ -1270,43 +1307,43 @@ let currentTrial = 2;
 
 // Build nav tabs
 const nav = document.getElementById('trialNav');
-TRIALS.forEach(t => {
+TRIALS.forEach((t, i) => {
   const btn = document.createElement('button');
   btn.className = 'trial-tab';
   btn.id = 'tab-'+t;
   btn.textContent = TRIAL_NAMES[t];
   btn.onclick = () => switchTrial(t);
+  if (i > 0) btn.classList.add('tab-hidden'); // hide all except first
   nav.appendChild(btn);
 });
 document.getElementById('tab-2').classList.add('active');
 
-// Build dots
-function buildDots() {
-  const dots = document.getElementById('stepDots');
-  dots.innerHTML = '';
-  ALL_STEPS.forEach(id => {
-    const d = document.createElement('div');
-    d.className = 'step-dot'; d.id = 'dot-'+id;
-    dots.appendChild(d);
-  });
+// Build jump menu
+const jumpMenu = document.getElementById('jumpMenu');
+TRIALS.forEach(t => {
+  const btn = document.createElement('button');
+  btn.className = 'trial-jump-item';
+  btn.id = 'jump-'+t;
+  btn.textContent = TRIAL_NAMES[t];
+  btn.onclick = () => {
+    const tab = document.getElementById('tab-'+t);
+    if (tab) tab.classList.remove('tab-hidden');
+    switchTrial(t);
+    document.getElementById('jumpMenu').classList.remove('open');
+  };
+  jumpMenu.appendChild(btn);
+});
+
+function toggleJumpMenu() {
+  document.getElementById('jumpMenu').classList.toggle('open');
 }
-buildDots();
+document.addEventListener('click', e => {
+  const btn = document.getElementById('jumpBtn');
+  const menu = document.getElementById('jumpMenu');
+  if (!btn.contains(e.target) && !menu.contains(e.target)) menu.classList.remove('open');
+});
 
 function updateProgress() {
-  const done = ALL_STEPS.filter(id => stepState[id]).length;
-  const pct = Math.round(done / ALL_STEPS.length * 100);
-  document.getElementById('progressFill').style.width = pct+'%';
-  document.getElementById('progressText').textContent = done+' / '+ALL_STEPS.length+' steps done';
-
-  const firstUndone = ALL_STEPS.find(s => !stepState[s]);
-  ALL_STEPS.forEach(id => {
-    const dot = document.getElementById('dot-'+id);
-    if (!dot) return;
-    dot.className = 'step-dot';
-    if (stepState[id]) dot.classList.add('done');
-    else if (id === firstUndone) dot.classList.add('current');
-  });
-
   // Check per-trial completion
   TRIALS.forEach(t => {
     const allDone = TRIAL_STEPS[t].every(id => stepState[id]);
@@ -1362,6 +1399,9 @@ function completeStep(id) {
         if (el) el.scrollIntoView({behavior:'smooth', block:'center'});
       }, 350);
     } else {
+      // Unhide the next trial's tab before switching
+      const nextTab = document.getElementById('tab-'+nextTrial);
+      if (nextTab) nextTab.classList.remove('tab-hidden');
       setTimeout(() => {
         if (confirm('🏅 Trial '+curTrial+' complete! Ready to move on to Trial '+nextTrial+'?')) {
           switchTrial(nextTrial);
