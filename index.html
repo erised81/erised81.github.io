@@ -251,6 +251,46 @@
   .gym-writing  { border-top: 4px solid #7C5CBF; }
   .gym-research { border-top: 4px solid #2A82C9; }
 
+  /* Quick Access buttons */
+  .quick-access { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 2.5rem; }
+  .quick-btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.9rem 1.2rem; border-radius: var(--radius); font-family: 'Fredoka One', cursive; font-size: 1.05rem; text-decoration: none; color: white; transition: transform 0.15s, box-shadow 0.15s; box-shadow: var(--shadow); }
+  .quick-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+  .quick-btn-schedule { background: var(--red); }
+  .quick-btn-burpee { background: #6B3FA0; }
+
+  /* Compact gym list buttons */
+  .gym-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2.5rem; }
+  .gym-btn { display: flex; align-items: center; gap: 0.85rem; background: var(--card); border: 1.5px solid var(--border); border-radius: 12px; padding: 0.7rem 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-decoration: none; color: inherit; transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s; position: relative; overflow: hidden; }
+  .gym-btn::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--gym-color, var(--teal)); border-radius: 12px 0 0 12px; }
+  a.gym-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.10); border-color: var(--gym-color, var(--teal)); }
+  .gym-sprite { width: 44px; height: 44px; flex-shrink: 0; border-radius: 8px; background: var(--bg); border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; overflow: hidden; font-size: 1.5rem; }
+  .gym-sprite img { width: 40px; height: 40px; object-fit: contain; }
+  .gym-btn-info { flex: 1; min-width: 0; }
+  .gym-btn-name { font-family: 'Fredoka One', cursive; font-size: 1rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .gym-btn-tagline { font-size: 0.78rem; font-weight: 700; color: var(--muted); margin-top: 1px; }
+  .gym-btn-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+  .pill { display: inline-block; font-size: 0.68rem; font-weight: 700; padding: 2px 9px; border-radius: 20px; white-space: nowrap; }
+  .pill-active { background: var(--teal-light); color: var(--teal); }
+  .pill-coming { background: var(--gold-light); color: var(--gold); }
+  .pill-done { background: #EEF5E8; color: #4A8C22; }
+
+  /* Video Resources */
+  .resource-section { margin-bottom: 2.5rem; }
+  .resource-gym-group { background: var(--card); border: 1.5px solid var(--border); border-radius: 12px; padding: 0.85rem 1rem; margin-bottom: 0.6rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+  .resource-gym-label { font-family: 'Fredoka One', cursive; font-size: 0.9rem; color: var(--text); margin-bottom: 0.5rem; }
+  .resource-links { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .resource-link { display: inline-flex; align-items: center; gap: 5px; font-size: 0.78rem; font-weight: 700; color: var(--text); text-decoration: none; background: var(--bg); border: 1.5px solid var(--border); padding: 4px 10px; border-radius: 20px; transition: border-color 0.15s, color 0.15s; white-space: nowrap; }
+  .resource-link:hover { border-color: var(--red); color: var(--red); background: #FEF3F3; }
+
+  /* Completed gyms collapsible */
+  .completed-toggle { display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; padding-bottom: 0.4rem; border-bottom: 2px solid var(--border); margin-top: 1rem; }
+  .completed-toggle:hover .section-title { color: var(--red); }
+  .chevron { font-size: 0.85rem; color: var(--muted); transition: transform 0.25s; }
+  .chevron.open { transform: rotate(180deg); }
+  .completed-body { display: none; padding-top: 1rem; margin-bottom: 1rem; }
+  .completed-body.open { display: block; }
+  .completed-body .gym-list { margin-bottom: 0; }
+
   /* Track progress button inside gym card */
   .track-btn {
     margin-top: 0.2rem;
@@ -387,87 +427,171 @@
 
   <!-- Active Gyms -->
   <div class="section-row">
-    <div class="section-title">&#x26A1; Active Gyms</div>
+    <div class="section-title">&#x1F3CB; Active Gyms</div>
   </div>
-  <div class="gym-grid">
+  <div class="gym-list">
 
-    <a href="gyms/burpee-lab-tracker.html" class="gym-card gym-paleo">
-      <div class="gym-icon">&#x1F9B4;</div>
-      <div class="gym-name">Burpee Fossil Lab Gym</div>
-      <div class="gym-subject">Paleontology · Fossil Prep</div>
-      <span class="badge badge-active">In Progress</span>
-      <div class="progress-bar-wrap">
-        <div class="progress-bar-fill" id="burpee-bar" style="width: 0%; background: #8B5E3C;"></div>
+    <a href="gyms/burpee-lab-tracker.html" class="gym-btn" style="--gym-color: #8B5E3C;">
+      <div class="gym-sprite">
+        <!-- PLACEHOLDER: replace span with <img src="images/kabuto.png" alt="Kabuto"> -->
+        <span>&#x1F9B4;</span>
       </div>
-      <div class="progress-label" id="burpee-label">Open to log a visit →</div>
+      <div class="gym-btn-info">
+        <div class="gym-btn-name">Burpee Fossil Lab Gym</div>
+        <div class="gym-btn-tagline">Paleontology &middot; Fossil Prep &middot; Field Log</div>
+      </div>
+      <div class="gym-btn-right">
+        <span class="pill pill-active">In Progress</span>
+        <span style="font-size:0.72rem;color:var(--muted);font-weight:700;" id="burpee-label">Open to log</span>
+      </div>
     </a>
 
-    <a href="gyms/scratch-game.html" class="gym-card gym-scratch">
-      <div class="gym-icon">&#x1F995;</div>
-      <div class="gym-name">Brachiosaurus Survival Gym</div>
-      <div class="gym-subject">Computer Science · Scratch</div>
-      <span class="badge badge-active">In Progress</span>
-      <div class="progress-bar-wrap">
-        <div class="progress-bar-fill" id="scratch-bar" style="width: 0%; background: #F4781F;"></div>
+    <a href="gyms/scratch-game.html" class="gym-btn" style="--gym-color: #F4781F;">
+      <div class="gym-sprite">
+        <!-- PLACEHOLDER: replace span with <img src="images/tropius.png" alt="Tropius"> -->
+        <span>&#x1F995;</span>
       </div>
-      <div class="progress-label" id="scratch-label">Loading...</div>
-      <button class="track-btn" onclick="openModal(event,'scratch')">&#x270F;&#xFE0E; Update Progress</button>
+      <div class="gym-btn-info">
+        <div class="gym-btn-name">Brachiosaurus Survival Gym</div>
+        <div class="gym-btn-tagline">Computer Science &middot; Scratch Game</div>
+      </div>
+      <div class="gym-btn-right">
+        <span class="pill pill-active">In Progress</span>
+        <button class="track-btn" onclick="openModal(event,'scratch')">&#x270F; Progress</button>
+      </div>
     </a>
 
-    <a href="gyms/rotom-dex-research.html" class="gym-card gym-research">
-      <div class="gym-icon">&#x26A1;</div>
-      <div class="gym-name">Rotom-Dex Research Gym</div>
-      <div class="gym-subject">Research Skills · Literacy</div>
-      <span class="badge badge-active">In Progress</span>
-      <div class="progress-bar-wrap">
-        <div class="progress-bar-fill" id="rotom-bar" style="width: 0%; background: #2A82C9;"></div>
+    <a href="gyms/rotom-dex-research.html" class="gym-btn" style="--gym-color: #2A82C9;">
+      <div class="gym-sprite">
+        <!-- PLACEHOLDER: replace span with <img src="images/rotom.png" alt="Rotom"> -->
+        <span>&#x26A1;</span>
       </div>
-      <div class="progress-label" id="rotom-label">Loading...</div>
-      <button class="track-btn" onclick="openModal(event,'rotom')">&#x270F;&#xFE0E; Update Progress</button>
+      <div class="gym-btn-info">
+        <div class="gym-btn-name">Rotom-Dex Research Gym</div>
+        <div class="gym-btn-tagline">Research Skills &middot; Source Evaluation</div>
+      </div>
+      <div class="gym-btn-right">
+        <span class="pill pill-active">Trail 1 Done</span>
+        <button class="track-btn" onclick="openModal(event,'rotom')">&#x270F; Progress</button>
+      </div>
     </a>
 
-    <a href="gyms/fossil-math.html" class="gym-card gym-math">
-      <div class="gym-icon">&#x1F9EE;</div>
-      <div class="gym-name">Professor Sada's Fossil Math Gym</div>
-      <div class="gym-subject">Math · Paleontology</div>
-      <span class="badge badge-coming">Not Yet Started</span>
-      <div class="progress-bar-wrap">
-        <div class="progress-bar-fill" id="math-bar" style="width: 0%; background: #E8A020;"></div>
+    <a href="gyms/story-gym.html" class="gym-btn" style="--gym-color: #6B21C8;">
+      <div class="gym-sprite">
+        <span>&#x1F47B;</span>
       </div>
-      <div class="progress-label" id="math-label">Loading...</div>
-      <button class="track-btn" onclick="openModal(event,'math')">&#x270F;&#xFE0E; Update Progress</button>
+      <div class="gym-btn-info">
+        <div class="gym-btn-name">Gengar's Story Catcher Gym</div>
+        <div class="gym-btn-tagline">ELA &middot; Story &amp; Media Analysis</div>
+      </div>
+      <div class="gym-btn-right">
+        <span class="pill pill-active">In Progress</span>
+        <button class="track-btn" onclick="openModal(event,'story')">&#x270F; Progress</button>
+      </div>
+    </a>
+
+    <a href="gyms/fossil-math.html" class="gym-btn" style="--gym-color: #E8A020;">
+      <div class="gym-sprite">
+        <!-- PLACEHOLDER: replace span with <img src="images/cranidos.png" alt="Cranidos"> -->
+        <span>&#x1F9EE;</span>
+      </div>
+      <div class="gym-btn-info">
+        <div class="gym-btn-name">Professor Sada's Fossil Math Gym</div>
+        <div class="gym-btn-tagline">Math &middot; Scale &amp; Proportion</div>
+      </div>
+      <div class="gym-btn-right">
+        <span class="pill pill-coming">Not Started</span>
+        <button class="track-btn" onclick="openModal(event,'math')">&#x270F; Progress</button>
+      </div>
     </a>
 
   </div>
 
-  <!-- Completed Gyms -->
+  <!-- Video Resources -->
   <div class="section-row">
-    <div class="section-title">&#x2705; Completed Gyms — Badges Earned</div>
+    <div class="section-title">&#x25B6; Watch &amp; Explore</div>
   </div>
-  <div class="gym-grid">
-
-    <div class="gym-card gym-writing" style="cursor: default; opacity: 0.80;">
-      <div class="gym-icon">&#x1F985;</div>
-      <div class="gym-name">Archen's Field Report Gym</div>
-      <div class="gym-subject">Science Writing · Literacy</div>
-      <span class="badge badge-done">&#x1F3C5; Taphonomy Badge</span>
-      <div class="progress-bar-wrap">
-        <div class="progress-bar-fill" style="width: 100%; background: #7C5CBF;"></div>
+  <div class="resource-section">
+    <div class="resource-gym-group">
+      <div class="resource-gym-label">&#x1F9B4; Burpee Fossil Lab + Field Report Gym</div>
+      <div class="resource-links">
+        <a href="https://www.youtube.com/watch?v=1FjyKmpmQzc" target="_blank" class="resource-link">&#x25B6; Dig Into Paleontology &mdash; SciShow Kids</a>
+        <a href="https://www.youtube.com/watch?v=koota_lwU_4" target="_blank" class="resource-link">&#x25B6; Mary Anning: Fossil Hunter &mdash; SciShow Kids</a>
+        <a href="https://www.youtube.com/watch?v=cPqjeIhUNk8" target="_blank" class="resource-link">&#x25B6; Why Don't We Have More Fossils? &mdash; SciShow</a>
+        <a href="https://www.youtube.com/watch?v=erWsDXNeDW0" target="_blank" class="resource-link">&#x25B6; Walking With Dinosaurs &mdash; BBC Earth</a>
       </div>
-      <div class="progress-label">All Trails &amp; Main Challenge done!</div>
     </div>
-
-    <div class="gym-card gym-science" style="cursor: default; opacity: 0.80;">
-      <div class="gym-icon">&#x1F550;</div>
-      <div class="gym-name">Rotom Clock Gym</div>
-      <div class="gym-subject">Math · Analog Time</div>
-      <span class="badge badge-done">&#x1F3C5; Analog Time Badge</span>
-      <div class="progress-bar-wrap">
-        <div class="progress-bar-fill" style="width: 100%; background: var(--teal);"></div>
+    <div class="resource-gym-group">
+      <div class="resource-gym-label">&#x1F9EE; Fossil Math Gym</div>
+      <div class="resource-links">
+        <a href="https://www.youtube.com/watch?v=srW5v2VlPMo" target="_blank" class="resource-link">&#x25B6; Prehistoric Planet Size Comparison &mdash; BBC</a>
       </div>
-      <div class="progress-label">All Trails &amp; Main Challenge done!</div>
     </div>
+    <div class="resource-gym-group">
+      <div class="resource-gym-label">&#x26A1; Rotom-Dex Research Gym</div>
+      <div class="resource-links">
+        <a href="https://www.youtube.com/watch?v=q-Y-z6HmRgI" target="_blank" class="resource-link">&#x25B6; How to Choose Your News &mdash; TED-Ed</a>
+      </div>
+    </div>
+    <div class="resource-gym-group">
+      <div class="resource-gym-label">&#x1F437; Animal Farm (when streaming)</div>
+      <div class="resource-links">
+        <a href="https://www.youtube.com/watch?v=Cqbleas1mmo" target="_blank" class="resource-link">&#x25B6; Russian Revolution Part 1 &mdash; OverSimplified</a>
+        <a href="https://www.youtube.com/watch?v=b1reY72ktEc" target="_blank" class="resource-link">&#x25B6; Russian Revolution Part 2 &mdash; OverSimplified</a>
+      </div>
+    </div>
+  </div>
 
+  <!-- Quick Access -->
+  <div class="section-row">
+    <div class="section-title">&#x26A1; Quick Access</div>
+  </div>
+  <div class="quick-access">
+    <a href="schedules/schedule.html" class="quick-btn quick-btn-schedule">
+      &#x1F4C5; This Week's Schedule
+    </a>
+    <a href="gyms/burpee-lab-tracker.html" class="quick-btn quick-btn-burpee">
+      &#x1F9B4; Burpee Field Log
+    </a>
+  </div>
+
+  <!-- Completed Gyms - collapsed -->
+  <div class="completed-toggle" onclick="toggleCompleted()">
+    <div class="section-title">&#x2705; Completed Gyms &mdash; Badges Earned</div>
+    <span class="chevron" id="completed-chevron">&#x25BC;</span>
+  </div>
+  <div class="completed-body" id="completed-body">
+    <div class="gym-list">
+
+      <div class="gym-btn" style="--gym-color: #7C5CBF; opacity: 0.75; cursor: default;">
+        <div class="gym-sprite">
+          <!-- PLACEHOLDER: replace span with <img src="images/archen.png" alt="Archen"> -->
+          <span>&#x1F985;</span>
+        </div>
+        <div class="gym-btn-info">
+          <div class="gym-btn-name">Archen's Field Report Gym</div>
+          <div class="gym-btn-tagline">Science Writing &middot; Literacy</div>
+        </div>
+        <div class="gym-btn-right">
+          <span class="pill pill-done">&#x1F3C5; Taphonomy Badge</span>
+        </div>
+      </div>
+
+      <div class="gym-btn" style="--gym-color: var(--teal); opacity: 0.75; cursor: default;">
+        <div class="gym-sprite">
+          <!-- PLACEHOLDER: replace span with <img src="images/rotom.png" alt="Rotom"> -->
+          <span>&#x1F550;</span>
+        </div>
+        <div class="gym-btn-info">
+          <div class="gym-btn-name">Rotom Clock Gym</div>
+          <div class="gym-btn-tagline">Math &middot; Analog Time</div>
+        </div>
+        <div class="gym-btn-right">
+          <span class="pill pill-done">&#x1F3C5; Analog Time Badge</span>
+        </div>
+      </div>
+
+    </div>
   </div>
 
 </main>
@@ -492,30 +616,31 @@
 // ============================================================
 const SCHEDULE = {
   MON: [
-    "Animal Farm video",
-    "Lego Life Hacks",
-    "Cole's choice: Mia, Night Zoo, Activity",
+    "Gym: Fossil Math Trail 1 or Rotom-Dex Trail 2",
+    "Ms. Amber homework",
+    "Choice: 1 Mia Academy or Night Zookeeper 15 min",
     "1:30 Heartland"
   ],
   TUES: [
-    "9:30 Brock",
-    "Library & Animal Farm",
-    "2:30 Heartland"
+    "No homeschool today",
+    "10:00 ENT",
+    "1:00 Maeve",
+    "3:30 Heartland Social Group"
   ],
   WED: [
-    "Choice: listen to Animal Farm or do Madlibs",
-    "10:00 Burpee"
+    "Fun Stories or Mad Libs",
+    "Burpee"
   ],
   THU: [
-    "9:30 Maeve",
-    "2 Mia Academy lessons",
-    "Night Zookeeper 15 min",
+    "Pokemon Gym",
+    "Scratch - cap hunger",
+    "Choice: 1 Mia Academy or Night Zookeeper 15 min",
     "1:30 Ms. Amber"
   ],
   FRI: [
-    "Rotom-Dex Trial 2",
-    "Bracho Game",
-    "Zoo Lunch"
+    "Scratch",
+    "Pokemon Gym",
+    "Optional: Ms. Amber homework"
   ]
 };
 // ============================================================
@@ -555,6 +680,17 @@ const GYMS = {
       { id: 'rotom_t1', label: 'Trail 1',        done: true  },
       { id: 'rotom_t2', label: 'Trail 2',        done: false },
       { id: 'rotom_mc', label: 'Main Challenge', done: false },
+    ]
+  },
+  story: {
+    name: "Gengar's Story Catcher Gym",
+    barId: 'story-bar',
+    labelId: 'story-label',
+    color: '#6B21C8',
+    milestones: [
+      { id: 'story_t1', label: 'Trail 1: Written Story',  done: false },
+      { id: 'story_t2', label: 'Trail 2: Comic Strip',    done: false },
+      { id: 'story_mc', label: 'Main Challenge: Movie',   done: false },
     ]
   },
   math: {
@@ -701,6 +837,11 @@ function loadBurpeeVisits() {
     if (bar) { bar.style.width = Math.min(count / 40 * 100, 100) + '%'; bar.style.background = '#8B5E3C'; }
     if (label) label.textContent = count === 0 ? 'Open to log a visit →' : `${count} visit${count === 1 ? '' : 's'} logged`;
   } catch(e) {}
+}
+
+function toggleCompleted() {
+  document.getElementById('completed-body').classList.toggle('open');
+  document.getElementById('completed-chevron').classList.toggle('open');
 }
 
 buildSchedule();
