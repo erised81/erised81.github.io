@@ -433,8 +433,7 @@
 
     <a href="gyms/burpee-lab-tracker.html" class="gym-btn" style="--gym-color: #8B5E3C;">
       <div class="gym-sprite">
-        <!-- PLACEHOLDER: replace span with <img src="images/kabuto.png" alt="Kabuto"> -->
-        <span>&#x1F9B4;</span>
+        <img src="images/kabuto.png" alt="Kabuto">
       </div>
       <div class="gym-btn-info">
         <div class="gym-btn-name">Burpee Fossil Lab Gym</div>
@@ -448,8 +447,7 @@
 
     <a href="gyms/scratch-game.html" class="gym-btn" style="--gym-color: #F4781F;">
       <div class="gym-sprite">
-        <!-- PLACEHOLDER: replace span with <img src="images/tropius.png" alt="Tropius"> -->
-        <span>&#x1F995;</span>
+        <img src="images/tropius.png" alt="Tropius">
       </div>
       <div class="gym-btn-info">
         <div class="gym-btn-name">Brachiosaurus Survival Gym</div>
@@ -463,22 +461,21 @@
 
     <a href="gyms/rotom-dex-research.html" class="gym-btn" style="--gym-color: #2A82C9;">
       <div class="gym-sprite">
-        <!-- PLACEHOLDER: replace span with <img src="images/rotom.png" alt="Rotom"> -->
-        <span>&#x26A1;</span>
+        <img src="images/rotom-dex-alt.jpg" alt="Rotom-Dex">
       </div>
       <div class="gym-btn-info">
         <div class="gym-btn-name">Rotom-Dex Research Gym</div>
         <div class="gym-btn-tagline">Research Skills &middot; Source Evaluation</div>
       </div>
       <div class="gym-btn-right">
-        <span class="pill pill-active">Trail 1 Done</span>
+        <span class="pill pill-active">Trial 1 Done</span>
         <button class="track-btn" onclick="openModal(event,'rotom')">&#x270F; Progress</button>
       </div>
     </a>
 
     <a href="gyms/story-gym.html" class="gym-btn" style="--gym-color: #6B21C8;">
       <div class="gym-sprite">
-        <span>&#x1F47B;</span>
+        <img src="images/gengar.png" alt="Gengar">
       </div>
       <div class="gym-btn-info">
         <div class="gym-btn-name">Gengar's Story Catcher Gym</div>
@@ -492,8 +489,7 @@
 
     <a href="gyms/fossil-math.html" class="gym-btn" style="--gym-color: #E8A020;">
       <div class="gym-sprite">
-        <!-- PLACEHOLDER: replace span with <img src="images/cranidos.png" alt="Cranidos"> -->
-        <span>&#x1F9EE;</span>
+        <img src="images/cranidos.png" alt="Cranidos">
       </div>
       <div class="gym-btn-info">
         <div class="gym-btn-name">Professor Sada's Fossil Math Gym</div>
@@ -552,8 +548,7 @@
 
       <div class="gym-btn" style="--gym-color: #7C5CBF; opacity: 0.75; cursor: default;">
         <div class="gym-sprite">
-          <!-- PLACEHOLDER: replace span with <img src="images/archen.png" alt="Archen"> -->
-          <span>&#x1F985;</span>
+          <img src="images/archen.png" alt="Archen">
         </div>
         <div class="gym-btn-info">
           <div class="gym-btn-name">Archen's Field Report Gym</div>
@@ -667,8 +662,8 @@ const GYMS = {
     labelId: 'rotom-label',
     color: '#2A82C9',
     milestones: [
-      { id: 'rotom_t1', label: 'Trail 1',        done: true  },
-      { id: 'rotom_t2', label: 'Trail 2',        done: false },
+      { id: 'rotom_t1', label: 'Trial 1',        done: true  },
+      { id: 'rotom_t2', label: 'Trial 2',        done: false },
       { id: 'rotom_mc', label: 'Main Challenge', done: false },
     ]
   },
@@ -678,8 +673,8 @@ const GYMS = {
     labelId: 'story-label',
     color: '#6B21C8',
     milestones: [
-      { id: 'story_t1', label: 'Trail 1: Written Story',  done: false },
-      { id: 'story_t2', label: 'Trail 2: Comic Strip',    done: false },
+      { id: 'story_t1', label: 'Trial 1: Written Story',  done: false },
+      { id: 'story_t2', label: 'Trial 2: Comic Strip',    done: false },
       { id: 'story_mc', label: 'Main Challenge: Movie',   done: false },
     ]
   },
@@ -689,8 +684,8 @@ const GYMS = {
     labelId: 'math-label',
     color: '#E8A020',
     milestones: [
-      { id: 'math_t1', label: 'Trail 1',        done: false },
-      { id: 'math_t2', label: 'Trail 2',        done: false },
+      { id: 'math_t1', label: 'Trial 1',        done: false },
+      { id: 'math_t2', label: 'Trial 2',        done: false },
       { id: 'math_mc', label: 'Main Challenge', done: false },
     ]
   }

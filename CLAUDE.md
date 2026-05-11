@@ -42,8 +42,8 @@ All learning design must:
 ## The Pokémon Scarlet Academy Framework
 
 Learning is organized into **Gyms**, each containing:
-- **Trail 1** — introductory activity
-- **Trail 2** — building activity
+- **Trial 1** — introductory activity
+- **Trial 2** — building activity
 - **Main Challenge** — culminating project or demonstration
 
 All student-facing language uses Pokémon-style quest framing. Cole chooses which Gym to work on — this choice architecture is what makes the system work (approximately 90% success rate).
@@ -59,8 +59,8 @@ Every Gym document has two audiences:
 
 | Gym | Badge | Status |
 |-----|-------|--------|
-| 🕐 Rotom Clock Gym | Analog Time Badge | ✅ Complete — all Trails and Main Challenge done |
-| 🦅 Archen's Field Report Gym | Taphonomy Badge | ✅ Complete — all Trails and Main Challenge done |
+| 🕐 Rotom Clock Gym | Analog Time Badge | ✅ Complete — all Trials and Main Challenge done |
+| 🦅 Archen's Field Report Gym | Taphonomy Badge | ✅ Complete — all Trials and Main Challenge done |
 
 ---
 
@@ -68,7 +68,7 @@ Every Gym document has two audiences:
 
 | Gym | File | Status |
 |-----|------|--------|
-| ⚡ Rotom-Dex Research Gym | `gyms/rotom-dex-research.html` | Trail 1 complete |
+| ⚡ Rotom-Dex Research Gym | `gyms/rotom-dex-research.html` | Trial 1 complete |
 | 🦴 Professor Sada's Fossil Math Gym | `gyms/fossil-math.html` | Not yet started |
 | 🦖 Burpee Fossil Lab Gym | `gyms/burpee-fossil-lab.html` | Ongoing — visit log, portfolio tracker |
 | 🎮 Scratch Brachiosaurus Game | `gyms/scratch-game.html` | Trials 2–12 planned; Trials 2–3 complete |
@@ -232,12 +232,7 @@ All Gym HTML files follow these conventions:
 
 ## Weekly Planning Notes
 
-Weekly planning sessions happen in the Claude.ai chat interface (not here). Claude Code is for building and maintaining files. The claude.ai chat handles:
-- Weekly schedule planning
-- Curriculum thinking and gap identification
-- Drafting new Gym content before it moves into the repo
-
-When a new Gym or schedule is ready to build, it comes to Claude Code for implementation.
+Weekly planning now happens here. When Dawn provides a week's time windows and constraints, ask clarifying questions before building the plan — specifically about: Gym readiness (what Cole has recently completed or is mid-stream on), Cole's current interests and energy, and any recent momentum to build on.
 
 ---
 ## Resource Verification Policy

@@ -207,7 +207,7 @@
   }
 
   /* ===== TRAIL CARDS ===== */
-  .trail-card {
+  .trial-card {
     background: var(--card-bg);
     border: 2px solid rgba(168,85,247,0.3);
     border-radius: 20px;
@@ -217,22 +217,22 @@
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
   }
 
-  .trail-card.active {
+  .trial-card.active {
     border-color: var(--purple-glow);
     box-shadow: var(--shadow-glow), 0 4px 20px rgba(0,0,0,0.3);
   }
 
-  .trail-card.locked {
+  .trial-card.locked {
     opacity: 0.55;
     pointer-events: none;
   }
 
-  .trail-card.complete {
+  .trial-card.complete {
     border-color: var(--teal-gem);
     box-shadow: 0 0 20px rgba(0,229,255,0.2), 0 4px 20px rgba(0,0,0,0.3);
   }
 
-  .trail-header {
+  .trial-header {
     display: flex;
     align-items: center;
     gap: 14px;
@@ -243,19 +243,19 @@
     border-bottom: 1px solid rgba(168,85,247,0.2);
   }
 
-  .trail-header:hover {
+  .trial-header:hover {
     background: rgba(255,255,255,0.06);
   }
 
-  .trail-icon {
+  .trial-icon {
     font-size: 2rem;
     flex-shrink: 0;
     filter: drop-shadow(0 0 8px rgba(168,85,247,0.6));
   }
 
-  .trail-title-block { flex: 1; }
+  .trial-title-block { flex: 1; }
 
-  .trail-number {
+  .trial-number {
     font-family: 'Bangers', cursive;
     font-size: 11px;
     letter-spacing: 3px;
@@ -263,7 +263,7 @@
     text-transform: uppercase;
   }
 
-  .trail-name {
+  .trial-name {
     font-family: 'Bangers', cursive;
     font-size: 1.5rem;
     letter-spacing: 1px;
@@ -271,17 +271,17 @@
     line-height: 1.1;
   }
 
-  .trail-status {
+  .trial-status {
     font-size: 1.3rem;
     flex-shrink: 0;
   }
 
-  .trail-body {
+  .trial-body {
     padding: 22px 24px;
     display: none;
   }
 
-  .trail-body.open {
+  .trial-body.open {
     display: block;
     animation: slideDown 0.3s ease;
   }
@@ -592,7 +592,7 @@
   }
 
   /* ===== DIVIDER ===== */
-  .trail-divider {
+  .trial-divider {
     text-align: center;
     margin: 6px 0 12px;
     font-size: 1.1rem;
@@ -641,7 +641,7 @@
   <div class="progress-section">
     <div class="progress-label">
       <span>Gym Progress</span>
-      <span id="progress-text">0 / 3 Trails Complete</span>
+      <span id="progress-text">0 / 3 Trials Complete</span>
     </div>
     <div class="progress-track">
       <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
@@ -654,16 +654,16 @@
   </div>
 
   <!-- ===== TRAIL 1 ===== -->
-  <div class="trail-card active" id="card-0">
-    <div class="trail-header" onclick="toggleTrail(0)">
-      <div class="trail-icon">📖</div>
-      <div class="trail-title-block">
-        <div class="trail-number">Trail 1 · Written Story</div>
-        <div class="trail-name">The Written Trap</div>
+  <div class="trial-card active" id="card-0">
+    <div class="trial-header" onclick="toggleTrial(0)">
+      <div class="trial-icon">📖</div>
+      <div class="trial-title-block">
+        <div class="trial-number">Trial 1 · Written Story</div>
+        <div class="trial-name">The Written Trap</div>
       </div>
-      <div class="trail-status" id="status-0">▼</div>
+      <div class="trial-status" id="status-0">▼</div>
     </div>
-    <div class="trail-body open" id="body-0">
+    <div class="trial-body open" id="body-0">
 
       <div class="flavor-text">
         Gengar's first hiding spot: an old story where two bumbling adults try to kidnap a kid — and the kid is SO chaotic that they end up paying the dad to take him back. Gengar loves this one. The little gremlin kid reminds him of himself.
@@ -706,35 +706,35 @@
           <strong>Why this story:</strong> It's a classic comedy of reversal — the "powerful" adults end up helpless, and the chaotic kid wins. Cole's pizza-ordering humor instinct is exactly this: unexpected absurdism that derails the "serious" plan. He'll recognize the logic immediately.<br><br>
           <strong>Time estimate:</strong> 20–35 minutes total. The story is about 4,000 words — manageable in one sit or split across two short sessions.<br><br>
           <strong>Reading options:</strong> Read together, he reads independently, or use the VOA Learning English simplified version (also verified free at learningenglish.voanews.com — search "Ransom of Red Chief"). The simplified version is shorter and easier if needed.<br><br>
-          <strong>The output goal:</strong> One sentence. "The funniest part was ___ because ___." That's the ELA skill — noticing what creates the effect and naming it. Don't push for more than that on Trail 1.<br><br>
+          <strong>The output goal:</strong> One sentence. "The funniest part was ___ because ___." That's the ELA skill — noticing what creates the effect and naming it. Don't push for more than that on Trial 1.<br><br>
           <strong>Wisconsin standards:</strong> RL.8.3 (character interaction), RL.8.6 (point of view/purpose)
         </div>
       </div>
 
-      <button class="complete-btn" id="btn-0" onclick="completeTrail(0)">
-        👻 Gengar's Grip Loosens — Trail 1 Complete!
+      <button class="complete-btn" id="btn-0" onclick="completeTrial(0)">
+        👻 Gengar's Grip Loosens — Trial 1 Complete!
       </button>
       <div class="completion-banner" id="banner-0">
-        <p>✨ Trail 1 Cleared! ✨</p>
-        <small>The written story is free. Gengar is furious. Trail 2 is unlocked.</small>
+        <p>✨ Trial 1 Cleared! ✨</p>
+        <small>The written story is free. Gengar is furious. Trial 2 is unlocked.</small>
       </div>
 
     </div>
   </div>
 
-  <div class="trail-divider">· · · · ·</div>
+  <div class="trial-divider">· · · · ·</div>
 
   <!-- ===== TRAIL 2 ===== -->
-  <div class="trail-card locked" id="card-1">
-    <div class="trail-header" onclick="toggleTrail(1)">
-      <div class="trail-icon">🎨</div>
-      <div class="trail-title-block">
-        <div class="trail-number">Trail 2 · Comic Strip</div>
-        <div class="trail-name">The Visual Trap</div>
+  <div class="trial-card locked" id="card-1">
+    <div class="trial-header" onclick="toggleTrial(1)">
+      <div class="trial-icon">🎨</div>
+      <div class="trial-title-block">
+        <div class="trial-number">Trial 2 · Comic Strip</div>
+        <div class="trial-name">The Visual Trap</div>
       </div>
-      <div class="trail-status" id="status-1">🔒</div>
+      <div class="trial-status" id="status-1">🔒</div>
     </div>
-    <div class="trail-body" id="body-1">
+    <div class="trial-body" id="body-1">
 
       <div class="flavor-text">
         Gengar's second hiding spot: a comic strip. No paragraphs. No chapters. Just panels, pictures, and a punchline face in the last box. Gengar thinks you can't figure out how a story works if there are no words — but he's wrong.
@@ -764,7 +764,7 @@
         </li>
         <li class="step-item" onclick="toggleStep(1,3)">
           <div class="step-check" id="check-1-3"></div>
-          <div class="step-text">Compare to Trail 1: the written story used words to describe a funny face. The comic just SHOWED the face. Which hit harder — reading it or seeing it? <span class="output-tag">YOUR CHOICE: say it · write it · draw a comparison</span></div>
+          <div class="step-text">Compare to Trial 1: the written story used words to describe a funny face. The comic just SHOWED the face. Which hit harder — reading it or seeing it? <span class="output-tag">YOUR CHOICE: say it · write it · draw a comparison</span></div>
         </li>
       </ul>
 
@@ -783,30 +783,30 @@
         </div>
       </div>
 
-      <button class="complete-btn" id="btn-1" onclick="completeTrail(1)">
-        👻 Another Story Freed — Trail 2 Complete!
+      <button class="complete-btn" id="btn-1" onclick="completeTrial(1)">
+        👻 Another Story Freed — Trial 2 Complete!
       </button>
       <div class="completion-banner" id="banner-1">
-        <p>✨ Trail 2 Cleared! ✨</p>
+        <p>✨ Trial 2 Cleared! ✨</p>
         <small>Gengar is down to one story. The Main Challenge is unlocked.</small>
       </div>
 
     </div>
   </div>
 
-  <div class="trail-divider">· · · · ·</div>
+  <div class="trial-divider">· · · · ·</div>
 
   <!-- ===== MAIN CHALLENGE ===== -->
-  <div class="trail-card locked" id="card-2">
-    <div class="trail-header" onclick="toggleTrail(2)">
-      <div class="trail-icon">🎬</div>
-      <div class="trail-title-block">
-        <div class="trail-number">Main Challenge · Movie</div>
-        <div class="trail-name">The Final Trap</div>
+  <div class="trial-card locked" id="card-2">
+    <div class="trial-header" onclick="toggleTrial(2)">
+      <div class="trial-icon">🎬</div>
+      <div class="trial-title-block">
+        <div class="trial-number">Main Challenge · Movie</div>
+        <div class="trial-name">The Final Trap</div>
       </div>
-      <div class="trail-status" id="status-2">🔒</div>
+      <div class="trial-status" id="status-2">🔒</div>
     </div>
-    <div class="trail-body" id="body-2">
+    <div class="trial-body" id="body-2">
 
       <div class="flavor-text">
         Gengar saved the best story for last — the one with the villain who can't catch a break, the sidekick who suffers, and the waterfall that ruins everything. He thinks a movie is too big to figure out. He's wrong about that too.
@@ -833,7 +833,7 @@
         </li>
         <li class="step-item" onclick="toggleStep(2,2)">
           <div class="step-check" id="check-2-2"></div>
-          <div class="step-text">Think back across all three trails. Written story → Comic strip → Movie. Each one made something funny. Did they all use the same trick? Or different tricks?</div>
+          <div class="step-text">Think back across all three trials. Written story → Comic strip → Movie. Each one made something funny. Did they all use the same trick? Or different tricks?</div>
         </li>
         <li class="step-item" onclick="toggleStep(2,3)">
           <div class="step-check" id="check-2-3"></div>
@@ -862,12 +862,12 @@
             <li>Handwritten: perfectly fine, transcript note for the record</li>
           </ul>
           <strong>Do NOT:</strong> Ask for a rewrite unless Cole wants to. First draft IS the draft.<br><br>
-          <strong>Connecting the three trails:</strong> The underlying skill built across this Gym is RL.8.7 — analyzing how different media use different storytelling tools. Written story used exaggerated language and irony. Comic used visual expression and timing. Movie used animation, sound, and character design. Same goal (get you to laugh) — different tools.<br><br>
+          <strong>Connecting the three trials:</strong> The underlying skill built across this Gym is RL.8.7 — analyzing how different media use different storytelling tools. Written story used exaggerated language and irony. Comic used visual expression and timing. Movie used animation, sound, and character design. Same goal (get you to laugh) — different tools.<br><br>
           <strong>Wisconsin standards:</strong> RL.8.1 (cite evidence), RL.8.3 (analyze character), RL.8.7 (compare media), W.8.4 (clear writing), SL.8.4 (if spoken)
         </div>
       </div>
 
-      <button class="complete-btn" id="btn-2" onclick="completeTrail(2)">
+      <button class="complete-btn" id="btn-2" onclick="completeTrial(2)">
         👻 Gengar Caught! Main Challenge Complete!
       </button>
       <div class="completion-banner" id="banner-2">
@@ -907,7 +907,7 @@
 
   // Load state from localStorage
   let state = {
-    trails: [
+    trials: [
       { open: true, complete: false, steps: [false, false, false, false] },
       { open: false, complete: false, steps: [false, false, false, false] },
       { open: false, complete: false, steps: [false, false, false, false] }
@@ -925,15 +925,15 @@
     try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e) {}
   }
 
-  function toggleTrail(i) {
-    state.trails[i].open = !state.trails[i].open;
+  function toggleTrial(i) {
+    state.trials[i].open = !state.trials[i].open;
     saveState();
     renderAll();
   }
 
-  function toggleStep(trail, step) {
-    if (state.trails[trail].complete) return;
-    state.trails[trail].steps[step] = !state.trails[trail].steps[step];
+  function toggleStep(trial, step) {
+    if (state.trials[trial].complete) return;
+    state.trials[trial].steps[step] = !state.trials[trial].steps[step];
     saveState();
     renderAll();
   }
@@ -945,19 +945,19 @@
     content.classList.toggle('open');
   }
 
-  function completeTrail(i) {
-    state.trails[i].complete = true;
-    state.trails[i].open = false;
+  function completeTrial(i) {
+    state.trials[i].complete = true;
+    state.trials[i].open = false;
     // Mark all steps done
-    state.trails[i].steps = state.trails[i].steps.map(() => true);
+    state.trials[i].steps = state.trials[i].steps.map(() => true);
     // Unlock next
-    if (i + 1 < state.trails.length) {
-      state.trails[i + 1].open = true;
+    if (i + 1 < state.trials.length) {
+      state.trials[i + 1].open = true;
     }
     saveState();
     renderAll();
     // Check for gym complete
-    if (state.trails.every(t => t.complete)) {
+    if (state.trials.every(t => t.complete)) {
       setTimeout(() => {
         document.getElementById('final-badge').classList.add('show');
         document.getElementById('final-badge').scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -966,14 +966,14 @@
   }
 
   function renderAll() {
-    const completed = state.trails.filter(t => t.complete).length;
-    const total = state.trails.length;
+    const completed = state.trials.filter(t => t.complete).length;
+    const total = state.trials.length;
 
     // Progress
     document.getElementById('progress-fill').style.width = (completed / total * 100) + '%';
-    document.getElementById('progress-text').textContent = completed + ' / ' + total + ' Trails Complete';
+    document.getElementById('progress-text').textContent = completed + ' / ' + total + ' Trials Complete';
 
-    state.trails.forEach((trail, i) => {
+    state.trials.forEach((trial, i) => {
       const card = document.getElementById('card-' + i);
       const body = document.getElementById('body-' + i);
       const status = document.getElementById('status-' + i);
@@ -982,30 +982,30 @@
       const dot = document.getElementById('dot-' + i);
 
       // Determine if locked
-      const isLocked = i > 0 && !state.trails[i - 1].complete;
+      const isLocked = i > 0 && !state.trials[i - 1].complete;
 
       card.classList.remove('locked', 'active', 'complete');
-      if (trail.complete) {
+      if (trial.complete) {
         card.classList.add('complete');
         status.textContent = '✅';
         dot.classList.add('complete');
         dot.textContent = '✅';
         banner.classList.add('show');
         btn.disabled = true;
-        btn.textContent = '✅ Trail Complete';
+        btn.textContent = '✅ Trial Complete';
       } else if (isLocked) {
         card.classList.add('locked');
         status.textContent = '🔒';
       } else {
         card.classList.add('active');
-        status.textContent = trail.open ? '▲' : '▼';
+        status.textContent = trial.open ? '▲' : '▼';
       }
 
       // Body open/close
-      body.classList.toggle('open', trail.open && !isLocked);
+      body.classList.toggle('open', trial.open && !isLocked);
 
       // Steps
-      trail.steps.forEach((done, si) => {
+      trial.steps.forEach((done, si) => {
         const item = document.querySelector('#steps-' + i + ' .step-item:nth-child(' + (si + 1) + ')');
         const check = document.getElementById('check-' + i + '-' + si);
         if (item) item.classList.toggle('done', done);
