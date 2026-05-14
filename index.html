@@ -281,6 +281,17 @@
   .resource-links { display: flex; flex-wrap: wrap; gap: 0.4rem; }
   .resource-link { display: inline-flex; align-items: center; gap: 5px; font-size: 0.78rem; font-weight: 700; color: var(--text); text-decoration: none; background: var(--bg); border: 1.5px solid var(--border); padding: 4px 10px; border-radius: 20px; transition: border-color 0.15s, color 0.15s; white-space: nowrap; }
   .resource-link:hover { border-color: var(--red); color: var(--red); background: #FEF3F3; }
+  .resource-link.watched { text-decoration: line-through; opacity: 0.5; }
+  .resource-group-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; }
+  .resource-group-meta { display: flex; align-items: center; gap: 0.5rem; }
+  .vid-count-badge { font-size: 0.7rem; background: var(--border); border-radius: 10px; padding: 2px 7px; color: #666; }
+  .vid-chevron { font-size: 0.75rem; color: var(--muted); transition: transform 0.2s; }
+  .vid-chevron.open { transform: rotate(180deg); }
+  .resource-gym-group.all-watched { opacity: 0.6; }
+  .vid-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem; flex-wrap: wrap; }
+  .vid-watch-btn { font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 12px; border: 1.5px solid var(--border); background: transparent; cursor: pointer; color: var(--text); transition: all 0.15s; white-space: nowrap; }
+  .vid-watch-btn:hover { border-color: var(--red); color: var(--red); }
+  .vid-watch-btn.watched { border-color: #2E6B3E; color: #2E6B3E; background: #F0FAF4; }
 
   /* Completed gyms collapsible */
   .completed-toggle { display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; padding-bottom: 0.4rem; border-bottom: 2px solid var(--border); margin-top: 1rem; }
@@ -454,7 +465,7 @@
         <div class="gym-btn-tagline">Computer Science &middot; Scratch Game</div>
       </div>
       <div class="gym-btn-right">
-        <span class="pill pill-active">In Progress</span>
+        <span class="pill pill-active" id="scratch-pill">In Progress</span>
         <button class="track-btn" onclick="openModal(event,'scratch')">&#x270F; Progress</button>
       </div>
     </a>
@@ -468,7 +479,7 @@
         <div class="gym-btn-tagline">Research Skills &middot; Source Evaluation</div>
       </div>
       <div class="gym-btn-right">
-        <span class="pill pill-active">Trial 1 Done</span>
+        <span class="pill pill-active" id="rotom-pill">Trial 1 Done</span>
         <button class="track-btn" onclick="openModal(event,'rotom')">&#x270F; Progress</button>
       </div>
     </a>
@@ -482,7 +493,7 @@
         <div class="gym-btn-tagline">ELA &middot; Story &amp; Media Analysis</div>
       </div>
       <div class="gym-btn-right">
-        <span class="pill pill-active">In Progress</span>
+        <span class="pill pill-active" id="story-pill">In Progress</span>
         <button class="track-btn" onclick="openModal(event,'story')">&#x270F; Progress</button>
       </div>
     </a>
@@ -496,47 +507,103 @@
         <div class="gym-btn-tagline">Math &middot; Scale &amp; Proportion</div>
       </div>
       <div class="gym-btn-right">
-        <span class="pill pill-coming">Not Started</span>
+        <span class="pill pill-coming" id="math-pill">Not Started</span>
         <button class="track-btn" onclick="openModal(event,'math')">&#x270F; Progress</button>
       </div>
     </a>
 
+    <a href="gyms/steam-lab.html" class="gym-btn" style="--gym-color: #FF8C00;">
+      <div class="gym-sprite">
+        <img src="images/volcanion.png" alt="Volcanion">
+      </div>
+      <div class="gym-btn-info">
+        <div class="gym-btn-name">Volcanion's Steam Lab Gym</div>
+        <div class="gym-btn-tagline">Chemistry &middot; Chemical Reactions</div>
+      </div>
+      <div class="gym-btn-right">
+        <span class="pill pill-coming" id="steam-pill">Not Started</span>
+        <button class="track-btn" onclick="openModal(event,'steam')">&#x270F; Progress</button>
+      </div>
+    </a>
+
+    <a href="gyms/hoenn-field-study.html" class="gym-btn" style="--gym-color: #1A8C7A;">
+      <div class="gym-sprite">
+        <span>&#x1F30A;</span>
+      </div>
+      <div class="gym-btn-info">
+        <div class="gym-btn-name">Professor Birch's Hoenn Field Study Gym</div>
+        <div class="gym-btn-tagline">Earth Science &middot; Natural Disasters &middot; Biomes</div>
+      </div>
+      <div class="gym-btn-right">
+        <span class="pill pill-coming" id="hoenn-pill">Not Started</span>
+        <button class="track-btn" onclick="openModal(event,'hoenn')">&#x270F; Progress</button>
+      </div>
+    </a>
+
+    <a href="gyms/critic-gym.html" class="gym-btn" style="--gym-color: #3050A0;">
+      <div class="gym-sprite">
+        <span>&#x1F50D;</span>
+      </div>
+      <div class="gym-btn-info">
+        <div class="gym-btn-name">Agent Inteleon's Critic Gym</div>
+        <div class="gym-btn-tagline">ELA &middot; Evaluation &amp; Opinion Writing</div>
+      </div>
+      <div class="gym-btn-right">
+        <span class="pill pill-coming" id="critic-pill">Not Started</span>
+        <button class="track-btn" onclick="openModal(event,'critic')">&#x270F; Progress</button>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- PDA Box — Standalone Activities -->
+  <div class="completed-toggle" onclick="toggleStandalone()">
+    <div class="section-title">&#x1F4E6; PDA Box &mdash; Standalone Activities</div>
+    <span class="chevron open" id="standalone-chevron">&#x25BC;</span>
+  </div>
+  <div class="completed-body open" id="standalone-body">
+    <div class="gym-list">
+
+      <div class="gym-btn" style="--gym-color: #E8A020; cursor: default;">
+        <div class="gym-sprite">
+          <span>&#x1F4D0;</span>
+        </div>
+        <div class="gym-btn-info">
+          <div class="gym-btn-name">Finding the Volume of a Wedge</div>
+          <div class="gym-btn-tagline">Math &middot; Measurement &middot; PDA Box Activity 3</div>
+        </div>
+        <div class="gym-btn-right">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;" onclick="event.stopPropagation()">
+            <input type="checkbox" id="standalone-wedge" style="width:16px;height:16px;accent-color:var(--teal);cursor:pointer;" onchange="saveStandalone()">
+            <span id="standalone-wedge-label" style="font-size:0.7rem;font-weight:700;color:var(--muted);">Mark done</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="gym-btn" style="--gym-color: #F4781F; cursor: default;">
+        <div class="gym-sprite">
+          <span>&#x1F9F1;</span>
+        </div>
+        <div class="gym-btn-info">
+          <div class="gym-btn-name">Lego Recreate</div>
+          <div class="gym-btn-tagline">Design &middot; Spatial Reasoning &middot; PDA Box Activity 9</div>
+        </div>
+        <div class="gym-btn-right">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;" onclick="event.stopPropagation()">
+            <input type="checkbox" id="standalone-lego" style="width:16px;height:16px;accent-color:var(--teal);cursor:pointer;" onchange="saveStandalone()">
+            <span id="standalone-lego-label" style="font-size:0.7rem;font-weight:700;color:var(--muted);">Mark done</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <!-- Video Resources -->
   <div class="section-row">
     <div class="section-title">&#x25B6; Watch &amp; Explore</div>
   </div>
-  <div class="resource-section">
-    <div class="resource-gym-group">
-      <div class="resource-gym-label">&#x1F9B4; Burpee Fossil Lab + Field Report Gym</div>
-      <div class="resource-links">
-        <a href="https://www.youtube.com/watch?v=1FjyKmpmQzc" target="_blank" class="resource-link">&#x25B6; Dig Into Paleontology &mdash; SciShow Kids</a>
-        <a href="https://www.youtube.com/watch?v=koota_lwU_4" target="_blank" class="resource-link">&#x25B6; Mary Anning: Fossil Hunter &mdash; SciShow Kids</a>
-        <a href="https://www.youtube.com/watch?v=cPqjeIhUNk8" target="_blank" class="resource-link">&#x25B6; Why Don't We Have More Fossils? &mdash; SciShow</a>
-        <a href="https://www.youtube.com/watch?v=erWsDXNeDW0" target="_blank" class="resource-link">&#x25B6; Walking With Dinosaurs &mdash; BBC Earth</a>
-      </div>
-    </div>
-    <div class="resource-gym-group">
-      <div class="resource-gym-label">&#x1F9EE; Fossil Math Gym</div>
-      <div class="resource-links">
-        <a href="https://www.youtube.com/watch?v=srW5v2VlPMo" target="_blank" class="resource-link">&#x25B6; Prehistoric Planet Size Comparison &mdash; BBC</a>
-      </div>
-    </div>
-    <div class="resource-gym-group">
-      <div class="resource-gym-label">&#x26A1; Rotom-Dex Research Gym</div>
-      <div class="resource-links">
-        <a href="https://www.youtube.com/watch?v=q-Y-z6HmRgI" target="_blank" class="resource-link">&#x25B6; How to Choose Your News &mdash; TED-Ed</a>
-      </div>
-    </div>
-    <div class="resource-gym-group">
-      <div class="resource-gym-label">&#x1F437; Animal Farm (when streaming)</div>
-      <div class="resource-links">
-        <a href="https://www.youtube.com/watch?v=Cqbleas1mmo" target="_blank" class="resource-link">&#x25B6; Russian Revolution Part 1 &mdash; OverSimplified</a>
-        <a href="https://www.youtube.com/watch?v=b1reY72ktEc" target="_blank" class="resource-link">&#x25B6; Russian Revolution Part 2 &mdash; OverSimplified</a>
-      </div>
-    </div>
-  </div>
+  <div id="video-section" class="resource-section"></div>
 
   <!-- Completed Gyms - collapsed -->
   <div class="completed-toggle" onclick="toggleCompleted()">
@@ -636,8 +703,7 @@ const DAYS = ['MON', 'TUES', 'WED', 'THU', 'FRI'];
 const GYMS = {
   scratch: {
     name: 'Brachiosaurus Survival Gym',
-    barId: 'scratch-bar',
-    labelId: 'scratch-label',
+    pillId: 'scratch-pill',
     color: '#F4781F',
     milestones: [
       { id: 'scratch_t1',  label: 'Trial 1: Movement',          done: true  },
@@ -656,8 +722,7 @@ const GYMS = {
   },
   rotom: {
     name: 'Rotom-Dex Research Gym',
-    barId: 'rotom-bar',
-    labelId: 'rotom-label',
+    pillId: 'rotom-pill',
     color: '#2A82C9',
     milestones: [
       { id: 'rotom_t1', label: 'Trial 1',        done: true  },
@@ -667,8 +732,7 @@ const GYMS = {
   },
   story: {
     name: "Gengar's Story Catcher Gym",
-    barId: 'story-bar',
-    labelId: 'story-label',
+    pillId: 'story-pill',
     color: '#6B21C8',
     milestones: [
       { id: 'story_t1', label: 'Trial 1: Written Story',  done: false },
@@ -678,13 +742,42 @@ const GYMS = {
   },
   math: {
     name: 'Fossil Math Gym',
-    barId: 'math-bar',
-    labelId: 'math-label',
+    pillId: 'math-pill',
     color: '#E8A020',
     milestones: [
       { id: 'math_t1', label: 'Trial 1',        done: false },
       { id: 'math_t2', label: 'Trial 2',        done: false },
       { id: 'math_mc', label: 'Main Challenge', done: false },
+    ]
+  },
+  steam: {
+    name: "Volcanion's Steam Lab Gym",
+    pillId: 'steam-pill',
+    color: '#FF8C00',
+    milestones: [
+      { id: 'steam_t1', label: "Trial 1: Koffing's Foamy Gas Potion", done: false },
+      { id: 'steam_t2', label: 'Trial 2: Why Do Chemicals React?',     done: false },
+      { id: 'steam_mc', label: 'Main Challenge: Deep Dive',            done: false },
+    ]
+  },
+  hoenn: {
+    name: "Professor Birch's Hoenn Field Study Gym",
+    pillId: 'hoenn-pill',
+    color: '#1A8C7A',
+    milestones: [
+      { id: 'hoenn_t1', label: 'Trial 1: Hoenn Natural Disaster Investigation', done: false },
+      { id: 'hoenn_t2', label: 'Trial 2: Almanac Pokémon Connection',           done: false },
+      { id: 'hoenn_mc', label: 'Main Challenge: Pokémon & Dinosaur Mad Lib',    done: false },
+    ]
+  },
+  critic: {
+    name: "Agent Inteleon's Critic Gym",
+    pillId: 'critic-pill',
+    color: '#3050A0',
+    milestones: [
+      { id: 'critic_t1', label: 'Trial 1: Board Game Reviews', done: false },
+      { id: 'critic_t2', label: 'Trial 2: Dig Em Up Dinos',    done: false },
+      { id: 'critic_mc', label: 'Main Challenge: Hip Hop Pops', done: false },
     ]
   }
 };
@@ -750,15 +843,20 @@ function refreshGymCard(gymKey) {
   if (total === 0) return;
 
   const doneCount = gym.milestones.filter(m => isMilestoneDone(m)).length;
-  const pct = Math.round(doneCount / total * 100);
 
-  const bar = document.getElementById(gym.barId);
-  const label = document.getElementById(gym.labelId);
-  if (bar) { bar.style.width = pct + '%'; bar.style.background = gym.color; }
-  if (label) {
-    if (doneCount === 0) label.textContent = 'Not started yet';
-    else if (doneCount === total) label.textContent = 'All done — badge earned! 🎉';
-    else label.textContent = `${doneCount} of ${total} complete`;
+  const pill = document.getElementById(gym.pillId);
+  if (pill) {
+    pill.className = 'pill';
+    if (doneCount === 0) {
+      pill.classList.add('pill-coming');
+      pill.textContent = 'Not Started';
+    } else if (doneCount === total) {
+      pill.classList.add('pill-done');
+      pill.textContent = '🏅 Badge Earned!';
+    } else {
+      pill.classList.add('pill-active');
+      pill.textContent = `${doneCount} of ${total} done`;
+    }
   }
 }
 
@@ -827,9 +925,163 @@ function toggleCompleted() {
   document.getElementById('completed-chevron').classList.toggle('open');
 }
 
+function toggleStandalone() {
+  document.getElementById('standalone-body').classList.toggle('open');
+  document.getElementById('standalone-chevron').classList.toggle('open');
+}
+
+function saveStandalone() {
+  ['wedge','lego'].forEach(id => {
+    const cb = document.getElementById('standalone-' + id);
+    const label = document.getElementById('standalone-' + id + '-label');
+    if (cb) {
+      localStorage.setItem('standalone_' + id, cb.checked ? '1' : '0');
+      if (label) label.textContent = cb.checked ? 'Done ✓' : 'Mark done';
+    }
+  });
+}
+
+function loadStandalone() {
+  ['wedge','lego'].forEach(id => {
+    const cb = document.getElementById('standalone-' + id);
+    const label = document.getElementById('standalone-' + id + '-label');
+    if (cb) {
+      const done = localStorage.getItem('standalone_' + id) === '1';
+      cb.checked = done;
+      if (label) label.textContent = done ? 'Done ✓' : 'Mark done';
+    }
+  });
+}
+
+const VIDEOS = {
+  burpee: {
+    label: '🦴 Burpee Fossil Lab + Field Report Gym',
+    videos: [
+      { title: 'Dig Into Paleontology — SciShow Kids', url: 'https://www.youtube.com/watch?v=1FjyKmpmQzc' },
+      { title: 'Mary Anning: Fossil Hunter — SciShow Kids', url: 'https://www.youtube.com/watch?v=koota_lwU_4' },
+      { title: "Why Don't We Have More Fossils? — SciShow", url: 'https://www.youtube.com/watch?v=cPqjeIhUNk8' },
+      { title: 'Walking With Dinosaurs — BBC Earth', url: 'https://www.youtube.com/watch?v=erWsDXNeDW0' }
+    ]
+  },
+  fossil_math: {
+    label: '🧮 Fossil Math Gym',
+    videos: [
+      { title: 'Prehistoric Planet Size Comparison — BBC', url: 'https://www.youtube.com/watch?v=srW5v2VlPMo' }
+    ]
+  },
+  rotom: {
+    label: '⚡ Rotom-Dex Research Gym',
+    videos: [
+      { title: 'How to Choose Your News — TED-Ed', url: 'https://www.youtube.com/watch?v=q-Y-z6HmRgI' }
+    ]
+  },
+  animal_farm: {
+    label: '🐷 Animal Farm (when streaming)',
+    videos: [
+      { title: 'Russian Revolution Part 1 — OverSimplified', url: 'https://www.youtube.com/watch?v=Cqbleas1mmo' },
+      { title: 'Russian Revolution Part 2 — OverSimplified', url: 'https://www.youtube.com/watch?v=b1reY72ktEc' }
+    ]
+  }
+};
+
+function buildVideos() {
+  const section = document.getElementById('video-section');
+  if (!section) return;
+  section.innerHTML = '';
+
+  Object.entries(VIDEOS).forEach(([groupKey, group]) => {
+    const total = group.videos.length;
+    const watchedCount = group.videos.filter((_, i) => localStorage.getItem('vid_' + groupKey + '_' + i) === '1').length;
+    const allWatched = watchedCount === total;
+    const savedState = localStorage.getItem('vid_group_' + groupKey);
+    const groupOpen = allWatched ? savedState === '1' : savedState !== '0';
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'resource-gym-group' + (allWatched ? ' all-watched' : '');
+    wrapper.id = 'vidgroup-' + groupKey;
+
+    const header = document.createElement('div');
+    header.className = 'resource-group-header';
+    header.onclick = () => toggleVidGroup(groupKey);
+
+    const labelEl = document.createElement('div');
+    labelEl.className = 'resource-gym-label';
+    labelEl.id = 'vidgroup-label-' + groupKey;
+    labelEl.textContent = allWatched ? group.label + ' — All watched ✓' : group.label;
+
+    const meta = document.createElement('div');
+    meta.className = 'resource-group-meta';
+
+    const badge = document.createElement('span');
+    badge.className = 'vid-count-badge';
+    badge.textContent = watchedCount + '/' + total + ' watched';
+
+    const chevron = document.createElement('span');
+    chevron.className = 'vid-chevron' + (groupOpen ? ' open' : '');
+    chevron.id = 'vidgroup-chevron-' + groupKey;
+    chevron.textContent = '▼';
+
+    meta.appendChild(badge);
+    meta.appendChild(chevron);
+    header.appendChild(labelEl);
+    header.appendChild(meta);
+    wrapper.appendChild(header);
+
+    const links = document.createElement('div');
+    links.className = 'resource-links';
+    links.id = 'vidgroup-links-' + groupKey;
+    links.style.display = groupOpen ? '' : 'none';
+    links.style.marginTop = '0.5rem';
+    links.style.flexDirection = 'column';
+
+    group.videos.forEach((vid, i) => {
+      const watched = localStorage.getItem('vid_' + groupKey + '_' + i) === '1';
+
+      const row = document.createElement('div');
+      row.className = 'vid-row';
+
+      const link = document.createElement('a');
+      link.href = vid.url;
+      link.target = '_blank';
+      link.className = 'resource-link' + (watched ? ' watched' : '');
+      link.innerHTML = '▶ ' + vid.title;
+
+      const btn = document.createElement('button');
+      btn.className = 'vid-watch-btn' + (watched ? ' watched' : '');
+      btn.textContent = watched ? '✓ Watched' : 'Mark Watched';
+      btn.onclick = (e) => { e.stopPropagation(); toggleWatched(groupKey, i); };
+
+      row.appendChild(link);
+      row.appendChild(btn);
+      links.appendChild(row);
+    });
+
+    wrapper.appendChild(links);
+    section.appendChild(wrapper);
+  });
+}
+
+function toggleWatched(groupKey, idx) {
+  const key = 'vid_' + groupKey + '_' + idx;
+  localStorage.setItem(key, localStorage.getItem(key) === '1' ? '0' : '1');
+  buildVideos();
+}
+
+function toggleVidGroup(groupKey) {
+  const links = document.getElementById('vidgroup-links-' + groupKey);
+  const chevron = document.getElementById('vidgroup-chevron-' + groupKey);
+  if (!links) return;
+  const isOpen = links.style.display !== 'none';
+  links.style.display = isOpen ? 'none' : '';
+  if (chevron) chevron.classList.toggle('open', !isOpen);
+  localStorage.setItem('vid_group_' + groupKey, isOpen ? '0' : '1');
+}
+
 buildSchedule();
 Object.keys(GYMS).forEach(key => refreshGymCard(key));
 loadBurpeeVisits();
+loadStandalone();
+buildVideos();
 </script>
 
 </body>

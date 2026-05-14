@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(cd \"c:\\\\projects\\\\erised81.github.io\" && rm index-preview.html && git status)"
+      "Bash(cd \"c:\\\\projects\\\\erised81.github.io\" && rm index-preview.html && git status)",
+      "Bash(grep -E \"\\\\.html$\")"
     ],
     "additionalDirectories": [
       "c:\\projects\\erised81.github.io"

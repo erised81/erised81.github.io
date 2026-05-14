@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Inteleon's Critic Gym</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800&display=swap');
+
+  :root {
+    --blue: #3050A0;
+    --blue-light: #5070C8;
+    --blue-glow: #80A0F0;
+    --deep: #020408;
+    --card-bg: rgba(4, 8, 20, 0.88);
+    --silver: #B0C0D8;
+    --gold: #FFD600;
+    --white-soft: #F0F4FF;
+    --complete: #00E5FF;
+    --shadow-glow: 0 0 30px rgba(48, 80, 160, 0.45);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--deep);
+    color: var(--white-soft);
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 58% 14%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 78% 44%, rgba(255,255,255,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 92% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(2px 2px at 45% 50%, rgba(48,80,160,0.45) 0%, transparent 100%),
+      radial-gradient(2px 2px at 70% 85%, rgba(80,112,200,0.35) 0%, transparent 100%),
+      radial-gradient(600px at 18% 28%, rgba(48,80,160,0.10) 0%, transparent 70%),
+      radial-gradient(400px at 82% 68%, rgba(48,80,160,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+
+  /* ===== HEADER ===== */
+  .gym-header { text-align: center; padding: 32px 20px 24px; }
+
+  .gym-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #1A2860, var(--blue));
+    color: white;
+    font-family: 'Bangers', cursive;
+    font-size: 13px;
+    letter-spacing: 3px;
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .gym-title {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(2.2rem, 7vw, 3.6rem);
+    letter-spacing: 3px;
+    line-height: 1.05;
+    background: linear-gradient(135deg, var(--blue-glow), var(--silver), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px rgba(48,80,160,0.6));
+    margin-bottom: 8px;
+  }
+
+  .gym-emoji {
+    font-size: 3.5rem;
+    display: block;
+    margin: 8px 0;
+    filter: drop-shadow(0 0 14px rgba(80,112,200,0.8));
+    animation: scan 3s ease-in-out infinite;
+  }
+
+  @keyframes scan {
+    0%, 100% { transform: translateY(0px); }
+    25% { transform: translateY(-6px) rotate(-3deg); }
+    75% { transform: translateY(-4px) rotate(3deg); }
+  }
+
+  .gym-subtitle {
+    font-size: 0.95rem;
+    color: rgba(240,244,255,0.7);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .badge-reward {
+    display: inline-block;
+    background: linear-gradient(135deg, #1A2860, var(--blue-light));
+    color: white;
+    font-family: 'Bangers', cursive;
+    font-size: 13px;
+    letter-spacing: 2px;
+    padding: 6px 18px;
+    border-radius: 20px;
+  }
+
+  /* ===== HOOK CARD ===== */
+  .hook-card {
+    background: linear-gradient(135deg, rgba(48,80,160,0.35), rgba(80,112,200,0.15));
+    border: 2px solid rgba(48,80,160,0.5);
+    border-radius: 20px;
+    padding: 24px 28px;
+    margin: 0 0 28px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-glow);
+  }
+
+  .hook-card::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(80,112,200,0.2), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hook-label {
+    font-family: 'Bangers', cursive;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--blue-glow);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .hook-text {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--white-soft);
+    font-weight: 600;
+  }
+
+  .hook-text strong { color: var(--gold); }
+
+  /* ===== PROGRESS ===== */
+  .progress-section { margin-bottom: 28px; }
+
+  .progress-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--blue-light);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .progress-track {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    height: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(48,80,160,0.3);
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #1A2860, var(--blue-glow));
+    border-radius: 10px;
+    transition: width 0.6s ease;
+    box-shadow: 0 0 10px rgba(48,80,160,0.6);
+  }
+
+  .progress-dots {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    justify-content: center;
+  }
+
+  .progress-dot {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2px solid rgba(48,80,160,0.4);
+    background: rgba(255,255,255,0.05);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    transition: all 0.4s ease;
+  }
+
+  .progress-dot.complete {
+    background: linear-gradient(135deg, #1A2860, var(--blue));
+    border-color: var(--blue-glow);
+    box-shadow: 0 0 12px rgba(48,80,160,0.5);
+  }
+
+  /* ===== TRIAL CARDS ===== */
+  .trial-card {
+    background: var(--card-bg);
+    border: 2px solid rgba(48,80,160,0.25);
+    border-radius: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+
+  .trial-card.active {
+    border-color: var(--blue-light);
+    box-shadow: var(--shadow-glow), 0 4px 20px rgba(0,0,0,0.4);
+  }
+
+  .trial-card.locked {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .trial-card.complete {
+    border-color: var(--complete);
+    box-shadow: 0 0 20px rgba(0,229,255,0.2), 0 4px 20px rgba(0,0,0,0.4);
+  }
+
+  .trial-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 22px;
+    cursor: pointer;
+    user-select: none;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(48,80,160,0.15);
+  }
+
+  .trial-header:hover { background: rgba(255,255,255,0.06); }
+
+  .trial-icon { font-size: 2rem; flex-shrink: 0; filter: drop-shadow(0 0 8px rgba(48,80,160,0.6)); }
+  .trial-title-block { flex: 1; }
+
+  .trial-number {
+    font-family: 'Bangers', cursive;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--blue-light);
+    text-transform: uppercase;
+  }
+
+  .trial-name {
+    font-family: 'Bangers', cursive;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    color: var(--white-soft);
+    line-height: 1.1;
+  }
+
+  .trial-status { font-size: 1.3rem; flex-shrink: 0; }
+
+  .trial-body { padding: 22px 24px; display: none; }
+
+  .trial-body.open {
+    display: block;
+    animation: slideDown 0.3s ease;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .trial-desc {
+    background: rgba(48,80,160,0.18);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 12px 12px 0;
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    font-size: 0.95rem;
+    color: #C0D0FF;
+    line-height: 1.65;
+    font-weight: 600;
+  }
+
+  .box-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(48,80,160,0.14);
+    border: 1.5px solid rgba(48,80,160,0.45);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--blue-light);
+    margin-bottom: 18px;
+  }
+
+  .parent-guide { margin-top: 4px; }
+
+  .parent-toggle {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(48,80,160,0.22);
+    border-radius: 10px;
+    padding: 10px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #A0B8F0;
+    text-transform: uppercase;
+    width: 100%;
+    text-align: left;
+    transition: background 0.2s;
+  }
+
+  .parent-toggle:hover { background: rgba(255,255,255,0.09); }
+  .parent-arrow { transition: transform 0.3s ease; font-size: 11px; }
+  .parent-toggle.open .parent-arrow { transform: rotate(180deg); }
+
+  .parent-content {
+    display: none;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(48,80,160,0.18);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    padding: 16px 18px;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: #C0D0FF;
+  }
+
+  .parent-content.open { display: block; }
+  .parent-content strong { color: var(--gold); }
+
+  .complete-btn {
+    width: 100%;
+    margin-top: 18px;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #1A2860, var(--blue-light));
+    border: none;
+    border-radius: 14px;
+    color: white;
+    font-family: 'Bangers', cursive;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(48,80,160,0.35);
+  }
+
+  .complete-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(48,80,160,0.55);
+  }
+
+  .complete-btn:active { transform: translateY(0); }
+
+  .complete-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .complete-btn.undo-mode {
+    background: rgba(255,255,255,0.07);
+    box-shadow: none;
+    color: rgba(255,255,255,0.45);
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .complete-btn.undo-mode:hover {
+    transform: none;
+    box-shadow: none;
+    background: rgba(255,60,60,0.12);
+    border-color: rgba(255,120,120,0.35);
+    color: rgba(255,180,180,0.85);
+  }
+
+  .completion-banner {
+    display: none;
+    background: linear-gradient(135deg, rgba(0,229,255,0.12), rgba(48,80,160,0.25));
+    border: 2px solid var(--complete);
+    border-radius: 16px;
+    padding: 18px 22px;
+    text-align: center;
+    margin-top: 12px;
+    animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .completion-banner.show { display: block; }
+
+  .completion-banner p {
+    font-family: 'Bangers', cursive;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    color: var(--complete);
+    filter: drop-shadow(0 0 8px rgba(0,229,255,0.5));
+  }
+
+  .completion-banner small {
+    font-size: 0.85rem;
+    color: #C0D0FF;
+    font-weight: 600;
+    display: block;
+    margin-top: 4px;
+  }
+
+  .trial-divider {
+    text-align: center;
+    margin: 6px 0 12px;
+    font-size: 1.1rem;
+    color: rgba(48,80,160,0.4);
+    letter-spacing: 8px;
+  }
+
+  .final-badge {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 24px;
+  }
+
+  .final-badge.show { display: block; animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1); }
+
+  .badge-circle {
+    width: 120px; height: 120px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1A2860, var(--blue), var(--silver));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem;
+    box-shadow: 0 0 50px rgba(48,80,160,0.7), 0 0 100px rgba(80,112,200,0.3);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 50px rgba(48,80,160,0.7), 0 0 100px rgba(80,112,200,0.3); }
+    50% { box-shadow: 0 0 70px rgba(48,80,160,0.9), 0 0 130px rgba(80,112,200,0.5); }
+  }
+
+  .badge-title {
+    font-family: 'Bangers', cursive;
+    font-size: 2.2rem;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, var(--blue-glow), var(--silver), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .badge-desc {
+    font-size: 0.95rem;
+    color: #C0D0FF;
+    font-weight: 600;
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .standards-section {
+    margin-top: 32px;
+    padding: 20px 22px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(48,80,160,0.2);
+    border-radius: 16px;
+  }
+
+  .standards-title {
+    font-family: 'Bangers', cursive;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    color: var(--blue-light);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .standards-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .standard-tag {
+    background: rgba(48,80,160,0.3);
+    border: 1px solid rgba(48,80,160,0.35);
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #C0D0FF;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="gym-header">
+    <div class="gym-badge">&#x1F50D; Pokémon Scarlet Academy &#x1F50D;</div>
+    <span class="gym-emoji">&#x1F575;&#xFE0F;</span>
+    <h1 class="gym-title">Agent Inteleon's<br>Critic Gym</h1>
+    <p class="gym-subtitle">Gym Leader: Inteleon &middot; The Secret Agent Pokémon</p>
+    <div class="badge-reward">&#x1F3C5; Earn: The Sharp Eye Badge</div>
+  </div>
+
+  <!-- HOOK -->
+  <div class="hook-card">
+    <div class="hook-label">&#x1F4CB; Agent Briefing</div>
+    <div class="hook-text">
+      Inteleon never takes anything at face value. Every game has strengths. Every experience has weaknesses. A <strong>good critic doesn't just say "I liked it"</strong> — they say why, and what could be better. Three reviews. One badge. The mission begins now.
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-section">
+    <div class="progress-label">
+      <span>Gym Progress</span>
+      <span id="progress-text">0 / 3 Trials Complete</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+    <div class="progress-dots">
+      <div class="progress-dot" id="dot-0">&#x1F3B2;</div>
+      <div class="progress-dot" id="dot-1">&#x1F9B4;</div>
+      <div class="progress-dot" id="dot-2">&#x1F3A4;</div>
+    </div>
+  </div>
+
+  <!-- ===== TRIAL 1 ===== -->
+  <div class="trial-card active" id="card-0">
+    <div class="trial-header" onclick="toggleTrial(0)">
+      <div class="trial-icon">&#x1F3B2;</div>
+      <div class="trial-title-block">
+        <div class="trial-number">Trial 1</div>
+        <div class="trial-name">Board Game Reviews</div>
+      </div>
+      <div class="trial-status" id="status-0">&#x25BC;</div>
+    </div>
+    <div class="trial-body open" id="body-0">
+
+      <div class="trial-desc">
+        Review a board game that came in a previous PDA box. Describe what it is and share your honest take — what worked, what didn't, and whether you'd recommend it.
+      </div>
+
+      <div class="box-tag">&#x1F4E6; Box Activity: Board Game Reviews</div>
+
+      <div class="parent-guide">
+        <button class="parent-toggle" onclick="toggleParent(0)">
+          <span>&#x1F4CB; Parent Guide</span>
+          <span style="flex:1"></span>
+          <span class="parent-arrow">&#x25BE;</span>
+        </button>
+        <div class="parent-content" id="parent-0">
+          <strong>Time estimate:</strong> 20–30 minutes.<br><br>
+          The PDA box includes the activity instructions and the board game to review. This targets the claim-and-evidence writing gap in a low-pressure format — Cole is the expert, giving an opinion on something he's already played.<br><br>
+          <strong>Output is flexible:</strong> spoken review, written notes, typed, or talked through. Any format counts.<br><br>
+          <strong>Wisconsin standards:</strong> W.8.1 — Opinion writing; W.8.4 — Clear and coherent writing.
+        </div>
+      </div>
+
+      <button class="complete-btn" id="btn-0" onclick="completeTrial(0)">
+        &#x1F3B2; Trial 1 Complete — Review Filed!
+      </button>
+      <div class="completion-banner" id="banner-0">
+        <p>&#x2728; Trial 1 Cleared! &#x2728;</p>
+        <small>First review on record!</small>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="trial-divider">&middot; &middot; &middot; &middot; &middot;</div>
+
+  <!-- ===== TRIAL 2 ===== -->
+  <div class="trial-card" id="card-1">
+    <div class="trial-header" onclick="toggleTrial(1)">
+      <div class="trial-icon">&#x1F9B4;</div>
+      <div class="trial-title-block">
+        <div class="trial-number">Trial 2</div>
+        <div class="trial-name">Dig Em Up Dinos</div>
+      </div>
+      <div class="trial-status" id="status-1">&#x1F512;</div>
+    </div>
+    <div class="trial-body" id="body-1">
+
+      <div class="trial-desc">
+        Play the Dig Em Up Dinos board game and rate the experience. What's it like to dig up dinosaurs as a game mechanic? How does it compare to the real thing at Burpee?
+      </div>
+
+      <div class="box-tag">&#x1F4E6; Box Activity: Dig Em Up Dinos</div>
+
+      <div class="parent-guide">
+        <button class="parent-toggle" onclick="toggleParent(1)">
+          <span>&#x1F4CB; Parent Guide</span>
+          <span style="flex:1"></span>
+          <span class="parent-arrow">&#x25BE;</span>
+        </button>
+        <div class="parent-content" id="parent-1">
+          <strong>Time estimate:</strong> 20–40 minutes (includes playing the game).<br><br>
+          The PDA box includes the game and activity instructions. The paleontology connection is strong here — Cole can bring genuine expertise to this review from his Burpee volunteer work. That makes it more interesting than a generic game review.<br><br>
+          <strong>Optional prompt:</strong> Does this game represent fossil work accurately? How is it similar or different from what happens at the museum?<br><br>
+          <strong>Wisconsin standards:</strong> W.8.1 — Opinion/argument writing; SL.8.4 — Presenting claims and findings.
+        </div>
+      </div>
+
+      <button class="complete-btn" id="btn-1" onclick="completeTrial(1)">
+        &#x1F9B4; Trial 2 Complete — Dinos Rated!
+      </button>
+      <div class="completion-banner" id="banner-1">
+        <p>&#x2728; Trial 2 Cleared! &#x2728;</p>
+        <small>Two reviews in. Inteleon is taking notes!</small>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="trial-divider">&middot; &middot; &middot; &middot; &middot;</div>
+
+  <!-- ===== MAIN CHALLENGE ===== -->
+  <div class="trial-card" id="card-2">
+    <div class="trial-header" onclick="toggleTrial(2)">
+      <div class="trial-icon">&#x1F3A4;</div>
+      <div class="trial-title-block">
+        <div class="trial-number">Main Challenge</div>
+        <div class="trial-name">Hip Hop Pops</div>
+      </div>
+      <div class="trial-status" id="status-2">&#x1F512;</div>
+    </div>
+    <div class="trial-body" id="body-2">
+
+      <div class="trial-desc">
+        Evaluate Hip Hop Pops and compare the experience to the board game reviews from Trials 1 and 2. What made something worth recommending — and what didn't?
+      </div>
+
+      <div class="box-tag">&#x1F4E6; Box Activity: Hip Hop Pops</div>
+
+      <div class="parent-guide">
+        <button class="parent-toggle" onclick="toggleParent(2)">
+          <span>&#x1F4CB; Parent Guide</span>
+          <span style="flex:1"></span>
+          <span class="parent-arrow">&#x25BE;</span>
+        </button>
+        <div class="parent-content" id="parent-2">
+          <strong>Time estimate:</strong> 20–30 minutes.<br><br>
+          The PDA box includes the activity and instructions. The Main Challenge asks Cole to do what critics do — compare across multiple experiences, not just evaluate one thing in isolation. After two reviews, he has the material to do that.<br><br>
+          <strong>What Inteleon is looking for:</strong> A claim ("I would / wouldn't recommend X because...") supported by at least one reason. That's the W.8.1 skill — opinion + evidence. Any format works.<br><br>
+          <strong>Wisconsin standards:</strong> W.8.1 — Opinion/argument writing; W.8.4 — Clarity and coherence; W.8.9 — Drawing on evidence from texts and experiences.
+        </div>
+      </div>
+
+      <button class="complete-btn" id="btn-2" onclick="completeTrial(2)">
+        &#x1F575;&#xFE0F; Main Challenge Complete — Sharp Eye Badge Earned!
+      </button>
+      <div class="completion-banner" id="banner-2">
+        <p>&#x26A1; GYM CLEARED! &#x26A1;</p>
+        <small>Three reviews. Three verdicts. Inteleon is satisfied. The Sharp Eye Badge is yours.</small>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FINAL BADGE -->
+  <div class="final-badge" id="final-badge">
+    <div class="badge-circle">&#x1F575;&#xFE0F;</div>
+    <div class="badge-title">The Sharp Eye Badge</div>
+    <p class="badge-desc">
+      Awarded to a trainer who didn't just experience things — they evaluated them. Inteleon only gives this badge to agents who can back up their opinions with reasons. You qualified.
+    </p>
+  </div>
+
+  <!-- STANDARDS -->
+  <div class="standards-section">
+    <div class="standards-title">&#x1F4D0; Wisconsin DPI Standards</div>
+    <div class="standards-grid">
+      <span class="standard-tag">W.8.1 — Opinion / Argument Writing</span>
+      <span class="standard-tag">W.8.4 — Clear and Coherent Writing</span>
+      <span class="standard-tag">W.8.9 — Evidence from Experience</span>
+      <span class="standard-tag">SL.8.4 — Presenting Claims</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const STATE_KEY = 'critic_gym_v1';
+
+  const BTN_TEXTS = [
+    '🎲 Trial 1 Complete — Review Filed!',
+    '🦴 Trial 2 Complete — Dinos Rated!',
+    '🕵️ Main Challenge Complete — Sharp Eye Badge Earned!'
+  ];
+
+  const DOT_ICONS = ['🎲', '🦴', '🎤'];
+
+  let state = {
+    trials: [
+      { open: true,  complete: false },
+      { open: false, complete: false },
+      { open: false, complete: false }
+    ]
+  };
+
+  function loadState() {
+    try {
+      const saved = localStorage.getItem(STATE_KEY);
+      if (saved) state = JSON.parse(saved);
+    } catch(e) {}
+  }
+
+  function saveState() {
+    try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e) {}
+  }
+
+  function toggleTrial(i) {
+    state.trials[i].open = !state.trials[i].open;
+    saveState();
+    renderAll();
+  }
+
+  function toggleParent(i) {
+    const btns = document.querySelectorAll('.parent-toggle');
+    const contents = document.querySelectorAll('.parent-content');
+    btns[i].classList.toggle('open');
+    contents[i].classList.toggle('open');
+  }
+
+  function completeTrial(i) {
+    state.trials[i].complete = true;
+    state.trials[i].open = false;
+    if (i + 1 < state.trials.length) {
+      state.trials[i + 1].open = true;
+    }
+    saveState();
+    renderAll();
+    if (state.trials.every(t => t.complete)) {
+      setTimeout(() => {
+        document.getElementById('final-badge').classList.add('show');
+        document.getElementById('final-badge').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 600);
+    }
+  }
+
+  function uncompleteTrial(i) {
+    for (let j = i; j < state.trials.length; j++) {
+      state.trials[j].complete = false;
+      state.trials[j].open = (j === i);
+    }
+    document.getElementById('final-badge').classList.remove('show');
+    saveState();
+    renderAll();
+  }
+
+  function renderAll() {
+    const completed = state.trials.filter(t => t.complete).length;
+    const total = state.trials.length;
+
+    document.getElementById('progress-fill').style.width = (completed / total * 100) + '%';
+    document.getElementById('progress-text').textContent = completed + ' / ' + total + ' Trials Complete';
+
+    state.trials.forEach((trial, i) => {
+      const card = document.getElementById('card-' + i);
+      const body = document.getElementById('body-' + i);
+      const status = document.getElementById('status-' + i);
+      const btn = document.getElementById('btn-' + i);
+      const banner = document.getElementById('banner-' + i);
+      const dot = document.getElementById('dot-' + i);
+
+      card.classList.remove('locked', 'active', 'complete');
+
+      if (trial.complete) {
+        card.classList.add('complete');
+        status.textContent = '✅';
+        dot.classList.add('complete');
+        dot.innerHTML = '✅';
+        banner.classList.add('show');
+        btn.disabled = false;
+        btn.textContent = '↩ Mark as Not Complete';
+        btn.classList.add('undo-mode');
+        btn.onclick = () => uncompleteTrial(i);
+      } else {
+        card.classList.add('active');
+        status.textContent = trial.open ? '▲' : '▼';
+        dot.classList.remove('complete');
+        dot.innerHTML = DOT_ICONS[i];
+        banner.classList.remove('show');
+        btn.disabled = false;
+        btn.textContent = BTN_TEXTS[i];
+        btn.classList.remove('undo-mode');
+        btn.onclick = () => completeTrial(i);
+      }
+
+      body.classList.toggle('open', trial.open);
+    });
+  }
+
+  loadState();
+  renderAll();
+</script>
+</body>
+</html>
