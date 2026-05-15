@@ -471,19 +471,6 @@
       </div>
     </a>
 
-    <a href="gyms/rotom-dex-research.html" class="gym-btn" data-gym-key="rotom" style="--gym-color: #2A82C9;">
-      <div class="gym-sprite">
-        <img src="images/rotom-dex-alt.jpg" alt="Rotom-Dex">
-      </div>
-      <div class="gym-btn-info">
-        <div class="gym-btn-name">Rotom-Dex Research Gym</div>
-        <div class="gym-btn-tagline">Research Skills &middot; Source Evaluation</div>
-      </div>
-      <div class="gym-btn-right">
-        <span class="pill pill-active" id="rotom-pill">Trial 1 Done</span>
-        <button class="track-btn" onclick="openModal(event,'rotom')">&#x270F; Progress</button>
-      </div>
-    </a>
 
     <a href="gyms/story-gym.html" class="gym-btn" data-gym-key="story" style="--gym-color: #6B21C8;">
       <div class="gym-sprite">
@@ -641,6 +628,19 @@
         </div>
       </div>
 
+      <a href="gyms/rotom-dex-research.html" class="gym-btn" style="--gym-color: #2A82C9; opacity: 0.75;">
+        <div class="gym-sprite">
+          <img src="images/rotom-dex-alt.jpg" alt="Rotom-Dex">
+        </div>
+        <div class="gym-btn-info">
+          <div class="gym-btn-name">Rotom-Dex Research Gym</div>
+          <div class="gym-btn-tagline">Research Skills &middot; Source Evaluation</div>
+        </div>
+        <div class="gym-btn-right">
+          <span class="pill pill-done">&#x1F3C5; Research Badge</span>
+        </div>
+      </a>
+
     </div>
   </div>
 
@@ -666,32 +666,29 @@
 // ============================================================
 const SCHEDULE = {
   MON: [
-    "Gym: Gengar or Ted-ed & Rotom-Dex",
+    "Pokemon Gym",
     "Ms. Amber homework",
-    "Choice: 1 Mia Academy or Night Zookeeper 15 min",
+    "Choice: Mia Academy or Night Zookeeper 15 min",
     "1:30 Heartland"
   ],
   TUES: [
-    "No homeschool today!!",
-    "10:00 ENT",
-    "1:00 Maeve",
-    "3:30 Heartland Social Group"
+    "9:30 Brock",
+    "Pokemon Gym",
+    "Choice: Mia Academy or Night Zookeeper 15 min",
+    "1:00 Maeve"
   ],
   WED: [
-    "MKE Zoo!",
-    "Gym Choice:",
-    " BBC Video & Fossil Length Trial 1 or Gengar Story or Ted-ed & Rotom-Dex"
+    "Car: Hoenn Trial 2 or 3 or Ms. Amber homework",
+    "10:00 Burpee Museum — fossil prep + reptile care",
+    "Log your Burpee visit"
   ],
   THU: [
-    "Pokemon Gym",
-    "Scratch - cap hunger",
-    "Choice: 1 Mia Academy or Night Zookeeper 15 min",
+    "Scratch — Trial 4: Cap the Hunger Bar",
+    "1 Mia Academy",
     "1:30 Ms. Amber"
   ],
   FRI: [
-    "Scratch",
-    "Pokemon Gym",
-    "Optional: Ms. Amber homework"
+    "No school - Trip to Austin with Quinn's family"
   ]
 };
 // ============================================================

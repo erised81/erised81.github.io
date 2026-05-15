@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(cd \"c:\\\\projects\\\\erised81.github.io\" && rm index-preview.html && git status)",
-      "Bash(grep -E \"\\\\.html$\")"
+      "Bash(grep -E \"\\\\.html$\")",
+      "PowerShell(Get-ChildItem \"c:\\\\Projects\\\\erised81.github.io\\\\gyms\\\\\" | Where-Object { $_.Name -match \"\\(burpee|scratch\\)\" } | Select-Object Name)"
     ],
     "additionalDirectories": [
       "c:\\projects\\erised81.github.io"
