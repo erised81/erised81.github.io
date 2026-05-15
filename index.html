@@ -273,6 +273,7 @@
   .pill-active { background: var(--teal-light); color: var(--teal); }
   .pill-coming { background: var(--gold-light); color: var(--gold); }
   .pill-done { background: #EEF5E8; color: #4A8C22; }
+  .gym-complete { display: none; }
 
   /* Video Resources */
   .resource-section { margin-bottom: 2.5rem; }
@@ -456,7 +457,7 @@
       </div>
     </a>
 
-    <a href="gyms/scratch-game.html" class="gym-btn" style="--gym-color: #F4781F;">
+    <a href="gyms/scratch-game.html" class="gym-btn" data-gym-key="scratch" style="--gym-color: #F4781F;">
       <div class="gym-sprite">
         <img src="images/tropius.png" alt="Tropius">
       </div>
@@ -470,7 +471,7 @@
       </div>
     </a>
 
-    <a href="gyms/rotom-dex-research.html" class="gym-btn" style="--gym-color: #2A82C9;">
+    <a href="gyms/rotom-dex-research.html" class="gym-btn" data-gym-key="rotom" style="--gym-color: #2A82C9;">
       <div class="gym-sprite">
         <img src="images/rotom-dex-alt.jpg" alt="Rotom-Dex">
       </div>
@@ -484,7 +485,7 @@
       </div>
     </a>
 
-    <a href="gyms/story-gym.html" class="gym-btn" style="--gym-color: #6B21C8;">
+    <a href="gyms/story-gym.html" class="gym-btn" data-gym-key="story" style="--gym-color: #6B21C8;">
       <div class="gym-sprite">
         <img src="images/gengar.png" alt="Gengar">
       </div>
@@ -498,7 +499,7 @@
       </div>
     </a>
 
-    <a href="gyms/fossil-math.html" class="gym-btn" style="--gym-color: #E8A020;">
+    <a href="gyms/fossil-math.html" class="gym-btn" data-gym-key="math" style="--gym-color: #E8A020;">
       <div class="gym-sprite">
         <img src="images/cranidos.png" alt="Cranidos">
       </div>
@@ -512,7 +513,7 @@
       </div>
     </a>
 
-    <a href="gyms/steam-lab.html" class="gym-btn" style="--gym-color: #FF8C00;">
+    <a href="gyms/steam-lab.html" class="gym-btn" data-gym-key="steam" style="--gym-color: #FF8C00;">
       <div class="gym-sprite">
         <img src="images/volcanion.png" alt="Volcanion">
       </div>
@@ -526,7 +527,7 @@
       </div>
     </a>
 
-    <a href="gyms/hoenn-field-study.html" class="gym-btn" style="--gym-color: #1A8C7A;">
+    <a href="gyms/hoenn-field-study.html" class="gym-btn" data-gym-key="hoenn" style="--gym-color: #1A8C7A;">
       <div class="gym-sprite">
         <span>&#x1F30A;</span>
       </div>
@@ -540,7 +541,7 @@
       </div>
     </a>
 
-    <a href="gyms/critic-gym.html" class="gym-btn" style="--gym-color: #3050A0;">
+    <a href="gyms/critic-gym.html" class="gym-btn" data-gym-key="critic" style="--gym-color: #3050A0;">
       <div class="gym-sprite">
         <span>&#x1F50D;</span>
       </div>
@@ -611,9 +612,9 @@
     <span class="chevron" id="completed-chevron">&#x25BC;</span>
   </div>
   <div class="completed-body" id="completed-body">
-    <div class="gym-list">
+    <div class="gym-list" id="completed-list">
 
-      <div class="gym-btn" style="--gym-color: #7C5CBF; opacity: 0.75; cursor: default;">
+      <a href="gyms/archens-field-report.html" class="gym-btn" style="--gym-color: #7C5CBF; opacity: 0.75;">
         <div class="gym-sprite">
           <img src="images/archen.png" alt="Archen">
         </div>
@@ -624,7 +625,7 @@
         <div class="gym-btn-right">
           <span class="pill pill-done">&#x1F3C5; Taphonomy Badge</span>
         </div>
-      </div>
+      </a>
 
       <div class="gym-btn" style="--gym-color: var(--teal); opacity: 0.75; cursor: default;">
         <div class="gym-sprite">
@@ -704,6 +705,10 @@ const GYMS = {
   scratch: {
     name: 'Brachiosaurus Survival Gym',
     pillId: 'scratch-pill',
+    badge: "Coder's Badge",
+    href: 'gyms/scratch-game.html',
+    tagline: 'Computer Science &middot; Scratch Game',
+    sprite: '<img src="images/tropius.png" alt="Tropius">',
     color: '#F4781F',
     milestones: [
       { id: 'scratch_t1',  label: 'Trial 1: Movement',          done: true  },
@@ -723,16 +728,24 @@ const GYMS = {
   rotom: {
     name: 'Rotom-Dex Research Gym',
     pillId: 'rotom-pill',
+    badge: 'Research Badge',
+    href: 'gyms/rotom-dex-research.html',
+    tagline: 'Research Skills &middot; Source Evaluation',
+    sprite: '<img src="images/rotom-dex-alt.jpg" alt="Rotom-Dex">',
     color: '#2A82C9',
     milestones: [
-      { id: 'rotom_t1', label: 'Trial 1',        done: true  },
-      { id: 'rotom_t2', label: 'Trial 2',        done: false },
-      { id: 'rotom_mc', label: 'Main Challenge', done: false },
+      { id: 'rotom_t1', label: 'Trial 1',        done: true },
+      { id: 'rotom_t2', label: 'Trial 2',        done: true },
+      { id: 'rotom_mc', label: 'Main Challenge', done: true },
     ]
   },
   story: {
     name: "Gengar's Story Catcher Gym",
     pillId: 'story-pill',
+    badge: 'Story Badge',
+    href: 'gyms/story-gym.html',
+    tagline: 'ELA &middot; Story &amp; Media Analysis',
+    sprite: '<img src="images/gengar.png" alt="Gengar">',
     color: '#6B21C8',
     milestones: [
       { id: 'story_t1', label: 'Trial 1: Written Story',  done: false },
@@ -743,6 +756,10 @@ const GYMS = {
   math: {
     name: 'Fossil Math Gym',
     pillId: 'math-pill',
+    badge: 'Fossil Math Badge',
+    href: 'gyms/fossil-math.html',
+    tagline: 'Math &middot; Scale &amp; Proportion',
+    sprite: '<img src="images/cranidos.png" alt="Cranidos">',
     color: '#E8A020',
     milestones: [
       { id: 'math_t1', label: 'Trial 1',        done: false },
@@ -753,6 +770,10 @@ const GYMS = {
   steam: {
     name: "Volcanion's Steam Lab Gym",
     pillId: 'steam-pill',
+    badge: 'Steam Badge',
+    href: 'gyms/steam-lab.html',
+    tagline: 'Chemistry &middot; Chemical Reactions',
+    sprite: '<img src="images/volcanion.png" alt="Volcanion">',
     color: '#FF8C00',
     milestones: [
       { id: 'steam_t1', label: "Trial 1: Koffing's Foamy Gas Potion", done: false },
@@ -763,6 +784,10 @@ const GYMS = {
   hoenn: {
     name: "Professor Birch's Hoenn Field Study Gym",
     pillId: 'hoenn-pill',
+    badge: 'Hoenn Badge',
+    href: 'gyms/hoenn-field-study.html',
+    tagline: 'Earth Science &middot; Natural Disasters &middot; Biomes',
+    sprite: '<span>&#x1F30A;</span>',
     color: '#1A8C7A',
     milestones: [
       { id: 'hoenn_t1', label: 'Trial 1: Hoenn Natural Disaster Investigation', done: false },
@@ -773,11 +798,15 @@ const GYMS = {
   critic: {
     name: "Agent Inteleon's Critic Gym",
     pillId: 'critic-pill',
+    badge: "Critic's Badge",
+    href: 'gyms/critic-gym.html',
+    tagline: 'ELA &middot; Evaluation &amp; Opinion Writing',
+    sprite: '<span>&#x1F50D;</span>',
     color: '#3050A0',
     milestones: [
-      { id: 'critic_t1', label: 'Trial 1: Board Game Reviews', done: false },
-      { id: 'critic_t2', label: 'Trial 2: Dig Em Up Dinos',    done: false },
-      { id: 'critic_mc', label: 'Main Challenge: Hip Hop Pops', done: false },
+      { id: 'critic_t1', label: 'Trial 1: Board Game Reviews',  done: true },
+      { id: 'critic_t2', label: 'Trial 2: Dig Em Up Dinos',     done: true },
+      { id: 'critic_mc', label: 'Main Challenge: Hip Hop Pops', done: true },
     ]
   }
 };
@@ -837,12 +866,48 @@ function isMilestoneDone(m) {
   return stored === '1';
 }
 
+function seedMilestones() {
+  Object.values(GYMS).forEach(gym => {
+    gym.milestones.forEach(m => {
+      if (m.done) localStorage.setItem('gym_' + m.id, '1');
+    });
+  });
+}
+
+function buildCompletedSection() {
+  const list = document.getElementById('completed-list');
+  if (!list) return;
+  list.querySelectorAll('.dynamic-completed').forEach(el => el.remove());
+  const insertBefore = list.firstElementChild;
+  Object.entries(GYMS).forEach(([key, gym]) => {
+    const total = gym.milestones.length;
+    if (total === 0) return;
+    const doneCount = gym.milestones.filter(m => isMilestoneDone(m)).length;
+    if (doneCount < total) return;
+    const card = document.createElement('a');
+    card.href = gym.href;
+    card.className = 'gym-btn dynamic-completed';
+    card.style.cssText = `--gym-color: ${gym.color}; opacity: 0.75;`;
+    card.innerHTML =
+      `<div class="gym-sprite">${gym.sprite}</div>` +
+      `<div class="gym-btn-info">` +
+        `<div class="gym-btn-name">${gym.name}</div>` +
+        `<div class="gym-btn-tagline">${gym.tagline}</div>` +
+      `</div>` +
+      `<div class="gym-btn-right">` +
+        `<span class="pill pill-done">&#x1F3C5; ${gym.badge}</span>` +
+      `</div>`;
+    list.insertBefore(card, insertBefore);
+  });
+}
+
 function refreshGymCard(gymKey) {
   const gym = GYMS[gymKey];
   const total = gym.milestones.length;
   if (total === 0) return;
 
   const doneCount = gym.milestones.filter(m => isMilestoneDone(m)).length;
+  const complete = doneCount === total;
 
   const pill = document.getElementById(gym.pillId);
   if (pill) {
@@ -850,7 +915,7 @@ function refreshGymCard(gymKey) {
     if (doneCount === 0) {
       pill.classList.add('pill-coming');
       pill.textContent = 'Not Started';
-    } else if (doneCount === total) {
+    } else if (complete) {
       pill.classList.add('pill-done');
       pill.textContent = '🏅 Badge Earned!';
     } else {
@@ -858,6 +923,11 @@ function refreshGymCard(gymKey) {
       pill.textContent = `${doneCount} of ${total} done`;
     }
   }
+
+  const card = document.querySelector(`.gym-btn[data-gym-key="${gymKey}"]`);
+  if (card) card.classList.toggle('gym-complete', complete);
+
+  buildCompletedSection();
 }
 
 function openModal(event, gymKey) {
@@ -1078,6 +1148,7 @@ function toggleVidGroup(groupKey) {
 }
 
 buildSchedule();
+seedMilestones();
 Object.keys(GYMS).forEach(key => refreshGymCard(key));
 loadBurpeeVisits();
 loadStandalone();
